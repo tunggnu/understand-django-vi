@@ -422,5 +422,3 @@ Trong bài tiếp theo, chúng ta sẽ tìm hiểu về views. Bài viết này 
 - Lớp view
 - Một số view hỗ trợ tích hợp sẵn
 - Decorator giúp tăng sức mạnh cho view.
-
-Nếu bạn muốn theo dõi loạt bài này, hãy đăng ký nhận bản tin của tôi, nơi tôi thông báo tất cả nội dung mới. Nếu bạn có câu hỏi khác, bạn có thể liên hệ với tôi trên X tại [\@mblayman](https://x.com/mblayman).
