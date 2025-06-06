@@ -1,43 +1,43 @@
-# Views On Views
+# Góc Nhìn Về Views
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/ "‌") article, I covered URLs and the variety of tools that Django gives us to describe the outside interface to the internet for your project. In this article, we’ll examine the core building block that makes those URLs work: the Django view.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/ "‌"), tôi đã trình bày về URLs và các công cụ đa dạng mà Django cung cấp để mô tả giao diện bên ngoài với internet cho dự án của bạn. Trong bài viết này, chúng ta sẽ xem xét khối xây dựng cốt lõi giúp các URL đó hoạt động: view của Django.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/ "‌")
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/ "‌")
-3. Views On Views
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/ "‌")
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/ "‌")
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/ "‌")
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/ "‌")
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/ "‌")
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/ "‌")
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/ "‌")
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/ "‌")
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/ "‌")
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/ "‌")
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/ "‌")
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/ "‌")
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/ "‌")
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/ "‌")
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/ "‌")
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/ "‌")
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/ "‌")
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/ "‌")
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/ "‌")
+3. Góc Nhìn Về Views
+4. [Templates Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/ "‌")
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/ "‌")
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/ "‌")
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/ "‌")
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/ "‌")
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/ "‌")
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/ "‌")
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/ "‌")
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/ "‌")
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/ "‌")
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/ "‌")
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/ "‌")
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/ "‌")
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/ "‌")
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/ "‌")
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/ "‌")
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/ "‌")
 
-## What Is A View?
+## View Là Gì?
 
-A view is a chunk of code that receives an HTTP request and returns an HTTP response. Views are where you use Django’s core functionality: to respond to requests made to an application on the internet.
+View là một đoạn mã nhận một HTTP request và trả về một HTTP response. Views là nơi bạn sử dụng chức năng cốt lõi của Django: để phản hồi các yêu cầu gửi đến một ứng dụng trên internet.
 
-You might notice that I’m a bit vague about “chunk of code.” That was deliberate. The reason is that views come in multiple forms. To say views are _functions_ would be part of the story. Later chapters in that story cover how they can also be implemented in _classes_.
+Bạn có thể nhận thấy tôi hơi mơ hồ về “đoạn mã.” Đó là chủ ý. Lý do là vì view có nhiều hình thức khác nhau. Nếu nói view là _hàm_ thì cũng chỉ đúng một phần. Các chương sau sẽ đề cập đến cách chúng cũng có thể được triển khai bằng _lớp_.
 
-Even if I attempted to call views _callables,_ I still would not portray them accurately because of the ways that certain types of views get plugged into a Django app. For instance, a view based on a class will _produce_ a callable as we’ll see in a later section.
+Ngay cả khi tôi cố gọi view là _callable_ (đối tượng có thể gọi được), tôi vẫn chưa mô tả chính xác vì một số loại view sẽ được “cắm” vào ứng dụng Django theo những cách khác nhau. Ví dụ, một view dựa trên lớp sẽ _tạo ra_ một callable như chúng ta sẽ thấy ở phần sau.
 
-Let’s start with functions since I think they are the gentlest introduction to views.
+Hãy bắt đầu với hàm vì tôi nghĩ đó là cách tiếp cận nhẹ nhàng nhất để làm quen với view.
 
-## Function Views
+## View Hàm
 
-A function view is precisely that, a function. The function takes an `HttpRequest` instance as input and returns an `HttpResponse` (or one of its many subclasses) as output.
+View hàm chính xác là một hàm. Hàm này nhận một instance của `HttpRequest` làm đầu vào và trả về một `HttpResponse` (hoặc một trong các lớp con của nó) làm đầu ra.
 
-The classic “Hello World” example would look like what is listed below.
+Ví dụ kinh điển “Hello World” sẽ trông như sau.
 
 ```python
 # application/views.py
@@ -47,17 +47,17 @@ def hello_world(request):
     return HttpResponse('Hello World')
 ```
 
-Adding the `hello_world` view to a URL configuration which we learned about in the last article, you could visit a browser at the URL and find the text “Hello World” on your browser page.
+Thêm view `hello_world` vào cấu hình URL mà chúng ta đã học ở bài trước, bạn có thể truy cập trình duyệt tại URL đó và thấy dòng chữ “Hello World” trên trang trình duyệt của mình.
 
-Maybe you don’t find that very exciting, but I do, and I think you should! The framework did so much work for us, and _our_ job is to write a mere couple of lines of Python. When plugged into a web server on the internet, your greeting can reach anyone with access to the net. That’s staggering and is worth reflecting on.
+Có thể bạn không thấy điều đó thú vị, nhưng tôi thì có, và tôi nghĩ bạn cũng nên như vậy! Framework đã làm rất nhiều việc nặng nhọc cho chúng ta, và _việc của chúng ta_ chỉ là viết vài dòng Python. Khi được kết nối với một web server trên internet, lời chào của bạn có thể đến với bất kỳ ai có truy cập mạng. Điều đó thật đáng kinh ngạc và đáng để suy ngẫm.
 
-Django does most of the heavy lifting for us. The raw HTTP request fits neatly into the `HttpRequest` class. Our example view doesn’t use that information, but it’s accessible if we need it. Likewise, we’re not using much of `HttpResponse`. Still, it’s doing all the work to ensure it appears on a user’s browser and delivers our message.
+Django đã làm hầu hết phần khó cho chúng ta. Yêu cầu HTTP thô được đóng gói gọn gàng vào lớp `HttpRequest`. View ví dụ của chúng ta không sử dụng thông tin đó, nhưng nó luôn sẵn sàng nếu ta cần. Tương tự, chúng ta cũng không dùng nhiều tính năng của `HttpResponse`. Tuy nhiên, nó đã làm tất cả công việc để đảm bảo nội dung xuất hiện trên trình duyệt người dùng và truyền tải thông điệp của chúng ta.
 
-To see what we can do with views, let’s look closely at `HttpRequest` and `HttpResponse` to get a glimpse at what’s going on.
+Để xem chúng ta có thể làm gì với view, hãy xem kỹ hơn về `HttpRequest` và `HttpResponse` để hiểu rõ hơn những gì đang diễn ra.
 
 ## HttpRequest
 
-`HttpRequest` is a Python class. Instances of this class represent an HTTP request. HTTP is the transfer protocol that the internet uses to exchange information. A request can be in a variety of formats, but a standard request might look like:
+`HttpRequest` là một lớp Python. Các instance của lớp này đại diện cho một HTTP request. HTTP là giao thức truyền tải mà internet sử dụng để trao đổi thông tin. Một request có thể có nhiều định dạng khác nhau, nhưng một request tiêu chuẩn có thể trông như sau:
 
 ```text
 POST /courses/0371addf-88f7-49e4-ac4d-3d50bb39c33a/edit/ HTTP/1.1
@@ -80,32 +80,32 @@ name=Science
 &friday=on
 ```
 
-This example is from a side project that uses school data. I have trimmed some lines out of the request so it will fit better on the screen, and I did some slight reformatting to make the content a bit clearer.  
+Ví dụ này lấy từ một dự án phụ sử dụng dữ liệu trường học. Tôi đã cắt bớt một số dòng để nó vừa với màn hình hơn, và tôi cũng định dạng lại một chút cho dễ nhìn hơn.
 
-When Django receives a request like this, it will parse the data and store it in an `HttpRequest` instance. The request provides convenient access to all parts of the raw data with helpful attributes for the most commonly used parameters. When considering the example, the request would have:
+Khi Django nhận được một request như vậy, nó sẽ phân tích dữ liệu và lưu trữ vào một instance của `HttpRequest`. Request này cung cấp quyền truy cập thuận tiện đến tất cả các phần của dữ liệu thô với các thuộc tính hữu ích cho những tham số thường dùng nhất. Khi xét ví dụ trên, request sẽ có:
 
-- `method` - This matches the HTTP method of `POST` and can be used to act on the _kind_ of request the user sent.
-- `content_type` - This attribute instructs Django on how to handle the data in the request. The example value would be `application/x-www-form-urlencoded` to indicate that this is user-submitted form data.
-- `POST` - For POST requests, Django processes the form data and stores the data into a dictionary-like structure. `request.POST['name']` would be `Science` in our example.
-- `GET` - Anything added to the query string (i.e., the content after a `?` character such as `student=Matt` in `/courses/?student=Matt`) is stored in a dictionary-like attribute as well.
-- `headers` - This is where all the HTTP headers like `Host`, `Accept-Language`, and the others are stored. `headers` is also dictionary-like and can be accessed like `request.headers['Host']`.
+- `method` - Thuộc tính này khớp với HTTP method là `POST` và có thể dùng để xử lý _loại_ request mà người dùng gửi lên.
+- `content_type` - Thuộc tính này hướng dẫn Django cách xử lý dữ liệu trong request. Giá trị ví dụ sẽ là `application/x-www-form-urlencoded` để chỉ ra đây là dữ liệu form do người dùng gửi lên.
+- `POST` - Với các request POST, Django sẽ xử lý dữ liệu form và lưu vào một cấu trúc giống dictionary. `request.POST['name']` sẽ là `Science` trong ví dụ của chúng ta.
+- `GET` - Bất kỳ thứ gì thêm vào query string (tức là nội dung sau dấu `?` như `student=Matt` trong `/courses/?student=Matt`) cũng được lưu vào một thuộc tính giống dictionary.
+- `headers` - Đây là nơi lưu trữ tất cả các HTTP header như `Host`, `Accept-Language` và các header khác. `headers` cũng giống dictionary và có thể truy cập như `request.headers['Host']`.
 
-Other attributes are available to `HttpRequest`, but that list will get you far enough to get started. Check out [Request and response objects](https://docs.djangoproject.com/en/4.1/ref/request-response/ "‌") for the other attributes.
+Còn nhiều thuộc tính khác có sẵn cho `HttpRequest`, nhưng danh sách trên đủ để bạn bắt đầu. Xem thêm tại [Request and response objects](https://docs.djangoproject.com/en/4.1/ref/request-response/ "‌") để biết các thuộc tính khác.
 
-I should also note that `HttpRequest` instances are a common place to attach extra data. Django requests pass through many pieces in the framework. This makes the objects great candidates for extra features that you may require. For instance, if you need user management (which we will explore in a future article), there is code that can attach a `request.user` attribute to represent a user in your system. It’s _very_ handy.
+Tôi cũng nên lưu ý rằng các instance của `HttpRequest` là nơi phổ biến để gắn thêm dữ liệu bổ sung. Các request của Django sẽ đi qua nhiều thành phần trong framework. Điều này khiến các đối tượng này rất phù hợp để bổ sung các tính năng mà bạn có thể cần. Ví dụ, nếu bạn cần quản lý người dùng (chúng ta sẽ tìm hiểu ở bài sau), có đoạn mã sẽ gắn thuộc tính `request.user` để đại diện cho một người dùng trong hệ thống của bạn. Điều này _rất_ tiện lợi.
 
-You can think of `HttpRequest` objects as the common interface for most of the inputs that my code uses.
+Bạn có thể coi các đối tượng `HttpRequest` là giao diện chung cho hầu hết các đầu vào mà mã của bạn sử dụng.
 
 ## HttpResponse
 
-The other major interface that your views will use either directly or indirectly is the `HttpResponse` interface.
+Giao diện chính còn lại mà view của bạn sẽ sử dụng trực tiếp hoặc gián tiếp là giao diện `HttpResponse`.
 
-Your job as a Django user is to make your views return some kind of `HttpResponse`. A response instance will include all the necessary information to create a valid HTTP response for a user’s browser.
+Nhiệm vụ của bạn với tư cách là người dùng Django là đảm bảo view trả về một loại `HttpResponse` nào đó. Một instance response sẽ bao gồm tất cả thông tin cần thiết để tạo ra một HTTP response hợp lệ cho trình duyệt của người dùng.
 
-Some of the common `HttpResponse` attributes include:
+Một số thuộc tính phổ biến của `HttpResponse` gồm:
 
-- `status_code` - This is the HTTP status code. Status codes are a set of numbers that HTTP defines to tell a client (e.g., a browser) about the success or failure of a request. `200` is the usual success code. Any number from `400` and up will indicate some error, like `404` when a requested resource is not found.
-- `content` - This is the content that you provide to the user. The response stores this data as bytes. If you supply Python string data, Django will encode it to bytes for you.
+- `status_code` - Đây là mã trạng thái HTTP. Status code là tập hợp các số mà HTTP định nghĩa để thông báo cho client (ví dụ, trình duyệt) về việc request thành công hay thất bại. `200` là mã thành công thông thường. Bất kỳ số nào từ `400` trở lên sẽ chỉ ra lỗi, như `404` khi tài nguyên được yêu cầu không tìm thấy.
+- `content` - Đây là nội dung bạn cung cấp cho người dùng. Response lưu trữ dữ liệu này dưới dạng bytes. Nếu bạn cung cấp dữ liệu dạng chuỗi Python, Django sẽ tự động mã hóa thành bytes cho bạn.
 
 ```text
 >>> from django.http import HttpResponse
@@ -114,19 +114,19 @@ Some of the common `HttpResponse` attributes include:
 b'Hello World'
 ```
 
-When working with Django views, you won’t always use `HttpResponse` directly. `HttpResponse` has a variety of subclasses for common uses. Let’s look at some:
+Khi làm việc với view trong Django, bạn không phải lúc nào cũng dùng trực tiếp `HttpResponse`. `HttpResponse` có nhiều lớp con phục vụ các mục đích phổ biến. Hãy xem một số ví dụ:
 
-- `HttpResponseRedirect` - You may want to send a user to a different page. Perhaps the user bought something on your site, and you would like them to see a receipt page of their order. This subclass is perfect for that scenario.
-- `HttpResponseNotFound` - This is the subclass used to create a `404 Not Found` response. Django provides some helper functions to return this so you might not use this subclass directly, but it’s good to know it’s available.
-- `HttpResponseForbidden` - This type of response can be used when you don’t want a user to access a part of your website (i.e., HTTP status `403 Forbidden`).
+- `HttpResponseRedirect` - Bạn có thể muốn chuyển hướng người dùng đến một trang khác. Có thể người dùng vừa mua hàng trên trang của bạn, và bạn muốn họ xem trang hóa đơn. Lớp con này rất phù hợp cho trường hợp đó.
+- `HttpResponseNotFound` - Đây là lớp con dùng để tạo response `404 Not Found`. Django cung cấp một số hàm hỗ trợ để trả về loại này nên bạn có thể không dùng trực tiếp lớp con này, nhưng biết nó tồn tại cũng tốt.
+- `HttpResponseForbidden` - Loại response này dùng khi bạn không muốn người dùng truy cập một phần nào đó của website (tức là HTTP status `403 Forbidden`).
 
-Aside from the subclasses, Django has other techniques to return `HttpResponse` instances without creating one yourself. The most common function is `render`.
+Ngoài các lớp con, Django còn có các kỹ thuật khác để trả về instance `HttpResponse` mà không cần tự tạo. Hàm phổ biến nhất là `render`.
 
-`render` is a tool for working with templates. Templates are the topic of the next article, but here is a sneak peek.
+`render` là công cụ để làm việc với template. Template là chủ đề của bài tiếp theo, nhưng đây là một cái nhìn trước.
 
-You could write a view for a webpage and include a lot of HTML in your Python. HTML is the markup language of internet pages that we use to describe the format of a page.
+Bạn có thể viết một view cho một trang web và chèn rất nhiều HTML vào Python. HTML là ngôn ngữ đánh dấu của các trang internet mà chúng ta dùng để mô tả bố cục trang.
 
-This view might look like:
+View này có thể trông như sau:
 
 ```python
 from django.http import HttpResponse
@@ -143,13 +143,13 @@ def my_html_view(request):
     return HttpResponse(response_content)
 ```
 
-While this works, it has many shortcomings.
+Dù cách này hoạt động, nó có nhiều hạn chế.
 
-1. The HTML chunk isn’t reusable by other views. That doesn’t matter much for this small example, but it would be a huge problem when you try to make many views that use a lot of markup and need to share a common look.
-2. The mixing of Python and HTML is going to get messy. Need proof? Go look at computing history and learn about [CGI](https://en.wikipedia.org/wiki/Common_Gateway_Interface "‌"). It wasn’t pretty.
-3. How can you join pieces of HTML together? Not easily.
+1. Đoạn HTML này không thể tái sử dụng bởi các view khác. Điều này không quan trọng với ví dụ nhỏ này, nhưng sẽ là vấn đề lớn khi bạn muốn tạo nhiều view dùng nhiều markup và cần chia sẻ giao diện chung.
+2. Việc trộn lẫn Python và HTML sẽ rất lộn xộn. Cần bằng chứng? Hãy tìm hiểu lịch sử lập trình và xem về [CGI](https://en.wikipedia.org/wiki/Common_Gateway_Interface "‌"). Nó không đẹp chút nào.
+3. Làm sao để ghép các đoạn HTML lại với nhau? Không dễ chút nào.
 
-With templates, we can separate the layout from the logic.
+Với template, chúng ta có thể tách biệt bố cục khỏi logic.
 
 ```python
 # application/views.py
@@ -163,7 +163,7 @@ def my_html_view(request):
     )
 ```
 
-And we would have another file named `template.html` containing:
+Và chúng ta sẽ có một file khác tên là `template.html` chứa:
 
 ```html
 <html>
@@ -174,21 +174,21 @@ And we would have another file named `template.html` containing:
 </html>
 ```
 
-The important part for this article is not about the templates themselves. What’s worth noting is that `render` loads the content from `template.html`, gets the output, and adds that output to an `HttpResponse` instance.
+Điều quan trọng trong bài này không phải là template. Điều đáng chú ý là `render` sẽ tải nội dung từ `template.html`, lấy kết quả đầu ra và thêm kết quả đó vào một instance của `HttpResponse`.
 
-That wraps up `HttpRequest` and `HttpResponse`. With those building blocks, we can now look at other ways that you can make Django views for your project.
+Như vậy là chúng ta đã điểm qua `HttpRequest` và `HttpResponse`. Với các khối xây dựng này, chúng ta có thể xem các cách khác để tạo view trong Django cho dự án của bạn.
 
-## View Classes
+## View Dạng Lớp
 
-By now we’ve seen this relationship with views:
+Đến giờ chúng ta đã thấy mối quan hệ này với view:
 
 ```text
 HttpRequest -> view -> HttpResponse
 ```
 
-Views do not need to be functions exclusively. Django also provides tools to make views out of classes. These types of views derive from Django’s `View` class.
+View không nhất thiết chỉ là hàm. Django cũng cung cấp công cụ để tạo view từ lớp. Các loại view này kế thừa từ lớp `View` của Django.
 
-When you write a class-based view (often abbreviated to CBVs), you add instance methods that match up with HTTP methods. Let’s see an example:
+Khi bạn viết một view dựa trên lớp (thường gọi tắt là CBV), bạn thêm các phương thức instance khớp với các HTTP method. Hãy xem ví dụ:
 
 ```python
 # application/views.py
@@ -200,7 +200,7 @@ class SampleView(View):
         return HttpResponse("Hello from a CBV!")
 ```
 
-The `get` method on the class corresponds to a `GET` HTTP request. `*args` and `**kwargs` are a common convention in Python to make a method or function that accepts any number of positional or keyword based arguments. We need these to match the expect method signature that Django requires for CBVs. Similarly, you would write a `post` method to respond to a `POST` HTTP request and so on. With that view defined, we can connect it to a URLconf:
+Phương thức `get` trên lớp này tương ứng với một HTTP request kiểu `GET`. `*args` và `**kwargs` là quy ước phổ biến trong Python để cho phép một phương thức hoặc hàm nhận bất kỳ số lượng đối số vị trí hoặc từ khóa nào. Chúng ta cần chúng để khớp với chữ ký phương thức mà Django yêu cầu cho CBV. Tương tự, bạn sẽ viết phương thức `post` để phản hồi HTTP request kiểu `POST` và các method khác. Khi đã định nghĩa view này, chúng ta có thể kết nối nó với URLconf:
 
 ```python
 # project/urls.py
@@ -213,23 +213,23 @@ urlpatterns = [
 ]
 ```
 
-Note that we don’t pass `SampleView` to `path` as is. `path` expects a callable object, so we must call `as_view`, a class method that returns a function that will call the code in our class.
+Lưu ý rằng chúng ta không truyền trực tiếp `SampleView` vào `path`. `path` mong đợi một đối tượng callable, nên chúng ta phải gọi `as_view`, một class method trả về một hàm sẽ gọi mã trong lớp của chúng ta.
 
-At this point, I would be suitably unimpressed if I were in your shoes. Why would we add all this boilerplate code when you can make a function and be done? If this were the full story, I would absolutely agree with you. A class-based view doesn’t add much beyond the function-based version. If anything, CBVs have more to remember, so they are probably more confusing.
+Tại thời điểm này, nếu tôi là bạn, tôi sẽ không ấn tượng lắm. Tại sao phải thêm nhiều mã mẫu như vậy khi bạn chỉ cần viết một hàm là xong? Nếu chỉ có vậy thì tôi hoàn toàn đồng ý với bạn. View dựa trên lớp không thêm nhiều giá trị so với phiên bản hàm. Nếu có, CBV còn khó nhớ hơn, nên có thể gây nhầm lẫn.
 
-Where class-based views begin to shine is when using some other classes beyond the initial `View` class.
+Nơi mà view dựa trên lớp thực sự tỏa sáng là khi sử dụng các lớp khác ngoài lớp `View` ban đầu.
 
-Django includes a host of class-based views to use for a variety of purposes. We can explore a few of them with our limited exposure to the full framework so far.
+Django bao gồm rất nhiều view dựa trên lớp để sử dụng cho nhiều mục đích khác nhau. Chúng ta có thể khám phá một vài trong số đó với kiến thức hiện tại về framework.
 
-## Out Of The Box Views
+## Các View Có Sẵn
 
-I won’t exhaustively cover all the class-based views because there are many. Also, if you’re joining this article series from the beginning and have never done Django before, then there will still be holes in your knowledge (which we will plug together!), and some of the views will not make much sense.
+Tôi sẽ không trình bày hết tất cả các view dựa trên lớp vì có rất nhiều. Ngoài ra, nếu bạn mới bắt đầu loạt bài này và chưa từng làm Django trước đây, thì vẫn sẽ còn nhiều lỗ hổng kiến thức (chúng ta sẽ cùng lấp đầy!), và một số view sẽ chưa có ý nghĩa.
 
 ### RedirectView
 
-Use `RedirectView` to send users of your site to a different place. You _could_ make a view that returns an `HttpResponseRedirect` instance, but this class-based view can handle that for you.
+Dùng `RedirectView` để chuyển hướng người dùng đến nơi khác. Bạn _có thể_ tạo một view trả về instance `HttpResponseRedirect`, nhưng view dựa trên lớp này có thể làm điều đó cho bạn.
 
-In fact, you can use `RedirectView` without subclassing it. Check this out:
+Thực tế, bạn có thể dùng `RedirectView` mà không cần kế thừa nó. Xem ví dụ sau:
 
 ```python
 # project/urls.py
@@ -246,9 +246,9 @@ urlpatterns = [
 ]
 ```
 
-`RedirectView` can use `url` for a full URL, or it can use `pattern_name` if you need to route to a view that moved somewhere else in your project.
+`RedirectView` có thể dùng `url` cho một URL đầy đủ, hoặc dùng `pattern_name` nếu bạn cần chuyển hướng đến một view đã chuyển sang nơi khác trong dự án.
 
-`as_view` is what lets us avoid subclassing `RedirectView`. The arguments passed to `as_view` override any class attributes. The following two `RedirectView` uses are equivalent:
+`as_view` là thứ giúp chúng ta không cần kế thừa `RedirectView`. Các đối số truyền vào `as_view` sẽ ghi đè bất kỳ thuộc tính lớp nào. Hai cách dùng `RedirectView` sau là tương đương:
 
 ```python
 # project/urls.py
@@ -262,7 +262,7 @@ class SubclassedRedirectView(RedirectView):
 
 urlpatterns = [
     path("old-path/", SubclassedRedirectView.as_view()),
-    # The RedirectView below acts like SubclassedRedirectView.
+    # RedirectView bên dưới hoạt động giống SubclassedRedirectView.
     path("old-path/", RedirectView.as_view(pattern_name='new-view')),
     path("new-path/", NewView.as_view(), name='new-view'),
 ]
@@ -270,11 +270,11 @@ urlpatterns = [
 
 ### TemplateView
 
-Earlier in the article, we briefly saw how to separate web page layout from the logic needed to build a page with templates.
+Ở đầu bài viết, chúng ta đã thấy cách tách bố cục trang web khỏi logic cần thiết để xây dựng trang bằng template.
 
-Templates are so commonly used that Django provides a class that knows how to produce a response with nothing more than a template name.
+Template được dùng quá phổ biến nên Django cung cấp một lớp biết cách tạo response chỉ với tên template.
 
-An example looks like:
+Ví dụ như sau:
 
 ```python
 # application/views.py
@@ -284,30 +284,30 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 ```
 
-We will look at template views in greater detail in the next article when we dive into templates.
+Chúng ta sẽ xem chi tiết hơn về template view ở bài tiếp theo khi đi sâu vào template.
 
-### Other View Classes
+### Các Lớp View Khác
 
-Django’s other class-based views serve a variety of purposes. Django has views that will:
+Các view dựa trên lớp khác của Django phục vụ nhiều mục đích khác nhau. Django có các view sẽ:
 
-- Display and handle HTML forms so users can input data and send the data to the application.
-- Pull data from a database and show an individual record to the user (e.g., a webpage to see facts about a particular movie).
-- Pull data from a database and show information from a collection of records to the user (e.g., showing the cast of actors from a movie).
-- Show data from specific time ranges like days, weeks, and months.
+- Hiển thị và xử lý form HTML để người dùng nhập dữ liệu và gửi dữ liệu lên ứng dụng.
+- Lấy dữ liệu từ cơ sở dữ liệu và hiển thị một bản ghi cho người dùng (ví dụ, một trang web để xem thông tin về một bộ phim cụ thể).
+- Lấy dữ liệu từ cơ sở dữ liệu và hiển thị thông tin từ một tập hợp bản ghi cho người dùng (ví dụ, hiển thị dàn diễn viên của một bộ phim).
+- Hiển thị dữ liệu theo các khoảng thời gian cụ thể như ngày, tuần, tháng.
 
-As we continue to explore Django, We will discuss these views when their related topic (like forms) is the primary subject of an article. For now, when you’re developing your own views, try to remember that Django probably has a class-based view to aid your work.
+Khi tiếp tục khám phá Django, chúng ta sẽ bàn về các view này khi chủ đề liên quan (như form) là nội dung chính của bài viết. Hiện tại, khi bạn phát triển view của riêng mình, hãy nhớ rằng Django có thể đã có một view dựa trên lớp hỗ trợ công việc của bạn.
 
-## Useful View Decorators And Mixins
+## Các Decorator Và Mixin Hữu Ích Cho View
 
-Before we finish the tour of views, let’s discuss some useful decorators and mixin classes.
+Trước khi kết thúc phần tìm hiểu về view, hãy nói về một số decorator và lớp mixin hữu ích.
 
-Decorators are a feature of Python (and many other languages) that let you extend a function with additional capabilities. A decorator can wrap a view function to provide new behavior to a view. Decorators are helpful when you have common functionality that you want to add to many views without copying and pasting a lot of code.
+Decorator là một tính năng của Python (và nhiều ngôn ngữ khác) cho phép bạn mở rộng một hàm với các khả năng bổ sung. Decorator có thể bọc một hàm view để cung cấp hành vi mới cho view đó. Decorator rất hữu ích khi bạn có chức năng chung muốn thêm vào nhiều view mà không phải copy-paste nhiều mã.
 
-Mixin classes serve a very similar purpose as decorators, but use Python’s multiple inheritance feature of classes to “mix in” the new behavior with an existing class-based view.
+Lớp mixin phục vụ mục đích tương tự như decorator, nhưng sử dụng tính năng đa kế thừa của Python để “trộn” hành vi mới vào một view dựa trên lớp hiện có.
 
-### Decorators To Know
+### Decorator Nên Biết
 
-When you work with function-based views, there is a challenge when handling different HTTP methods. By default, a function based view can receive requests from _any_ HTTP method. Some views will handle multiple methods like:
+Khi làm việc với view dựa trên hàm, có một thách thức khi xử lý các HTTP method khác nhau. Mặc định, một view dựa trên hàm có thể nhận request từ _bất kỳ_ HTTP method nào. Một số view sẽ xử lý nhiều method như sau:
 
 ```python
 # application/views.py
@@ -324,7 +324,7 @@ def multi_method_view(request):
     return HttpResponseNotAllowed()
 ```
 
-This view uses the `request` instance `method` attribute to check the request’s HTTP method. What if you only want your view to respond to one HTTP method? Let’s say you only want to respond to a POST. We could write:
+View này dùng thuộc tính `method` của instance `request` để kiểm tra HTTP method của request. Nếu bạn chỉ muốn view phản hồi một HTTP method duy nhất thì sao? Giả sử bạn chỉ muốn phản hồi POST. Chúng ta có thể viết:
 
 ```
 # application/views.py
@@ -339,7 +339,7 @@ def guard_clause_view(request):
 
     return HttpResponse('Method was a POST.')
 
-# OR
+# HOẶC
 
 def if_clause_view(request):
     if request.method == 'POST':
@@ -348,7 +348,7 @@ def if_clause_view(request):
         return HttpResponseNotAllowed()
 ```
 
-Both techniques work, but the code is a little messier because of the extra indentation. Instead, we can use the `require_POST` decorator and let Django check the method for us.
+Cả hai cách đều hoạt động, nhưng mã sẽ lộn xộn hơn vì phải thụt lề thêm. Thay vào đó, chúng ta có thể dùng decorator `require_POST` và để Django kiểm tra method giúp.
 
 ```python
 # application/views.py
@@ -360,9 +360,9 @@ def the_view(request):
     return HttpResponse('Method was a POST.')
 ```
 
-This version states the expectation up front with the decorator and declares the contract that the view will work with. If a user tries a different method (like a `GET`), then Django will respond with HTTP status code `405`, which is an error code for “method not allowed.”
+Phiên bản này nêu rõ mong đợi ngay từ đầu với decorator và khai báo hợp đồng mà view sẽ tuân theo. Nếu người dùng thử một method khác (như `GET`), Django sẽ trả về HTTP status code `405`, là mã lỗi “method not allowed.”
 
-Another common decorator you may encounter is the `login_required` decorator. When we get to the subject of user management, you’ll see that we can make a protected view for an app by including this decorator.
+Một decorator phổ biến khác bạn có thể gặp là `login_required`. Khi chúng ta bàn về quản lý người dùng, bạn sẽ thấy chúng ta có thể bảo vệ một view bằng cách thêm decorator này.
 
 ‌
 
@@ -378,9 +378,9 @@ def the_view(request):
 
 ‌
 
-Any unauthenticated user will be redirected automatically to the login page for your web app.
+Bất kỳ người dùng chưa xác thực nào sẽ tự động bị chuyển hướng đến trang đăng nhập của ứng dụng web.
 
-A final example of a useful built-in decorator is `user_passes_test`. This is another decorator used with the user management system that lets us control _which_ users should be allowed to access a view. For instance, we could make a view that only staff-level users could access.
+Một ví dụ cuối cùng về decorator tích hợp hữu ích là `user_passes_test`. Đây là một decorator khác dùng với hệ thống quản lý người dùng cho phép chúng ta kiểm soát _người dùng nào_ được phép truy cập view. Ví dụ, chúng ta có thể tạo một view chỉ cho phép người dùng cấp nhân viên truy cập.
 
 ```python
 # application/views.py
@@ -392,9 +392,9 @@ def the_view(request):
     return HttpResponse('Only visible to staff users.')
 ```
 
-The decorator takes a callable that will accept a single argument of a user object. The view will only be accessible if the return value of the test callable evaluates to `True`.
+Decorator này nhận một callable chấp nhận một đối số là đối tượng user. View chỉ truy cập được nếu giá trị trả về của callable kiểm tra là `True`.
 
-What I’m trying to show with these examples is how single decorators can quickly augment your views with new features. And, because of how decorators work to wrap functions, you can “stack” these together.
+Điều tôi muốn chỉ ra với các ví dụ này là chỉ với một decorator, bạn có thể nhanh chóng bổ sung tính năng mới cho view. Và, nhờ cách decorator bọc hàm, bạn có thể “xếp chồng” chúng lại với nhau.
 
 ```python
 # application/views.py
@@ -408,11 +408,11 @@ def the_view(request):
     return HttpResponse('Only staff users may POST to this view.')
 ```
 
-### Mixins To Know
+### Mixin Nên Biết
 
-Mixin classes are to class-based views as decorators are to function-based views. This isn’t _completely_ true since class-based views can also use decorators, but it should give you an idea of where mixins fit.
+Lớp mixin đối với view dựa trên lớp cũng giống như decorator đối với view dựa trên hàm. Điều này không _hoàn toàn_ đúng vì view dựa trên lớp cũng có thể dùng decorator, nhưng nó giúp bạn hình dung vị trí của mixin.
 
-Like the `login_required` and `user_passes_test` decorators, we have mixin equivalents of `LoginRequiredMixin` and `UserPassesTestMixin`. Maybe you have some template views that should only be accessible to authenticated users or staff-level users. Those views could look like:
+Giống như các decorator `login_required` và `user_passes_test`, chúng ta có các mixin tương đương là `LoginRequiredMixin` và `UserPassesTestMixin`. Có thể bạn có một số template view chỉ nên cho người dùng đã xác thực hoặc người dùng cấp nhân viên truy cập. Các view đó có thể trông như sau:
 
 ```python
 # application/views.py
@@ -429,27 +429,27 @@ class StaffProtectedView(UserPassesTestMixin, TemplateView):
         return self.request.user.is_staff
 ```
 
-You can see that these views are similar to their decorator counterparts with a slightly different usage pattern.
+Bạn có thể thấy các view này tương tự như các decorator tương ứng nhưng với cách dùng hơi khác.
 
-One thing worth noting with mixins is their placement. Because of the way that Python handles multiple inheritance, you should be sure to include mixin classes to the left in the list of inherited base classes. This will ensure that Python will behave appropriately with these classes. The exact reason for this placement is because of Python’s method resolution order (MRO) rules when using multiple inheritance. MRO is outside of our scope, but that’s what you can search for if you want to learn more.
+Một điều cần lưu ý với mixin là vị trí của chúng. Do cách Python xử lý đa kế thừa, bạn nên đặt các lớp mixin bên trái trong danh sách các lớp cha kế thừa. Điều này đảm bảo Python sẽ hoạt động đúng với các lớp này. Lý do chính xác là do quy tắc MRO (method resolution order) của Python khi dùng đa kế thừa. MRO nằm ngoài phạm vi bài viết này, nhưng bạn có thể tìm hiểu thêm nếu muốn.
 
-There are plenty of other mixin classes. Most of Django’s built-in class-based views are constructed by composing various mixin classes together. If you’d like to see how they are constructed, check out [Classy Class-Based Views](https://ccbv.co.uk/ "‌"), a site showing the built-in CBVs and the mixins and attributes available to those classes.
+Còn rất nhiều lớp mixin khác. Hầu hết các view dựa trên lớp tích hợp của Django đều được xây dựng bằng cách kết hợp nhiều lớp mixin khác nhau. Nếu bạn muốn xem chúng được xây dựng thế nào, hãy xem [Classy Class-Based Views](https://ccbv.co.uk/ "‌"), một trang web hiển thị các CBV tích hợp và các mixin, thuộc tính có sẵn cho các lớp đó.
 
-## Summary
+## Tóm Tắt
 
-That’s a wrap on view fundamentals. We’ve looked at:
+Như vậy là chúng ta đã kết thúc phần cơ bản về view. Chúng ta đã xem qua:
 
-- View functions
-- `HttpRequest` and `HttpResponse`
-- View classes
-- Some built-in supporting views
-- Decorators and mixins that supercharge views.
+- Hàm view
+- `HttpRequest` và `HttpResponse`
+- View dạng lớp
+- Một số view hỗ trợ tích hợp sẵn
+- Decorator và mixin giúp tăng sức mạnh cho view.
 
-In the next article, we’ll see how views can mix static layout with the dynamic data we provide by using templates. Templates are the workhorse for your Django-based user interfaces. We’re going to see:
+Trong bài tiếp theo, chúng ta sẽ xem cách view có thể kết hợp bố cục tĩnh với dữ liệu động mà chúng ta cung cấp thông qua template. Template là công cụ chủ lực cho giao diện người dùng dựa trên Django của bạn. Chúng ta sẽ tìm hiểu:
 
-- How to set up templates for your site
-- Ways to call templates from views
-- How to use data
-- How to handle logic
-- Built-in functions available to templates
-- Customizing templates with your own code extensions
+- Cách thiết lập template cho trang web
+- Cách gọi template từ view
+- Cách sử dụng dữ liệu
+- Cách xử lý logic
+- Các hàm tích hợp sẵn cho template
+- Tùy biến template với phần mở rộng mã của riêng bạn
