@@ -1,27 +1,27 @@
 # Góc Nhìn Về Views
 
-Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/ "‌"), tôi đã trình bày về URLs và các công cụ đa dạng mà Django cung cấp để mô tả giao diện bên ngoài với internet cho dự án của bạn. Trong bài viết này, chúng ta sẽ xem xét khối xây dựng cốt lõi giúp các URL đó hoạt động: view của Django.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), tôi đã trình bày về URLs và các công cụ đa dạng mà Django cung cấp để mô tả giao diện bên ngoài với internet cho dự án của bạn. Trong bài viết này, chúng ta sẽ xem xét khối xây dựng cốt lõi giúp các URL đó hoạt động: view của Django.
 
-1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/ "‌")
-2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/ "‌")
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
 3. Góc Nhìn Về Views
-4. [Templates Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/ "‌")
-5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/ "‌")
-6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/ "‌")
-7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/ "‌")
-8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/ "‌")
-9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/ "‌")
-10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/ "‌")
-11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/ "‌")
-12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/ "‌")
-13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/ "‌")
-14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/ "‌")
-15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/ "‌")
-16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/ "‌")
-17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/ "‌")
-18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/ "‌")
-19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/ "‌")
-20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/ "‌")
+4. [Templates Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
 ## View Là Gì?
 
@@ -90,7 +90,7 @@ Khi Django nhận được một request như vậy, nó sẽ phân tích dữ l
 - `GET` - Bất kỳ thứ gì thêm vào query string (tức là nội dung sau dấu `?` như `student=Matt` trong `/courses/?student=Matt`) cũng được lưu vào một thuộc tính giống dictionary.
 - `headers` - Đây là nơi lưu trữ tất cả các HTTP header như `Host`, `Accept-Language` và các header khác. `headers` cũng giống dictionary và có thể truy cập như `request.headers['Host']`.
 
-Còn nhiều thuộc tính khác có sẵn cho `HttpRequest`, nhưng danh sách trên đủ để bạn bắt đầu. Xem thêm tại [Request and response objects](https://docs.djangoproject.com/en/4.1/ref/request-response/ "‌") để biết các thuộc tính khác.
+Còn nhiều thuộc tính khác có sẵn cho `HttpRequest`, nhưng danh sách trên đủ để bạn bắt đầu. Xem thêm tại [Request and response objects](https://docs.djangoproject.com/en/4.1/ref/request-response/) để biết các thuộc tính khác.
 
 Tôi cũng nên lưu ý rằng các instance của `HttpRequest` là nơi phổ biến để gắn thêm dữ liệu bổ sung. Các request của Django sẽ đi qua nhiều thành phần trong framework. Điều này khiến các đối tượng này rất phù hợp để bổ sung các tính năng mà bạn có thể cần. Ví dụ, nếu bạn cần quản lý người dùng (chúng ta sẽ tìm hiểu ở bài sau), có đoạn mã sẽ gắn thuộc tính `request.user` để đại diện cho một người dùng trong hệ thống của bạn. Điều này _rất_ tiện lợi.
 
@@ -146,7 +146,7 @@ def my_html_view(request):
 Dù cách này hoạt động, nó có nhiều hạn chế.
 
 1. Đoạn HTML này không thể tái sử dụng bởi các view khác. Điều này không quan trọng với ví dụ nhỏ này, nhưng sẽ là vấn đề lớn khi bạn muốn tạo nhiều view dùng nhiều markup và cần chia sẻ giao diện chung.
-2. Việc trộn lẫn Python và HTML sẽ rất lộn xộn. Cần bằng chứng? Hãy tìm hiểu lịch sử lập trình và xem về [CGI](https://en.wikipedia.org/wiki/Common_Gateway_Interface "‌"). Nó không đẹp chút nào.
+2. Việc trộn lẫn Python và HTML sẽ rất lộn xộn. Cần bằng chứng? Hãy tìm hiểu lịch sử lập trình và xem về [CGI](https://en.wikipedia.org/wiki/Common_Gateway_Interface). Nó không đẹp chút nào.
 3. Làm sao để ghép các đoạn HTML lại với nhau? Không dễ chút nào.
 
 Với template, chúng ta có thể tách biệt bố cục khỏi logic.
@@ -326,7 +326,7 @@ def multi_method_view(request):
 
 View này dùng thuộc tính `method` của instance `request` để kiểm tra HTTP method của request. Nếu bạn chỉ muốn view phản hồi một HTTP method duy nhất thì sao? Giả sử bạn chỉ muốn phản hồi POST. Chúng ta có thể viết:
 
-```
+```python
 # application/views.py
 from django.http import (
     HttpResponse,
@@ -364,8 +364,6 @@ Phiên bản này nêu rõ mong đợi ngay từ đầu với decorator và khai
 
 Một decorator phổ biến khác bạn có thể gặp là `login_required`. Khi chúng ta bàn về quản lý người dùng, bạn sẽ thấy chúng ta có thể bảo vệ một view bằng cách thêm decorator này.
 
-‌
-
 ```python
 # application/views.py
 from django.contrib.auth.decorators import login_required
@@ -375,8 +373,6 @@ from django.http import HttpResponse
 def the_view(request):
     return HttpResponse('This view is only viewable to authenticated users.')
 ```
-
-‌
 
 Bất kỳ người dùng chưa xác thực nào sẽ tự động bị chuyển hướng đến trang đăng nhập của ứng dụng web.
 
@@ -433,7 +429,7 @@ Bạn có thể thấy các view này tương tự như các decorator tương �
 
 Một điều cần lưu ý với mixin là vị trí của chúng. Do cách Python xử lý đa kế thừa, bạn nên đặt các lớp mixin bên trái trong danh sách các lớp cha kế thừa. Điều này đảm bảo Python sẽ hoạt động đúng với các lớp này. Lý do chính xác là do quy tắc MRO (method resolution order) của Python khi dùng đa kế thừa. MRO nằm ngoài phạm vi bài viết này, nhưng bạn có thể tìm hiểu thêm nếu muốn.
 
-Còn rất nhiều lớp mixin khác. Hầu hết các view dựa trên lớp tích hợp của Django đều được xây dựng bằng cách kết hợp nhiều lớp mixin khác nhau. Nếu bạn muốn xem chúng được xây dựng thế nào, hãy xem [Classy Class-Based Views](https://ccbv.co.uk/ "‌"), một trang web hiển thị các CBV tích hợp và các mixin, thuộc tính có sẵn cho các lớp đó.
+Còn rất nhiều lớp mixin khác. Hầu hết các view dựa trên lớp tích hợp của Django đều được xây dựng bằng cách kết hợp nhiều lớp mixin khác nhau. Nếu bạn muốn xem chúng được xây dựng thế nào, hãy xem [Classy Class-Based Views](https://ccbv.co.uk/), một trang web hiển thị các CBV tích hợp và các mixin, thuộc tính có sẵn cho các lớp đó.
 
 ## Tóm Tắt
 
