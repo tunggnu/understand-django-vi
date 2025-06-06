@@ -1,120 +1,120 @@
-# Test Your Apps
+# Kiểm Thử Ứng Dụng Của Bạn
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/) article, we saw how static files like CSS, JavaScript, and images can be incorporated into your site. Now we’re going to focus on how to verify that your website works and continues to work by writing automated tests that check your pages and your code logic.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã thấy cách các static files như CSS, JavaScript và hình ảnh có thể được tích hợp vào trang web của bạn. Bây giờ, chúng ta sẽ tập trung vào cách xác minh rằng website của bạn hoạt động đúng và tiếp tục hoạt động đúng bằng cách viết các kiểm thử tự động để kiểm tra các trang và logic mã nguồn của bạn.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/)
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/)
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/)
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/)
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/)
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
-12. Test Your Apps
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/)
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/)
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/)
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/)
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/)
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/)
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/)
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
+3. [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. Kiểm Thử Ứng Dụng Của Bạn
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## Why Write Tests
+## Tại Sao Cần Viết Kiểm Thử
 
-I’m going to assume that if you’re reading this, then you’ve either got a Django project or are considering working with Django to build a project. If that’s true, think about your project and how you would make sure it works.
+Tôi sẽ giả định rằng nếu bạn đang đọc bài này, thì bạn đã có một dự án Django hoặc đang cân nhắc làm việc với Django để xây dựng một dự án. Nếu đúng như vậy, hãy nghĩ về dự án của bạn và cách bạn sẽ đảm bảo nó hoạt động đúng.
 
-When you start out with a project, whether for a tutorial or for something real that you plan to grow, the fledgling site has very little functionality. To check that the site is working, you can start up the local web server, open your browser, navigate to the `localhost` URL, and confirm that the site is functional. How long does that take? 5 seconds? 15 seconds? 30 seconds?
+Khi bạn bắt đầu với một dự án, dù là cho một hướng dẫn hay cho một thứ gì đó thực tế mà bạn dự định phát triển, trang web ban đầu có rất ít chức năng. Để kiểm tra xem trang có hoạt động không, bạn có thể khởi động web server cục bộ, mở trình duyệt, truy cập URL `localhost` và xác nhận rằng trang hoạt động. Việc đó mất bao lâu? 5 giây? 15 giây? 30 giây?
 
-For starting out, manually checking out your site is fine. What happens, though, when you create more pages? How do you continue to confirm that all your pages are functional? You could open up the local site and start clicking around, but the time spent confirming that everything works begins to grow. Maybe your verification effort takes 3 minutes, 5 minutes, or perhaps much more. If you’re not careful, your creation may start to feel like the mythical multi-headed Hydra, and what once was a fun project to work on devolves into a chore of tedious page verification.
+Khi mới bắt đầu, kiểm tra thủ công trang web của bạn là ổn. Tuy nhiên, điều gì sẽ xảy ra khi bạn tạo thêm nhiều trang? Làm sao bạn tiếp tục xác nhận rằng tất cả các trang đều hoạt động? Bạn có thể mở trang cục bộ và bắt đầu click quanh, nhưng thời gian xác nhận mọi thứ hoạt động sẽ tăng lên. Có thể nỗ lực xác minh của bạn mất 3 phút, 5 phút, hoặc thậm chí nhiều hơn. Nếu bạn không cẩn thận, sản phẩm của bạn có thể bắt đầu giống như con quái vật nhiều đầu Hydra trong thần thoại, và thứ từng là một dự án vui vẻ để làm sẽ trở thành một công việc nhàm chán kiểm tra từng trang.
 
-You can’t eliminate the fact that a larger project means that there is more to check. What you _can_ do is change the name of the game. You can change your page checking from something manual that may take 15 seconds to verify a page to something that a computer can do in _milliseconds_.
+Bạn không thể loại bỏ thực tế rằng dự án càng lớn thì càng có nhiều thứ cần kiểm tra. Điều bạn _có thể_ làm là thay đổi cách tiếp cận. Bạn có thể chuyển việc kiểm tra trang từ thủ công (mất 15 giây để xác nhận một trang) sang việc để máy tính làm trong _mili giây_.
 
-This is where automated tests come into the picture. Automated tests let computers do what computers do best: run repetitive tasks repeatedly, consistently, and quickly. When we write tests, our goal is to confirm some logic or behavior in a deterministic way.
+Đây là lúc kiểm thử tự động xuất hiện. Kiểm thử tự động cho phép máy tính làm điều mà máy tính giỏi nhất: thực hiện các tác vụ lặp đi lặp lại, nhất quán và nhanh chóng. Khi chúng ta viết kiểm thử, mục tiêu là xác nhận một logic hoặc hành vi nào đó một cách xác định.
 
-Let’s look at a test for a hypothetical `add` function which functions like the `+` operator. This should give us a feel for what an automated test is like if you’ve never encountered tests before.
+Hãy xem một kiểm thử cho hàm `add` giả định hoạt động như toán tử `+`. Điều này sẽ giúp bạn hình dung kiểm thử tự động là gì nếu bạn chưa từng gặp kiểm thử trước đây.
 
-```
+```python
 def test_does_it_add():
     assert add(40, 2) == 42
 ```
 
-The test works by running the code and comparing the result to whatever we expect that result to be. The test _asserts_ that the equality statement is true. If the equality is false, then the assertion raises an exception and the test fails.
+Kiểm thử này hoạt động bằng cách chạy mã và so sánh kết quả với giá trị mà chúng ta mong đợi. Kiểm thử _khẳng định_ rằng biểu thức so sánh là đúng. Nếu so sánh sai, assertion sẽ raise một exception và kiểm thử thất bại.
 
-This automated test would take virtually no time to run if you compared it to running the function in a Python REPL to inspect the result manually.
+Kiểm thử tự động này sẽ mất gần như không đáng kể thời gian nếu so với việc chạy hàm trong Python REPL để kiểm tra kết quả thủ công.
 
-Seeing a silly example of an `add` function doesn’t really help you much with how you should test your Django project. Next, we’ll look at some types of tests for Django. If you add these kinds of tests to your project, you’ll be able to make changes to your website with more confidence that you’re not breaking things.
+Nhìn một ví dụ đơn giản về hàm `add` không giúp bạn nhiều về cách kiểm thử dự án Django. Tiếp theo, chúng ta sẽ xem một số loại kiểm thử cho Django. Nếu bạn thêm các loại kiểm thử này vào dự án, bạn sẽ tự tin hơn khi thay đổi website mà không lo phá vỡ mọi thứ.
 
-## Useful Types Of Django Tests
+## Các Loại Kiểm Thử Django Hữu Ích
 
-When we explored the anatomy of a Django application, I noted that I _always_ delete the `tests.py` file that comes with the `startapp` command. The reason I do this is because there are different kinds of tests, and I want those different kinds to live in separate files. My apps have those separate files in a `tests` package within the app instead of a `tests.py` module.
+Khi chúng ta tìm hiểu giải phẫu một ứng dụng Django, tôi đã nói rằng tôi _luôn_ xóa file `tests.py` đi kèm lệnh `startapp`. Lý do là vì có nhiều loại kiểm thử khác nhau, và tôi muốn các loại đó nằm ở các file riêng biệt. Ứng dụng của tôi sẽ có các file riêng trong một package `tests` bên trong app thay vì một module `tests.py`.
 
-My `tests` package will often mirror the structure of the application itself. The program which executes tests, which is called a “test runner,” typically expects to find tests in files that start with `test_`. The package often includes:
+Package `tests` của tôi thường sẽ phản chiếu cấu trúc của chính ứng dụng. Chương trình thực thi kiểm thử, gọi là “test runner”, thường mong đợi tìm kiểm thử trong các file bắt đầu bằng `test_`. Package này thường bao gồm:
 
 - `test_forms.py`
 - `test_models.py`
 - `test_views.py`
-- etc.
+- v.v.
 
-This structure hints at the kinds of tests that you’d write for your application, but I’ll touch on specifics more a bit later. Broadly, when we write automated tests, there is an important dimension to consider: how much application code should my test run?
+Cấu trúc này gợi ý về các loại kiểm thử bạn sẽ viết cho ứng dụng, nhưng tôi sẽ nói cụ thể hơn ở phần sau. Nhìn chung, khi viết kiểm thử tự động, có một chiều quan trọng cần cân nhắc: kiểm thử của tôi nên chạy bao nhiêu mã nguồn của ứng dụng?
 
-The answer to that question influences the behavior of tests. If we write a test that runs a lot of code, then we benefit by checking a lot of a system at once; however, there are some downsides:
+Câu trả lời cho câu hỏi đó ảnh hưởng đến hành vi của kiểm thử. Nếu chúng ta viết một kiểm thử chạy rất nhiều mã, thì chúng ta được lợi là kiểm tra được nhiều phần của hệ thống cùng lúc; tuy nhiên, cũng có một số nhược điểm:
 
-- Running a lot of code means more things can happen and there is a higher chance of your test breaking in unexpected ways. A test that often breaks in unexpected ways is called a “brittle” test.
-- Running a lot of code means that there is a lot of code to run. That’s axiomatic, but the implication is that a test with more code to execute will take longer to run. Big automated tests are still very likely to be much faster than the same test executed manually, so running time is relative.
+- Chạy nhiều mã nghĩa là có nhiều thứ có thể xảy ra và khả năng kiểm thử bị hỏng theo những cách không ngờ tới cao hơn. Một kiểm thử thường xuyên bị hỏng bất ngờ được gọi là kiểm thử “dễ vỡ” (brittle).
+- Chạy nhiều mã nghĩa là có nhiều mã phải thực thi. Điều này nghe hiển nhiên, nhưng ý nghĩa là kiểm thử càng nhiều mã thì càng chạy lâu hơn. Các kiểm thử tự động lớn vẫn có thể nhanh hơn nhiều so với kiểm thử thủ công, nên thời gian chạy chỉ là tương đối.
 
-When we have tests that run many parts of your application that are _integrated_ together, we call these tests _integration tests_. Integration tests are good at surfacing issues related to the _connections between code_. For instance, if you called a method and passed in the wrong arguments, an integration test is likely to discover that problem.
+Khi chúng ta có các kiểm thử chạy nhiều phần của ứng dụng _kết hợp_ với nhau, ta gọi đó là _integration test_ (kiểm thử tích hợp). Kiểm thử tích hợp rất tốt để phát hiện các vấn đề liên quan đến _kết nối giữa các đoạn mã_. Ví dụ, nếu bạn gọi một phương thức và truyền sai tham số, kiểm thử tích hợp có thể phát hiện ra vấn đề đó.
 
-On the other end of the spectrum are tests that run very little code. The `add` test from above is a good example. These kinds of tests check individual units of code (e.g., a Django model). For that reason, we call these _unit tests_. Unit tests are good at _checking a piece of code in isolation_ to confirm its behavior.
+Ở đầu kia của phổ kiểm thử là các kiểm thử chạy rất ít mã. Kiểm thử `add` ở trên là một ví dụ. Các kiểm thử này kiểm tra từng đơn vị mã riêng lẻ (ví dụ một model Django). Vì lý do đó, chúng ta gọi chúng là _unit test_ (kiểm thử đơn vị). Unit test rất tốt để _kiểm tra một đoạn mã riêng biệt_ nhằm xác nhận hành vi của nó.
 
-Unit tests have downsides too. These tests execute without a lot of context from the rest of an application. This can help you confirm the behavior of the piece, but it might not be the behavior that the larger application requires.
+Unit test cũng có nhược điểm. Các kiểm thử này chạy mà không có nhiều ngữ cảnh từ phần còn lại của ứng dụng. Điều này giúp bạn xác nhận hành vi của từng phần, nhưng có thể không phải là hành vi mà toàn bộ ứng dụng yêu cầu.
 
-In this explanation, the lesson is that both kinds of tests are good, yet have tradeoffs. Beware of anyone who tells you that you should only write one kind of test or the other.
+Bài học ở đây là cả hai loại kiểm thử đều tốt, nhưng đều có đánh đổi. Hãy cẩn thận với ai đó nói rằng bạn chỉ nên viết một loại kiểm thử này hoặc loại kia.
 
-> _A good set of automated tests will include both **unit** and **integration** tests to check behavior of the individual units and the interconnections between parts._
+> _Một bộ kiểm thử tự động tốt sẽ bao gồm cả kiểm thử **đơn vị** và **tích hợp** để kiểm tra hành vi của từng phần riêng lẻ và sự kết nối giữa các phần._
 
-We have to consider another aspect to this discussion: what is the “right” amount of code for a unit test? _There’s no absolutely correct answer here._ In fact, this topic is hotly debated among testers.
+Chúng ta cần cân nhắc thêm một khía cạnh nữa: đâu là “lượng mã đúng” cho một unit test? _Không có câu trả lời tuyệt đối ở đây._ Thực tế, chủ đề này được tranh luận rất nhiều giữa các tester.
 
-Some people will assert that a unit test should only run the code for that unit. If you have a class that implements some pure logic and doesn’t need other code, then you’re in the ideal case. But what happens if you’re testing a method that you added to a Django model that needs to interact with a database? Even if the only thing you’re testing is the individual model method, a unit test purist would highlight that the test is actually an integration test if it interacts with a database.
+Một số người cho rằng unit test chỉ nên chạy mã của đơn vị đó. Nếu bạn có một class chỉ thực hiện logic thuần túy và không cần mã khác, thì bạn đang ở trường hợp lý tưởng. Nhưng nếu bạn kiểm thử một phương thức bạn thêm vào model Django và nó cần tương tác với cơ sở dữ liệu thì sao? Ngay cả khi bạn chỉ kiểm tra phương thức model riêng lẻ, một người theo chủ nghĩa unit test sẽ cho rằng kiểm thử đó thực ra là integration test nếu nó tương tác với cơ sở dữ liệu.
 
-**I usually find this kind of discussion counterproductive.** In my experience, this sort of philosophical debate about what is a unit test doesn’t typically help with testing your web app to verify its correctness. I brought all of this up because, if you’re going to learn more about testing after this article, I caution you to avoid getting sucked into this definition trap.
+**Tôi thường thấy kiểu tranh luận này không hiệu quả.** Theo kinh nghiệm của tôi, tranh luận triết lý về unit test là gì thường không giúp ích cho việc kiểm thử web app để xác nhận tính đúng đắn. Tôi đề cập đến điều này vì nếu bạn muốn tìm hiểu sâu hơn về kiểm thử sau bài này, tôi khuyên bạn tránh bị cuốn vào bẫy định nghĩa này.
 
-Here are my working definitions of unit and integration tests in Django. These definitions are imperfect (as are _any_ definitions), but they should help frame the discussion in this article.
+Đây là định nghĩa thực tế của tôi về unit test và integration test trong Django. Các định nghĩa này không hoàn hảo (như _mọi_ định nghĩa), nhưng chúng sẽ giúp bạn hình dung chủ đề trong bài viết này.
 
-- **Unit tests** - Tests that check individual units within a Django project like a model method or a form.
-- **Integration test** - Tests that check a group of units and their interactions like checking if a view renders the expected output.
+- **Unit test** - Kiểm thử kiểm tra từng đơn vị riêng lẻ trong dự án Django như một phương thức model hoặc một form.
+- **Integration test** - Kiểm thử kiểm tra một nhóm các đơn vị và sự tương tác giữa chúng, ví dụ kiểm tra một view render ra kết quả mong đợi.
 
-Now that we have some core notion of what tests are about, let’s get into the details.
+Giờ chúng ta đã có khái niệm cốt lõi về kiểm thử, hãy đi vào chi tiết.
 
-### Unit Tests
+### Unit Test
 
-As we get into some examples, I need to introduce a couple of tools that I use on all of my Django projects. I’ll describe these tools in more depth in a later section, but they need a brief introduction here or my examples won’t make much sense. My two “must have” packages are:
+Khi đi vào ví dụ, tôi cần giới thiệu một vài công cụ mà tôi dùng cho tất cả dự án Django của mình. Tôi sẽ mô tả kỹ hơn về các công cụ này ở phần sau, nhưng cần giới thiệu ngắn gọn ở đây để ví dụ không bị khó hiểu. Hai package “phải có” của tôi là:
 
 - `pytest-django`
 - `factory-boy`
 
-`pytest-django` is a package that makes it possible to run Django tests through the `pytest` program. pytest is an extremely popular Python testing tool with a huge ecosystem of extensions. In fact, `pytest-django` is one of those extensions.
+`pytest-django` là một package giúp chạy kiểm thử Django thông qua chương trình `pytest`. pytest là một công cụ kiểm thử Python cực kỳ phổ biến với hệ sinh thái extension rất lớn. Thực tế, `pytest-django` là một trong những extension đó.
 
-My biggest reason for using `pytest-django` is that it lets me use the `assert` keyword in all of my tests. In the Python standard library’s `unittest` module and, by extension, Django’s built-in test tools which subclass `unittest` classes, checking values requires methods like `assertEqual` and `assertTrue`. As we’ll see, using the `assert` keyword exclusively is a very natural way to write tests.
+Lý do lớn nhất tôi dùng `pytest-django` là nó cho phép tôi dùng từ khóa `assert` trong tất cả kiểm thử. Trong module `unittest` của thư viện chuẩn Python và, kéo theo đó, các công cụ kiểm thử tích hợp của Django (subclass từ các class của `unittest`), việc kiểm tra giá trị cần các phương thức như `assertEqual` và `assertTrue`. Như bạn sẽ thấy, chỉ dùng từ khóa `assert` là cách viết kiểm thử rất tự nhiên.
 
-The other vital tool in my tool belt is `factory-boy`. PyPI calls this `factory-boy`, but the documentation uses `factory_boy`, so we’ll use that naming from here on. `factory_boy` is a tool for building test database data. The library has fantastic Django integration and gives us the ability to generate model data with ease.
+Công cụ quan trọng còn lại là `factory-boy`. Trên PyPI gọi là `factory-boy`, nhưng tài liệu lại dùng `factory_boy`, nên từ đây tôi sẽ dùng tên đó. `factory_boy` là công cụ để xây dựng dữ liệu kiểm thử cho cơ sở dữ liệu. Thư viện này tích hợp tuyệt vời với Django và giúp chúng ta sinh dữ liệu model rất dễ dàng.
 
-Again, I’ll focus on these two packages later on to cover more of their features, but you’ll see them used immediately in the examples.
+Tôi sẽ tập trung vào hai package này ở phần sau để nói kỹ hơn về tính năng, nhưng bạn sẽ thấy chúng được dùng ngay trong các ví dụ.
 
-#### Model Tests
+#### Kiểm Thử Model
 
-In Django projects, we use models to hold data about our app, so it’s very natural to add methods to the models to interact with the data. How do we write a test that checks that the method does what we expect?
+Trong các dự án Django, chúng ta dùng model để lưu dữ liệu về ứng dụng, nên rất tự nhiên khi thêm các phương thức vào model để thao tác với dữ liệu. Làm sao để viết kiểm thử xác nhận phương thức đó hoạt động như mong đợi?
 
-I’m going to give you a mental framework for _any_ of your tests, not only unit tests. This framework should help you reason through any tests that you encounter when reading and writing code. The framework is the _AAA pattern_. The AAA patterns stands for:
+Tôi sẽ đưa cho bạn một khung tư duy cho _mọi_ kiểm thử, không chỉ unit test. Khung này sẽ giúp bạn suy nghĩ về mọi kiểm thử khi đọc và viết mã. Đó là _mẫu AAA_. AAA là viết tắt của:
 
-- **Arrange** - This is the part of the test that sets up your data and any necessary preconditions for your test.
-- **Act** - This stage is when your test runs the application code that you want to test.
-- **Assert** - The last part checks that your action is what you expected.
+- **Arrange** - Phần này của kiểm thử sẽ thiết lập dữ liệu và các điều kiện cần thiết cho kiểm thử.
+- **Act** - Giai đoạn này là khi kiểm thử chạy đoạn mã ứng dụng bạn muốn kiểm tra.
+- **Assert** - Phần cuối cùng kiểm tra rằng hành động của bạn đúng như mong đợi.
 
-For a model test, this looks like:
+Với kiểm thử model, nó sẽ trông như sau:
 
 ```python
 # application/tests/test_models.py
@@ -135,31 +135,31 @@ class TestOrder:
         assert order.status == Order.Status.SHIPPED
 ```
 
-We can imagine a project that includes an ecommerce system. A big part of handling orders is tracking status. We could manually set the status field throughout the app, but changing status within a method gives us the chance to do other things. For instance, maybe the `ship` method also triggers sending an email.
+Chúng ta có thể hình dung một dự án có hệ thống thương mại điện tử. Một phần lớn của việc xử lý đơn hàng là theo dõi trạng thái. Chúng ta có thể tự đặt trường trạng thái ở nhiều nơi trong ứng dụng, nhưng thay đổi trạng thái trong một phương thức cho phép ta làm thêm việc khác. Ví dụ, có thể phương thức `ship` cũng gửi email.
 
-In the test above, we’re checking the state transition from `PENDING` to `SHIPPED`. The test acts on the `ship` method, then refreshes the model instance from the database to ensure that the `SHIPPED` status persisted.
+Trong kiểm thử trên, chúng ta kiểm tra chuyển trạng thái từ `PENDING` sang `SHIPPED`. Kiểm thử gọi phương thức `ship`, sau đó làm mới instance model từ cơ sở dữ liệu để đảm bảo trạng thái `SHIPPED` đã được lưu.
 
-What are some good qualities about this test?
+Điều gì tốt ở kiểm thử này?
 
-The test includes a docstring. Trust me, you _will_ benefit from docstrings on your tests. There is a strong temptation to leave things at `test_shipped`, but in the future you may not have enough context.
+Kiểm thử có docstring. Tin tôi đi, bạn _sẽ_ thấy lợi ích của docstring cho kiểm thử. Có một cám dỗ lớn là chỉ để lại tên hàm như `test_shipped`, nhưng sau này bạn có thể không còn đủ ngữ cảnh.
 
-Many developers opt for long test names instead. While I have no problem with long descriptive test names, docstrings are helpful too. Whitespace is a _good_ thing and, in my opinion, it’s easier to read “The widget updates the game state when pushed.” than `test_widget_updates_game_state_when_pushed`.
+Nhiều lập trình viên chọn tên kiểm thử dài thay thế. Tôi không phản đối tên kiểm thử dài, nhưng docstring cũng rất hữu ích. Whitespace là _tốt_ và, theo tôi, dễ đọc “The widget updates the game state when pushed.” hơn là `test_widget_updates_game_state_when_pushed`.
 
-The test checks one action. A test that checks a single action can fit in your head. There’s no question about interaction with other parts. There’s also no question about what is actually being tested. The simplicity of testing a single action makes each unit test tell a unique story.
+Kiểm thử kiểm tra một hành động duy nhất. Một kiểm thử kiểm tra một hành động duy nhất sẽ dễ hiểu. Không có câu hỏi về sự tương tác với phần khác. Cũng không có câu hỏi về việc thực sự đang kiểm tra cái gì. Sự đơn giản của việc kiểm tra một hành động giúp mỗi unit test kể một câu chuyện riêng.
 
-Conversely, you’ll likely encounter tests in projects that do a lot of initial arrangement, then alternate between act and assert lines in a single test. These kinds of tests are brittle (i.e., the term to indicate that the test can break and fail easily) and are difficult to understand when there is a failure.
+Ngược lại, bạn có thể gặp các kiểm thử trong dự án làm rất nhiều bước chuẩn bị, rồi xen kẽ giữa act và assert trong một kiểm thử. Các kiểm thử này dễ vỡ (tức là dễ bị hỏng và fail) và khó hiểu khi có lỗi.
 
-The qualities in this test translate to lots of different test types. I think that’s the beauty of having a solid mental model for testing. Once you see the way that tests:
+Các đặc điểm này áp dụng cho nhiều loại kiểm thử khác nhau. Đó là cái hay của một mô hình tư duy kiểm thử vững chắc. Khi bạn thấy kiểm thử:
 
-1. Set up the inputs,
-2. Take action,
-3. Check the outputs,
+1. Thiết lập đầu vào,
+2. Thực hiện hành động,
+3. Kiểm tra đầu ra,
 
-then automated testing becomes a lot less scary and more valuable to you. Now let’s see how this same pattern plays out in forms.
+thì kiểm thử tự động sẽ bớt đáng sợ và hữu ích hơn nhiều. Giờ hãy xem mẫu này áp dụng cho form như thế nào.
 
-#### Form Tests
+#### Kiểm Thử Form
 
-When writing tests, we often want to write a “happy path” test. This kind of test is when everything works exactly as you hope. This is a happy path form test.
+Khi viết kiểm thử, chúng ta thường muốn viết kiểm thử “happy path”. Đây là loại kiểm thử khi mọi thứ hoạt động đúng như mong đợi. Đây là một kiểm thử happy path cho form.
 
 ```python
 # application/tests/test_forms.py
@@ -185,17 +185,17 @@ class TestSupportForm:
         ).count() == 1
 ```
 
-With this test, we are synthesizing a POST request. The test:
+Với kiểm thử này, chúng ta mô phỏng một request POST. Kiểm thử:
 
-- Builds the POST data as `data`
-- Creates a bound form (i.e., connects `data=data` in the constructor)
-- Validates the form
-- Saves the form
-- Asserts that a new record was created
+- Tạo dữ liệu POST là `data`
+- Tạo một form đã gán dữ liệu (tức là truyền `data=data` vào constructor)
+- Kiểm tra tính hợp lệ của form
+- Lưu form
+- Khẳng định rằng đã tạo một bản ghi mới
 
-Notice that I’m bending the AAA rules a bit for this test. Part of the Django convention for forms is that the form is valid before calling the `save` method. If that convention is not followed, then `cleaned_data` won’t be populated correctly and most `save` methods depend on `cleaned_data`. Even though `is_valid` is an action, I view it as a setup step for form tests.
+Lưu ý là tôi hơi “bẻ cong” quy tắc AAA một chút cho kiểm thử này. Theo thông lệ của Django với form, form phải hợp lệ trước khi gọi phương thức `save`. Nếu không làm vậy, `cleaned_data` sẽ không được populate đúng và hầu hết các phương thức `save` đều phụ thuộc vào `cleaned_data`. Dù `is_valid` là một hành động, tôi xem nó là bước chuẩn bị cho kiểm thử form.
 
-When we work with forms, a lot of what we care about is cleaning the data to make sure that junk is not getting into your app’s database. Let’s write a test for an invalid form.
+Khi làm việc với form, điều chúng ta quan tâm là làm sạch dữ liệu để đảm bảo dữ liệu rác không vào cơ sở dữ liệu. Hãy viết một kiểm thử cho form không hợp lệ.
 
 ```python
 # application/tests/test_forms.py
@@ -220,33 +220,33 @@ class TestSupportForm:
         assert 'email' in form.errors
 ```
 
-The test shows the mechanics for checking an invalid form. The key elements are:
+Kiểm thử này cho thấy cách kiểm tra một form không hợp lệ. Các bước chính là:
 
-- Set up the bad form data
-- Check the validity with `is_valid`
-- Inspect the output state in `form.errors`
+- Thiết lập dữ liệu form sai
+- Kiểm tra tính hợp lệ với `is_valid`
+- Kiểm tra trạng thái đầu ra trong `form.errors`
 
-This test shows how to check an invalid form, but I’m less likely to write this particular test in a real project. Why? Because the test is checking functionality from Django’s `EmailField` which has the validation logic to know what is a real email or not.
+Kiểm thử này cho thấy cách kiểm tra form không hợp lệ, nhưng tôi ít khi viết kiểm thử này trong dự án thực tế. Tại sao? Vì kiểm thử này kiểm tra chức năng của `EmailField` của Django, vốn đã có logic kiểm tra email hợp lệ.
 
-Generally, I don’t think it’s valuable to test features from the framework itself. A good open source project like Django is already testing those features for you. When you write form tests, you should check on custom `clean_*` and `clean` methods as well as any custom `save` method that you might add.
+Nói chung, tôi không nghĩ kiểm thử các tính năng của framework là hữu ích. Một dự án mã nguồn mở tốt như Django đã kiểm thử các tính năng đó cho bạn. Khi viết kiểm thử form, bạn nên kiểm tra các phương thức `clean_*` và `clean` tùy biến cũng như bất kỳ phương thức `save` tùy biến nào bạn thêm vào.
 
-The patterns for both happy path and error cases are what I use for virtually all of my Django form tests. Let’s move on to the integration tests to see what it looks like to test more code at once.
+Mẫu kiểm thử cho cả happy path và trường hợp lỗi là thứ tôi dùng cho hầu hết kiểm thử form Django. Hãy chuyển sang kiểm thử tích hợp để xem kiểm thử nhiều mã hơn trông như thế nào.
 
-### Integration Tests
+### Kiểm Thử Tích Hợp
 
-In my opinion, a good integration test won’t look very different from a good unit test. An integration test can still follow the AAA pattern like other automated tests. The parts that change are the tools you’ll use and the assertions you will write.
+Theo tôi, một kiểm thử tích hợp tốt sẽ không khác nhiều so với một unit test tốt. Kiểm thử tích hợp vẫn có thể tuân theo mẫu AAA như các kiểm thử tự động khác. Điều thay đổi là công cụ bạn dùng và các khẳng định bạn sẽ viết.
 
-My definition of an integration test in Django is a test that uses Django’s test `Client`. In previous articles, I’ve only mentioned what a client is in passing. In the context of a web application, a client is anything that consumes the output of a web app to display it to a user.
+Định nghĩa của tôi về kiểm thử tích hợp trong Django là kiểm thử dùng test `Client` của Django. Trong các bài trước, tôi chỉ nhắc đến client một cách lướt qua. Trong ngữ cảnh ứng dụng web, client là bất cứ thứ gì tiêu thụ đầu ra của web app để hiển thị cho người dùng.
 
-The most obvious client for a web app is a web browser, but there are plenty of other client types out there. Some examples that could use output from a web application:
+Client rõ ràng nhất cho web app là trình duyệt, nhưng còn rất nhiều loại client khác. Một số ví dụ có thể dùng đầu ra từ web app:
 
-- A native mobile application
-- A command line interface
-- A programming library like Python’s `requests` package that can handle HTTP requests and responses
+- Ứng dụng di động native
+- Giao diện dòng lệnh
+- Thư viện lập trình như package `requests` của Python có thể xử lý HTTP request và response
 
-The Django test `Client` is like these other clients in that it can interact with your Django project to receive data from requests that it creates. The nice part about the test client is that the output is returned in a convenient way that we can assert against. The client returns the `HttpResponse` object directly!
+Test `Client` của Django cũng giống các client khác ở chỗ nó có thể tương tác với dự án Django để nhận dữ liệu từ các request mà nó tạo ra. Điểm hay của test client là đầu ra được trả về theo cách tiện lợi để chúng ta kiểm tra. Client trả về trực tiếp object `HttpResponse`!
 
-With that context, here’s an integration test that we can discuss.
+Với bối cảnh đó, đây là một kiểm thử tích hợp để chúng ta thảo luận.
 
 ```python
 # application/tests/test_views.py
@@ -270,44 +270,44 @@ class TestProfileView:
         assert user.first_name in response.content.decode()
 ```
 
-What is this test doing? Also, what is this test _not_ doing?
+Kiểm thử này đang làm gì? Và kiểm thử này _không_ làm gì?
 
-By using the Django test client, the test runs a lot of Django code. This goes through:
+Bằng cách dùng test client của Django, kiểm thử này chạy rất nhiều mã Django. Nó đi qua:
 
-- URL routing
-- View execution (which will likely fetch from the database)
-- Template rendering
+- Định tuyến URL
+- Thực thi view (có thể sẽ truy vấn cơ sở dữ liệu)
+- Render template
 
-That’s a lot of code to execute in a single test! The goal of the test is to check that all the major pieces hang together.
+Đó là rất nhiều mã được chạy trong một kiểm thử! Mục tiêu của kiểm thử là kiểm tra tất cả các phần chính có kết nối với nhau.
 
-Now let’s observe what the test is not doing. Even though the test runs a ton of code, there aren’t a huge number of `assert` statements. In other words, our goal with an integration isn’t to check every tiny little thing that could happen in the whole flow. Hopefully, we have unit tests that cover those little parts of the system.
+Giờ hãy xem kiểm thử _không_ làm gì. Dù kiểm thử chạy rất nhiều mã, không có quá nhiều câu lệnh `assert`. Nói cách khác, mục tiêu của kiểm thử tích hợp không phải là kiểm tra từng chi tiết nhỏ có thể xảy ra trong toàn bộ luồng. Hy vọng rằng chúng ta đã có unit test kiểm tra các phần nhỏ đó.
 
-When I write an integration test, I’m mostly trying to answer the question: **does the _system_ hold together without breaking?**
+Khi tôi viết kiểm thử tích hợp, tôi chủ yếu muốn trả lời câu hỏi: **hệ thống có hoạt động trơn tru mà không bị vỡ không?**
 
-Now that we’ve covered unit tests and integration tests, what are some tools that will help you make testing easier?
+Giờ chúng ta đã bàn về unit test và integration test, vậy có những công cụ nào giúp kiểm thử dễ dàng hơn?
 
-## Tools To Help
+## Công Cụ Hỗ Trợ
 
-When testing your application, you have access to so many packages to help that it can be fairly overwhelming. If you’re testing for the first time, you may be struggling with applying the AAA pattern and knowing what to test. We want to minimize the extra stuff that you have to know.
+Khi kiểm thử ứng dụng, bạn có rất nhiều package hỗ trợ đến mức có thể bị choáng ngợp. Nếu bạn kiểm thử lần đầu, bạn có thể gặp khó khăn khi áp dụng mẫu AAA và biết nên kiểm thử gì. Chúng ta muốn giảm thiểu những thứ bạn phải biết thêm.
 
-We’re going to revisit the tools that I listed earlier, `pytest-django` and `factory_boy`, to get you started. Consider these your Django testing survival kit. As you develop your testing skills, you can add more tools to your toolbox, but these two tools are a fantastic start.
+Chúng ta sẽ xem lại hai công cụ tôi đã liệt kê ở trên, `pytest-django` và `factory_boy`, để bạn bắt đầu. Hãy coi đây là bộ sinh tồn kiểm thử Django của bạn. Khi kỹ năng kiểm thử phát triển, bạn có thể thêm nhiều công cụ khác, nhưng hai công cụ này là khởi đầu tuyệt vời.
 
 ### `pytest-django`
 
-[pytest](https://docs.pytest.org/en/stable/) is a “test runner.” The tool’s job is to run automated tests. If you read [Writing and running tests](https://docs.djangoproject.com/en/4.1/topics/testing/overview/) in the Django documentation, you’ll discover that Django _also_ includes a test runner with `./manage.py test`. What gives? Why am I suggesting that you use `pytest`?
+[pytest](https://docs.pytest.org/en/stable/) là một “test runner”. Công cụ này dùng để chạy kiểm thử tự động. Nếu bạn đọc [Writing and running tests](https://docs.djangoproject.com/en/4.1/topics/testing/overview/) trong tài liệu Django, bạn sẽ thấy Django _cũng_ có một test runner với `./manage.py test`. Vậy tại sao tôi lại khuyên bạn dùng `pytest`?
 
-I’m going to make a bold assertion: **pytest is better**. (Did I just go meta there? Yes, I did. 😆)
+Tôi sẽ mạnh dạn khẳng định: **pytest tốt hơn**. (Tôi vừa meta đấy! 😆)
 
-I like a lot about Django’s built-in test runner, but I keep coming back to pytest for one primary reason: I can use `assert` in tests. As you’ve seen in these test examples, the `assert` keyword makes for clear reading. We can use all of Python’s normal comparison tests (e.g., `==`, `!=`, `in`) to check the output of tests.
+Tôi thích nhiều thứ ở test runner tích hợp của Django, nhưng tôi luôn quay lại với pytest vì một lý do chính: tôi có thể dùng `assert` trong kiểm thử. Như bạn đã thấy trong các ví dụ, từ khóa `assert` giúp mã kiểm thử dễ đọc. Chúng ta có thể dùng tất cả phép so sánh thông thường của Python (ví dụ `==`, `!=`, `in`) để kiểm tra đầu ra của kiểm thử.
 
-Django’s test runner builds off the test tools that are included with Python in the `unittest` module. With those test tools, developers must make test classes that subclass `unittest.TestCase`. The downside of `TestCase` classes is that you must use a set of `assert*` methods to check your code.
+Test runner của Django xây dựng dựa trên công cụ kiểm thử có sẵn trong Python là module `unittest`. Với các công cụ đó, lập trình viên phải tạo class kiểm thử kế thừa từ `unittest.TestCase`. Nhược điểm của class `TestCase` là bạn phải dùng một loạt phương thức `assert*` để kiểm tra mã.
 
-The list of `assert*` methods are included in the [unittest](https://docs.python.org/3/library/unittest.html#assert-methods) documentation. You can be very successful with these methods, but I think it requires remembering an API that includes a large number of methods. Consider this. Would you rather:
+Danh sách các phương thức `assert*` có trong tài liệu [unittest](https://docs.python.org/3/library/unittest.html#assert-methods). Bạn có thể thành công với các phương thức này, nhưng tôi nghĩ nó đòi hỏi phải nhớ một API với rất nhiều phương thức. Hãy cân nhắc điều này. Bạn thích:
 
-1. Use `assert`? OR
-2. Use `assertEqual`, `assertNotEqual`, `assertTrue`, `assertFalse`, `assertIs`, `assertIsNot`, `assertIsNone`, `assertIsNotNone`, `assertIn`, `assertNotIn`, `assertIsInstance`, and `assertNotIsInstance`?
+1. Dùng `assert`? HAY
+2. Dùng `assertEqual`, `assertNotEqual`, `assertTrue`, `assertFalse`, `assertIs`, `assertIsNot`, `assertIsNone`, `assertIsNotNone`, `assertIn`, `assertNotIn`, `assertIsInstance`, và `assertNotIsInstance`?
 
-Using `assert` from pytest means that you get all the benefits of the `assert*` methods, but you only need to remember a single keyword. If that wasn’t enough, let’s compare the readability:
+Dùng `assert` từ pytest nghĩa là bạn có tất cả lợi ích của các phương thức `assert*`, nhưng chỉ cần nhớ một từ khóa duy nhất. Nếu vậy vẫn chưa đủ, hãy so sánh độ dễ đọc:
 
 ```python
 self.assertEqual(my_value, 42)
@@ -323,25 +323,25 @@ self.assertTrue(my_value)
 assert my_value
 ```
 
-For the same reason that Python developers prefer `property` methods instead of getters and setters (e.g. `obj.value = 42` instead of `obj.set_value(42)`), I think the `assert` style syntax is far simpler to visually process.
+Vì lý do tương tự mà lập trình viên Python thích dùng phương thức `property` thay vì getter và setter (ví dụ `obj.value = 42` thay vì `obj.set_value(42)`), tôi nghĩ cú pháp kiểu `assert` đơn giản hơn nhiều để đọc.
 
-Outside of the awesome handling of `assert`, [pytest-django](https://pytest-django.readthedocs.io/en/latest/) includes a lot of other features that you might find interesting when writing automated tests.
+Ngoài việc xử lý tuyệt vời từ khóa `assert`, [pytest-django](https://pytest-django.readthedocs.io/en/latest/) còn có nhiều tính năng khác mà bạn có thể thấy hữu ích khi viết kiểm thử tự động.
 
 ### `factory_boy`
 
-The other test package that I think every developer should use in their Django projects is `factory_boy`.
+Package kiểm thử khác mà tôi nghĩ mọi lập trình viên nên dùng trong dự án Django là `factory_boy`.
 
-> `factory_boy` _helps you build model data for your tests._
+> `factory_boy` _giúp bạn xây dựng dữ liệu model cho kiểm thử._
 
-The recommendation when writing automated tests is to use an empty test database. If fact, the common pattern provided with Django testing tools is to use an empty database for every test. Having a blank slate in the database helps each test be independent and makes it easier to assert on the state of the database. Because the test database is empty, you’ll need a strategy to populate your tests with the appropriate data to check against.
+Khuyến nghị khi viết kiểm thử tự động là dùng một cơ sở dữ liệu kiểm thử trống. Thực tế, mẫu phổ biến mà Django cung cấp là dùng cơ sở dữ liệu trống cho mỗi kiểm thử. Có một database trắng giúp mỗi kiểm thử độc lập và dễ kiểm tra trạng thái database. Vì database kiểm thử trống, bạn sẽ cần một chiến lược để tạo dữ liệu kiểm thử phù hợp.
 
-As you build up your Django project, you will have more models that help to describe the domain that your website addresses. Generating model data for your tests is an immensely valuable capability.
+Khi bạn phát triển dự án Django, bạn sẽ có nhiều model mô tả domain mà website của bạn giải quyết. Sinh dữ liệu model cho kiểm thử là một khả năng cực kỳ giá trị.
 
-You _could_ use your model manager’s `create` method to create a database entry for your test, but you’re going to run into some limits very fast.
+Bạn _có thể_ dùng phương thức `create` của model manager để tạo bản ghi database cho kiểm thử, nhưng bạn sẽ gặp giới hạn rất nhanh.
 
-The biggest challenge with using `create` comes from database constraints like foreign keys. What do you do if you want to build a record that requires a large number of non-nullable foreign key relationships? Your only choice is to create those foreign key records.
+Thách thức lớn nhất khi dùng `create` là các ràng buộc database như foreign key. Nếu bạn muốn tạo một bản ghi cần nhiều foreign key không được null thì sao? Bạn chỉ còn cách tạo các bản ghi foreign key đó.
 
-We can imagine an app that shows information about movies. The `Movie` model could have a variety of foreign key relationships like director, producer, studio, and so on. I’ll use a few in the example, but imagine what would happen as the number of foreign key relationships increases.
+Chúng ta có thể hình dung một ứng dụng hiển thị thông tin về các bộ phim. Model `Movie` có thể có nhiều quan hệ foreign key như đạo diễn, nhà sản xuất, hãng phim, v.v. Tôi sẽ sử dụng một vài quan hệ trong ví dụ, nhưng hãy tưởng tượng điều gì sẽ xảy ra khi số lượng foreign key tăng lên.
 
 ```python
 def test_detail_view_show_genre(client):
@@ -370,7 +370,7 @@ def test_detail_view_show_genre(client):
     assert 'Sci-Fi' in response.content.decode()
 ```
 
-On the surface, the test isn’t _too_ bad. I think that’s mostly because I kept the modeling simple. What if the `Director`, `Producer`, or `Studio` models also had required foreign keys? We’d spend most of our effort on the Arrangement section of the test. Also, as we inspect the test, we get bogged down with unnecessary details. Did we need to know the names of the director, producer, and studio? No, we didn’t need that for this test. Now, let’s look at the `factory_boy` equivalent.
+Thoạt nhìn, kiểm thử này không _quá_ tệ. Tôi nghĩ phần lớn là do tôi giữ cho phần modeling đơn giản. Nhưng nếu các model `Director`, `Producer` hoặc `Studio` cũng có các khóa ngoại bắt buộc thì sao? Chúng ta sẽ phải dành phần lớn công sức cho bước Arrange (sắp xếp dữ liệu đầu vào) của kiểm thử. Ngoài ra, khi xem xét kiểm thử này, chúng ta bị sa lầy vào những chi tiết không cần thiết. Liệu chúng ta có cần biết tên của đạo diễn, nhà sản xuất và hãng phim không? Không, chúng ta không cần những thông tin đó cho kiểm thử này. Giờ hãy xem phiên bản tương đương sử dụng `factory_boy`.
 
 ```python
 def test_detail_view_show_genre(client):
@@ -385,11 +385,11 @@ def test_detail_view_show_genre(client):
     assert 'Sci-Fi' in response.content.decode()
 ```
 
-`MovieFactory` seems like magic. Our test got to ignore all the other details. Now the test could focus entirely on the genre.
+`MovieFactory` trông như phép màu. Kiểm thử của chúng ta không cần quan tâm đến các chi tiết khác. Giờ kiểm thử chỉ tập trung vào genre.
 
-Factories simplify the construction of database records. Instead of wiring the models together in the test, we move that wiring to the factory definition. The benefit is that our tests can use the plain style that we see in the second example. If we need to add a new foreign key to the model, only the factory has to be updated, not all your other tests that use that model.
+Factory đơn giản hóa việc tạo bản ghi database. Thay vì nối các model trong kiểm thử, ta chuyển việc đó sang định nghĩa factory. Lợi ích là kiểm thử có thể dùng phong cách đơn giản như ví dụ thứ hai. Nếu cần thêm foreign key mới cho model, chỉ cần cập nhật factory, không phải tất cả kiểm thử khác dùng model đó.
 
-What might this `Movie` factory look like? The factory might be:
+Factory `Movie` có thể trông như sau:
 
 ```python
 # application/tests/factories.py
@@ -416,25 +416,25 @@ class MovieFactory(factory.django.DjangoModelFactory):
     genre = 'Action'
 ```
 
-This factory definition is very declarative. We declare what we want, and `factory_boy` figures out how to put it together. This quality leads to factories that you can reason about because you can focus on the what and not the how of model construction.
+Định nghĩa factory này rất khai báo. Ta khai báo muốn gì, và `factory_boy` sẽ tự biết cách ghép lại. Điều này giúp factory dễ hiểu vì bạn tập trung vào _cái gì_ chứ không phải _làm thế nào_ để tạo model.
 
-The other noteworthy aspect is that the factories compose together. When we call `MovieFactory()`, `factory_boy` is missing data about everything so it must build all of that data. The challenge is that the `MovieFactory` doesn’t know how to build a `Director` or any of the movie’s foreign key relationships. Instead, the factory will delegate to _other_ factories using the `SubFactory` attribute. By delegating to other factories, `factory_boy` can build the model and its entire tree of relationships with a single call.
+Điểm đáng chú ý khác là các factory có thể kết hợp với nhau. Khi gọi `MovieFactory()`, `factory_boy` thiếu dữ liệu về mọi thứ nên phải tự tạo tất cả. Thách thức là `MovieFactory` không biết tạo `Director` hay các foreign key khác. Thay vào đó, factory sẽ ủy quyền cho _các_ factory khác qua thuộc tính `SubFactory`. Nhờ vậy, `factory_boy` có thể tạo model và toàn bộ cây quan hệ chỉ với một lệnh gọi.
 
-When we want to override the behavior of some of the generated data, we pass in the extra argument as I did in the second example by providing “Sci-Fi” as the `genre`. You can pass in other model instances to your factories too.
+Khi muốn ghi đè một số dữ liệu sinh ra, bạn chỉ cần truyền thêm tham số như tôi đã làm với “Sci-Fi” cho trường `genre`. Bạn cũng có thể truyền instance model khác vào factory.
 
-`factory_boy` makes testing with database records a joy. In my experience, most of my Django tests require some amount of database data so I use factories very heavily. I think you will find that `factory_boy` is a worthy addition to your test tools.
+`factory_boy` giúp kiểm thử với bản ghi database trở nên thú vị. Theo kinh nghiệm của tôi, hầu hết kiểm thử Django đều cần một lượng dữ liệu database nào đó nên tôi dùng factory rất nhiều. Tôi nghĩ bạn sẽ thấy `factory_boy` là bổ sung xứng đáng cho bộ công cụ kiểm thử của mình.
 
-## Summary
+## Tóm Tắt
 
-In this article, we explored tests with Django projects. We focused on:
+Trong bài viết này, chúng ta đã tìm hiểu về kiểm thử với dự án Django. Chúng ta tập trung vào:
 
-- Why anyone would want to write automated tests
-- What kinds of tests are useful to a Django app
-- What tools you can use to make testing easier
+- Tại sao nên viết kiểm thử tự động
+- Những loại kiểm thử nào hữu ích cho ứng dụng Django
+- Những công cụ nào giúp kiểm thử dễ dàng hơn
 
-Next time, we will dig into deployment. Deployment is getting your project into the environment where you will share your application for use. This might be the internet or it might be a private network for your company. Wherever you’re putting your app, you’ll want to know about:
+Lần tới, chúng ta sẽ tìm hiểu về triển khai. Triển khai là đưa dự án của bạn vào môi trường nơi bạn sẽ chia sẻ ứng dụng cho người khác sử dụng. Đó có thể là internet hoặc mạng nội bộ công ty. Dù bạn triển khai ở đâu, bạn sẽ muốn biết về:
 
-- Deploying your application with a Python web application server (i.e., `./manage.py runserver` isn’t meant for deployed apps)
-- Deployment preconditions for managing settings, migrations, and static files
-- A checklist to confirm that your settings are configured with the proper security guards
-- Monitoring your application for errors
+- Triển khai ứng dụng với web application server Python (tức là `./manage.py runserver` không dành cho app đã triển khai)
+- Các điều kiện tiên quyết khi triển khai để quản lý settings, migration và static files
+- Checklist xác nhận settings đã cấu hình đúng các bảo vệ bảo mật
+- Giám sát ứng dụng để phát hiện lỗi
