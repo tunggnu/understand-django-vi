@@ -1,41 +1,41 @@
-# Middleware Do You Go?
+# Middleware Bạn Đi Đâu?
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/) article, we covered the built-in auth system. That article gave you a chance to see the `User` model, ways to login users with Django’s authentication tools, and the features that make the authorization controls work. In that topic, middleware came up as an integral component. Now we’re going to learn more about middleware and its function within a Django project.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã tìm hiểu về hệ thống xác thực tích hợp sẵn. Bài viết đó giúp bạn có cơ hội xem model `User`, các cách đăng nhập người dùng với các công cụ xác thực của Django, và các tính năng giúp kiểm soát phân quyền hoạt động. Trong chủ đề đó, middleware đã xuất hiện như một thành phần không thể thiếu. Bây giờ chúng ta sẽ tìm hiểu sâu hơn về middleware và vai trò của nó trong một dự án Django.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/)
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/)
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/)
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/)
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/)
-10. Middleware Do You Go?
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/)
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/)
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/)
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/)
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/)
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/)
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/)
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/)
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
+3. [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. Middleware Bạn Đi Đâu?
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## How Should I Think About Middleware?
+## Nên Nghĩ Về Middleware Như Thế Nào?
 
-To start this topic, let’s figure out where middleware exists in a Django project.
+Để bắt đầu chủ đề này, hãy xác định middleware tồn tại ở đâu trong một dự án Django.
 
-Middleware is code that exists in the middle. “In the middle of what?” you might ask. The “middle” is the code that executes between when an `HttpRequest` is created by the framework and when the code you wrote is called by Django. The “middle” can also refer to code that executes _after_ your view completes but before Django translates the `HttpResponse` to bytes to send it over the network to a browser.
+Middleware là đoạn mã tồn tại ở giữa. “Ở giữa cái gì?” bạn có thể hỏi. “Ở giữa” là đoạn mã thực thi giữa lúc một `HttpRequest` được framework tạo ra và lúc mã bạn viết được Django gọi. “Ở giữa” cũng có thể chỉ đoạn mã thực thi _sau_ khi view của bạn hoàn thành nhưng trước khi Django chuyển đổi `HttpResponse` thành bytes để gửi qua mạng về trình duyệt.
 
-Have you ever eaten an Everlasting Gobstopper? No, I don’t mean the one from Willy Wonka that will last forever. An Everlasting Gobstopper is a hard, layered candy that changes colors and flavors as you keep it in your mouth until you finally get to a soft center.
+Bạn đã từng ăn kẹo Everlasting Gobstopper chưa? Không, tôi không nói đến loại trong phim Willy Wonka mà tồn tại mãi mãi. Everlasting Gobstopper là một loại kẹo cứng, nhiều lớp, thay đổi màu sắc và hương vị khi bạn ngậm trong miệng cho đến khi đến phần mềm ở giữa.
 
-Middleware is kind of like those candy layers and your view code is like the soft center. My analogy breaks down when you think about how someone eats the candy.
+Middleware cũng giống như các lớp kẹo đó và mã view của bạn giống như phần mềm ở giữa. So sánh này sẽ không còn đúng nếu bạn nghĩ về cách ai đó ăn viên kẹo.
 
-With the candy, you experience one layer at a time until you get to the middle and you’re done. A more apt comparison to middleware would be to burrow _through_ the layers and come out the other side, experiencing the same layers in the opposite order as the way you came in.
+Với viên kẹo, bạn trải nghiệm từng lớp một cho đến khi đến giữa và kết thúc. Một so sánh hợp lý hơn với middleware là bạn đào _xuyên qua_ các lớp và đi ra phía bên kia, trải nghiệm các lớp theo thứ tự ngược lại so với lúc đi vào.
 
-What’s shown below is a diagram of all the default middleware that is included when you run the `startproject` command. If you’re a visual learner who didn’t find my gobstopper analogy helpful, then I hope this picture will be more illustrative.
+Dưới đây là sơ đồ tất cả các middleware mặc định được thêm vào khi bạn chạy lệnh `startproject`. Nếu bạn là người học trực quan và không thấy ví dụ về kẹo gobstopper hữu ích, hy vọng hình này sẽ minh họa rõ hơn.
 
 ```text
                +--------- SecurityMiddleware --------------+
@@ -50,60 +50,60 @@ HttpRequest =================> view function ==================> HttpResponse
                |||||||                               |||||||
 ```
 
-How does Django make this layering work? When you start Django with an application server like Gunicorn, you have to give the application server the path to your WSGI module. We will cover application servers in a later topic, but, for now, know that an application server can run your Django app. If your project directory containing your settings file is called `project`, then calling Gunicorn looks like:
+Django làm sao để tạo ra các lớp này? Khi bạn khởi động Django với một application server như Gunicorn, bạn phải cung cấp cho application server đường dẫn đến module WSGI của bạn. Chúng ta sẽ bàn về application server ở chủ đề sau, nhưng hiện tại, hãy biết rằng một application server có thể chạy ứng dụng Django của bạn. Nếu thư mục dự án chứa file settings của bạn tên là `project`, thì gọi Gunicorn sẽ như sau:
 
 ```shell
 gunicorn project.wsgi
 ```
 
-You’d have this setup if you ran `django-admin startproject project .` (including the last dot), but what’s really needed by the application server is wherever your `wsgi.py` file is located in your project, _in module path form_. Adjust accordingly for your needs.
+Bạn sẽ có thiết lập này nếu bạn chạy `django-admin startproject project .` (bao gồm dấu chấm cuối), nhưng điều thực sự cần cho application server là vị trí file `wsgi.py` trong dự án của bạn, _dưới dạng đường dẫn module_. Hãy điều chỉnh cho phù hợp với nhu cầu của bạn.
 
-Remember way back in the first article of the series that WSGI stands for the Web Server Gateway Interface and is the common layer that synchronous Python web apps must implement in order to work with Python application servers. Inside this `project.wsgi` module is a function called `get_wsgi_application`, imported from `django.core.wsgi`.
+Nhớ lại từ bài đầu tiên của loạt bài rằng WSGI là viết tắt của Web Server Gateway Interface và là lớp chung mà các ứng dụng web Python đồng bộ phải triển khai để hoạt động với application server Python. Bên trong module `project.wsgi` này có một hàm gọi là `get_wsgi_application`, được import từ `django.core.wsgi`.
 
-`get_wsgi_application` does two things:
+`get_wsgi_application` làm hai việc:
 
-- Calls `django.setup` which does all the startup configuration that we saw in the last article
-- Returns a `WSGIHandler` instance
+- Gọi `django.setup` để thực hiện tất cả cấu hình khởi động mà chúng ta đã thấy ở bài trước
+- Trả về một instance của `WSGIHandler`
 
-As you might guess, the `WSGIHandler` is designed to make the WSGI interface work, but it is also a subclass of `django.core.handlers.base.BaseHandler`. This base handler class is where Django handles middleware setup.
+Bạn có thể đoán rằng `WSGIHandler` được thiết kế để làm việc với WSGI, nhưng nó cũng là một subclass của `django.core.handlers.base.BaseHandler`. Lớp base handler này là nơi Django xử lý việc thiết lập middleware.
 
-The base handler includes a `load_middleware` method. This method has the job of iterating through all the middleware listed in your `MIDDLEWARE` setting. As it iterates through the `MIDDLEWARE`, the method’s primary objective is to include each middleware in the _middleware chain_.
+Base handler bao gồm một phương thức `load_middleware`. Phương thức này có nhiệm vụ lặp qua tất cả middleware được liệt kê trong thiết lập `MIDDLEWARE` của bạn. Khi lặp qua `MIDDLEWARE`, mục tiêu chính của phương thức là đưa từng middleware vào _chuỗi middleware_.
 
-> _The middleware chain is the Django gobstopper._
+> _Chuỗi middleware chính là viên kẹo gobstopper của Django._
 
-The chain represents each instance of Django middleware, layered together, to produce the desired effect of allowing a request and response to pass through each middleware.
+Chuỗi này đại diện cho từng instance middleware của Django, xếp lớp lại với nhau, để tạo ra hiệu ứng mong muốn là cho phép một request và response đi qua từng middleware.
 
-Aside from building the middleware chain, `load_middleware` must do some other important configuration.
+Ngoài việc xây dựng chuỗi middleware, `load_middleware` còn phải thực hiện một số cấu hình quan trọng khác.
 
-- The method handles synchronous and asynchronous middleware. As Django increases its support of async development, the internals of Django need to manage the differences. `load_middleware` makes some alterations depending on what it can discover about a middleware class.
-- The method registers a middleware with certain _sets_ of middleware based on the presence of various hook methods. We’ll discuss those hooks later in this article.
+- Phương thức này xử lý cả middleware đồng bộ và bất đồng bộ. Khi Django tăng cường hỗ trợ phát triển async, các phần bên trong Django cần quản lý sự khác biệt này. `load_middleware` sẽ điều chỉnh tùy theo những gì nó phát hiện về class middleware.
+- Phương thức này đăng ký một middleware với các _tập_ middleware nhất định dựa trên sự hiện diện của các hook method khác nhau. Chúng ta sẽ bàn về các hook này ở phần sau của bài viết.
 
-That explains middleware’s structure and how all the middleware interacts with the request and response lifecycle, but what does middleware do?
+Như vậy là đã giải thích cấu trúc middleware và cách tất cả middleware tương tác với vòng đời request và response, nhưng middleware thực sự làm gì?
 
-We can use middleware for a wide variety of purposes. Because of the middleware chain, a successful HTTP request will pass through every middleware. This property of middleware makes it ideal for code that we want to execute globally for our Django project.
+Chúng ta có thể dùng middleware cho rất nhiều mục đích khác nhau. Nhờ chuỗi middleware, một HTTP request thành công sẽ đi qua mọi middleware. Tính chất này khiến middleware rất lý tưởng cho những đoạn mã mà bạn muốn thực thi toàn cục cho dự án Django của mình.
 
-For instance, think back to our last article on [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/). In that article, we observed that Django’s auth system is dependent on the `AuthenticationMiddleware`. This middleware has the singular job of adding a `user` property to every `HttpRequest` object that passes through the application before the request gets to view code.
+Ví dụ, hãy nhớ lại bài trước về [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/). Trong bài đó, chúng ta thấy hệ thống xác thực của Django phụ thuộc vào `AuthenticationMiddleware`. Middleware này chỉ có một nhiệm vụ là thêm thuộc tính `user` vào mọi object `HttpRequest` đi qua ứng dụng trước khi request đến mã view.
 
-The `AuthenticationMiddleware` highlights some qualities that are good for middleware in Django.
+`AuthenticationMiddleware` làm nổi bật một số đặc điểm tốt cho middleware trong Django.
 
-- A middleware should ideally have a narrow or singular objective.
-- A middleware should run a minimal amount of code.
+- Một middleware lý tưởng nên có mục tiêu hẹp hoặc đơn lẻ.
+- Một middleware nên chạy càng ít mã càng tốt.
 
-_Why?_ Again, the answer is related to the middleware chain. Since the HTTP request will pass through every middleware in the chain, then we can see that _every middleware will execute for every request._ In other words, each middleware carries a performance overhead for each request.
+_Tại sao?_ Lý do lại liên quan đến chuỗi middleware. Vì HTTP request sẽ đi qua mọi middleware trong chuỗi, nên _mọi middleware sẽ thực thi cho mọi request._ Nói cách khác, mỗi middleware đều mang lại chi phí hiệu năng cho mỗi request.
 
-There **is** an exception to this behavior of the chain. A middleware early in the chain can prevent middleware later in the chain from running.
+Có **một ngoại lệ** cho hành vi này của chuỗi. Một middleware ở đầu chuỗi có thể ngăn các middleware phía sau chạy tiếp.
 
-For example, the `SecurityMiddleware` is first in the default middleware chain from a `startproject` generated project. This middleware is designed to do some checks to keep the application secure. One check is to look for a secure connection (i.e., a request using HTTPS) if HTTPS is configured. If a request comes to the application and uses HTTP instead of HTTPS, the middleware can return an `HttpResponsePermanentRedirect` that redirects to the same URL with `https://` and prevents the rest of the chain from running.
+Ví dụ, `SecurityMiddleware` là middleware đầu tiên trong chuỗi mặc định của một dự án tạo bằng `startproject`. Middleware này được thiết kế để thực hiện một số kiểm tra nhằm giữ cho ứng dụng an toàn. Một kiểm tra là xem kết nối có an toàn không (tức là request dùng HTTPS) nếu HTTPS đã được cấu hình. Nếu một request đến ứng dụng và dùng HTTP thay vì HTTPS, middleware này có thể trả về một `HttpResponsePermanentRedirect` chuyển hướng đến cùng URL nhưng với `https://` và ngăn không cho các middleware còn lại chạy tiếp.
 
-Aside from this exceptional behavior in middleware, it’s important to remember that, in most circumstances, each middleware will run for each request. We should be aware of that performance aspect when creating our own middleware.
+Ngoài hành vi ngoại lệ này, điều quan trọng là nhớ rằng, trong hầu hết trường hợp, mỗi middleware sẽ chạy cho mỗi request. Chúng ta nên lưu ý đến khía cạnh hiệu năng này khi tự tạo middleware.
 
-Now we’re ready to learn about how we can create our own middleware!
+Giờ chúng ta đã sẵn sàng tìm hiểu cách tự tạo middleware!
 
-## How Can I Write My Own Custom Middleware?
+## Làm Sao Viết Middleware Tùy Biến?
 
-Let’s assume that you’ve found a good case to create a middleware. You need something that happens with every request and that functionality has a narrow goal.
+Giả sử bạn đã tìm được lý do hợp lý để tạo một middleware. Bạn cần một thứ gì đó xảy ra với mọi request và chức năng đó có mục tiêu hẹp.
 
-You can begin with an empty middleware definition. In my example, we’re going to put the middleware in a `middleware.py` file.
+Bạn có thể bắt đầu với một định nghĩa middleware rỗng. Trong ví dụ này, chúng ta sẽ đặt middleware vào file `middleware.py`.
 
 ```python
 # project/middleware.py
@@ -117,7 +117,7 @@ class AwesomeMiddleware:
         )
 ```
 
-After creating the middleware, you add it to your settings.
+Sau khi tạo middleware, bạn thêm nó vào settings.
 
 ```python
 # project/settings.py
@@ -129,16 +129,16 @@ MIDDLEWARE = [
 ]
 ```
 
-_That’s it!_ This custom middleware doesn’t do anything except slow performance slightly because it’s an extra method call on every request. Since I put the middleware at the end of the `MIDDLEWARE` list, it will be the last middleware to run before a view receives a request and the first middleware with the chance to process a response.
+_Vậy là xong!_ Middleware tùy biến này không làm gì ngoài việc làm hiệu năng chậm đi một chút vì nó thêm một lần gọi hàm cho mỗi request. Vì tôi đặt middleware ở cuối danh sách `MIDDLEWARE`, nó sẽ là middleware cuối cùng chạy trước khi view nhận request và là middleware đầu tiên có cơ hội xử lý response.
 
-We can break down how this class works.
+Chúng ta có thể phân tích cách class này hoạt động.
 
-- The `__init__` method gets a callable that is conventionally named `get_response`. The middleware is created during `load_middleware` and the callable is a key part of what makes the middleware chain work. The callable will either call the next middleware or the view depending on where the current middleware is in the chain.
-- The `__call__` method transforms the middleware instance itself into a callable. The method must call `get_response` to ensure that the chain is unbroken.
+- Phương thức `__init__` nhận một callable thường được đặt tên là `get_response`. Middleware được tạo ra trong quá trình `load_middleware` và callable này là phần then chốt giúp chuỗi middleware hoạt động. Callable này sẽ gọi middleware tiếp theo hoặc view tùy vào vị trí middleware hiện tại trong chuỗi.
+- Phương thức `__call__` biến instance middleware thành một callable. Phương thức này phải gọi `get_response` để đảm bảo chuỗi không bị đứt đoạn.
 
-If you want to do extra work, you can make changes to the `__call__` method. You can modify `__call__` to process changes before or after the call of `get_response`. In the request/response lifecycle, changes before `get_response` occur before the view is called while changes after `get_response` can handle the `response` itself or any other post-request processing.
+Nếu bạn muốn làm thêm điều gì đó, bạn có thể thay đổi phương thức `__call__`. Bạn có thể sửa `__call__` để xử lý trước hoặc sau khi gọi `get_response`. Trong vòng đời request/response, thay đổi trước `get_response` sẽ xảy ra trước khi view được gọi, còn thay đổi sau `get_response` có thể xử lý chính `response` hoặc bất kỳ xử lý hậu request nào khác.
 
-Let’s say we want our example middleware to record some timing information. We might update the code to look like:
+Giả sử chúng ta muốn middleware ví dụ ghi lại một số thông tin thời gian. Chúng ta có thể cập nhật mã như sau:
 
 ```python
 # project/middleware.py
@@ -169,19 +169,19 @@ class AwesomeMiddleware:
         return response
 ```
 
-We still haven’t covered logging yet, but you can understand it as recording messages to some output source like a file.
+Chúng ta chưa bàn về logging, nhưng bạn có thể hiểu nó là ghi lại thông điệp ra một nguồn nào đó như file.
 
-This example acts as a crude performance monitor. If you wanted to measure the response time of a view, this middleware would do that. The downside is that it wouldn’t tell you _which_ view is recorded. Hey, give me a break, this is a silly example! 🤪
+Ví dụ này hoạt động như một bộ đo hiệu năng thô sơ. Nếu bạn muốn đo thời gian phản hồi của một view, middleware này sẽ làm được điều đó. Nhược điểm là nó không cho bạn biết _view nào_ được ghi lại. Thôi nào, đây chỉ là ví dụ vui thôi mà! 🤪
 
-Hopefully, you’re beginning to see how middleware can be useful. But wait! There’s more that middleware can do.
+Hy vọng bạn bắt đầu thấy middleware hữu ích như thế nào. Nhưng khoan đã! Middleware còn làm được nhiều hơn thế.
 
-A Django middleware can define any of three different hook methods that Django will run at different parts of the request/response lifecycle. The three methods are:
+Một middleware Django có thể định nghĩa bất kỳ ba hook method nào mà Django sẽ gọi ở các phần khác nhau của vòng đời request/response. Ba phương thức đó là:
 
-- `process_exception` - This hook is called whenever a view raises an exception. This could include an uncaught exception from the view, but the hook will also receive exceptions that are intentionally raised like `Http404`.
-- `process_template_response` - This hook is called whenever a view returns a response that looks like a template response (i.e., the response object has a `render` method).
-- `process_view` - This hook is called right before the view.
+- `process_exception` - Hook này được gọi bất cứ khi nào một view raise exception. Điều này có thể bao gồm cả exception chưa được bắt từ view, nhưng hook này cũng nhận các exception được raise có chủ đích như `Http404`.
+- `process_template_response` - Hook này được gọi bất cứ khi nào một view trả về response trông giống template response (tức là object response có phương thức `render`).
+- `process_view` - Hook này được gọi ngay trước khi view được gọi.
 
-Returning to our silly example, we can make it less silly by using the `process_view` hook. Let’s see what we can do:
+Quay lại ví dụ vui của chúng ta, ta có thể làm nó bớt ngớ ngẩn hơn bằng cách dùng hook `process_view`. Hãy xem chúng ta có thể làm gì:
 
 ```python
 # project/middleware.py
@@ -217,7 +217,7 @@ class AwesomeMiddleware:
         )
 ```
 
-Now our middleware uses Python’s reflection capabilities to record the view’s name. If accessing the Django admin with an unauthenticated user, the log might record something like:
+Giờ middleware của chúng ta dùng khả năng reflection của Python để ghi lại tên view. Nếu truy cập admin Django với một user chưa xác thực, log có thể ghi lại như sau:
 
 ```text
 Tracking 1607438038.232886
@@ -225,42 +225,42 @@ Running login view
 Tracking 1607438038.261855 for a delta of 0.02896881103515625
 ```
 
-This middleware could still benefit from a lot of polish, but you can see how the hooks make it possible for a middleware to have more advanced functionality.
+Middleware này vẫn còn có thể cải tiến nhiều, nhưng bạn có thể thấy các hook giúp middleware có thể có chức năng nâng cao hơn.
 
-As an example of the `process_exception` middleware, consider a service that collects and reports exceptions to track the health of your application. There are many of these services like [Rollbar](https://rollbar.com/) and [Sentry](https://sentry.io/welcome/). I happen to be a Rollbar user so I’ll comment on that one. You can see from the [pyrollbar code](https://github.com/rollbar/pyrollbar/blob/8d116a374f2c54da886972f7da7c289e317bbd8a/rollbar/contrib/django/middleware.py#L268) that the service sends exception information from the `process_exception` hook to Rollbar via their `rollbar.report_exc_info` function. Without middleware, capturing and reporting exceptions would be _significantly_ harder.
+Ví dụ về middleware `process_exception`, hãy nghĩ đến một dịch vụ thu thập và báo cáo exception để theo dõi sức khỏe ứng dụng của bạn. Có nhiều dịch vụ như [Rollbar](https://rollbar.com/) và [Sentry](https://sentry.io/welcome/). Tôi tình cờ dùng Rollbar nên sẽ nói về nó. Bạn có thể thấy từ [mã nguồn pyrollbar](https://github.com/rollbar/pyrollbar/blob/8d116a374f2c54da886972f7da7c289e317bbd8a/rollbar/contrib/django/middleware.py#L268) rằng dịch vụ này gửi thông tin exception từ hook `process_exception` đến Rollbar qua hàm `rollbar.report_exc_info`. Nếu không có middleware, việc thu thập và báo cáo exception sẽ _khó hơn rất nhiều_.
 
-Want to learn more about hooks? You can see all the details about these hooks in the [middleware documentation](https://docs.djangoproject.com/en/4.1/topics/http/middleware/#other-middleware-hooks).
+Muốn tìm hiểu thêm về các hook? Bạn có thể xem chi tiết về các hook này trong [tài liệu middleware](https://docs.djangoproject.com/en/4.1/topics/http/middleware/#other-middleware-hooks).
 
-## What Middleware Does Django Include?
+## Django Bao Gồm Những Middleware Nào?
 
-We’ve looked at the mental model for middleware and all the details of how an individual middleware works. What middleware does Django include in the framework?
+Chúng ta đã xem xét mô hình tư duy về middleware và chi tiết cách một middleware hoạt động. Vậy Django bao gồm những middleware nào trong framework?
 
-The full list of built-in middleware is available in the [middleware reference](https://docs.djangoproject.com/en/4.1/ref/middleware/). I’ll describe what I think are the most common or useful middleware classes that Django includes.
+Danh sách đầy đủ các middleware tích hợp có trong [tài liệu tham khảo middleware](https://docs.djangoproject.com/en/4.1/ref/middleware/). Tôi sẽ mô tả những class middleware phổ biến hoặc hữu ích nhất mà Django cung cấp.
 
-- `AuthenticationMiddleware` - We’ve already encountered this middleware in the exploration of the auth system. The job of this middleware is to add the `user` attribute to an `HttpRequest` object. That one little `user` attribute powers many of the features of the auth system.
-- `CommonMiddleware` - The common middleware is a bit of an oddball. This middleware handles a variety of Django settings to control certain aspects of your project. For instance, the `APPEND_SLASH` setting will redirect a request like `example.com/accounts` to `example.com/accounts/`. This setting only works if the `CommonMiddleware` is included.
-- `CsrfViewMiddleware` - In the forms article, I mentioned the CSRF token. As a reminder, this is a security feature that helps protect your project against malicious sources that want to send bad data to your site. The `CsrfViewMiddleware` ensures that the CSRF token is present and valid on form submissions.
-- `LocaleMiddleware` - This middleware is for handling translations if you choose to internationalize your project.
-- `MessageMiddleware` - The message middleware is for “flash messages.” These are one-time messages that you’d likely see after submitting a form, though they can be used in many places. We’ll discuss messages more when we get to the sessions topic.
-- `SecurityMiddleware` - The security middleware includes a number of checks to help keep your site secure. We saw the example of checking for HTTPS earlier in this article. This middleware also handles things like XSS, HSTS, and a bunch of other acronyms (😛) that will be seen with the future security topic.
-- `SessionMiddleware` - The session middleware manages session state for a user. Sessions are crucial for many parts of Django like user auth.
+- `AuthenticationMiddleware` - Chúng ta đã gặp middleware này khi tìm hiểu hệ thống xác thực. Nhiệm vụ của middleware này là thêm thuộc tính `user` vào object `HttpRequest`. Chỉ một thuộc tính nhỏ `user` này đã cung cấp sức mạnh cho nhiều tính năng của hệ thống xác thực.
+- `CommonMiddleware` - Middleware này hơi “dị”. Nó xử lý nhiều thiết lập của Django để kiểm soát một số khía cạnh của dự án. Ví dụ, thiết lập `APPEND_SLASH` sẽ chuyển hướng một request như `example.com/accounts` thành `example.com/accounts/`. Thiết lập này chỉ hoạt động nếu có `CommonMiddleware`.
+- `CsrfViewMiddleware` - Trong bài về forms, tôi đã nhắc đến token CSRF. Nhắc lại, đây là một tính năng bảo mật giúp bảo vệ dự án của bạn khỏi các nguồn độc hại muốn gửi dữ liệu xấu lên trang. `CsrfViewMiddleware` đảm bảo token CSRF có mặt và hợp lệ khi gửi form.
+- `LocaleMiddleware` - Middleware này dùng để xử lý dịch thuật nếu bạn muốn quốc tế hóa dự án.
+- `MessageMiddleware` - Middleware này dùng cho “flash message”. Đây là các thông báo một lần mà bạn thường thấy sau khi gửi form, dù có thể dùng ở nhiều nơi khác. Chúng ta sẽ bàn thêm về message khi đến chủ đề sessions.
+- `SecurityMiddleware` - Middleware này bao gồm nhiều kiểm tra để giúp trang của bạn an toàn. Chúng ta đã thấy ví dụ kiểm tra HTTPS ở phần trước. Middleware này cũng xử lý các vấn đề như XSS, HSTS và nhiều từ viết tắt khác (😛) sẽ gặp ở chủ đề bảo mật sau này.
+- `SessionMiddleware` - Middleware này quản lý trạng thái session cho người dùng. Session rất quan trọng cho nhiều phần của Django như xác thực người dùng.
 
-As you can see from this incomplete list, Django’s middleware can do a lot to enrich your project in a wide variety of ways. Middleware is an extremely powerful concept for Django projects and a great tool to extend your application’s request handling.
+Như bạn thấy từ danh sách chưa đầy đủ này, middleware của Django có thể làm rất nhiều thứ để làm phong phú dự án của bạn theo nhiều cách khác nhau. Middleware là một khái niệm cực kỳ mạnh mẽ cho các dự án Django và là công cụ tuyệt vời để mở rộng khả năng xử lý request của ứng dụng.
 
-Remember, middleware comes with a performance cost so avoid the temptation to stuff too much functionality into the middleware chain. As long as you’re aware of the tradeoffs, middleware is a great tool for your toolbelt.
+Hãy nhớ rằng, middleware đi kèm với chi phí hiệu năng nên hãy tránh nhồi nhét quá nhiều chức năng vào chuỗi middleware. Miễn là bạn nhận thức được sự đánh đổi, middleware là một công cụ tuyệt vời cho bộ công cụ của bạn.
 
-## Summary
+## Tóm Tắt
 
-In this article, we saw Django’s middleware system.
+Trong bài viết này, chúng ta đã thấy hệ thống middleware của Django.
 
-We discussed:
+Chúng ta đã bàn về:
 
-- The mental model for considering middleware
-- How to write your own middleware
-- Some of the middleware classes that come with Django
+- Mô hình tư duy khi nghĩ về middleware
+- Cách tự viết middleware
+- Một số class middleware đi kèm Django
 
-Next time we’ll dig into static files. Static files are all the images, JavaScript, CSS, or other file types that your application serves, unmodified, to a user. We need to understand:
+Lần tới chúng ta sẽ tìm hiểu về static files. Static files là tất cả hình ảnh, JavaScript, CSS, hoặc các loại file khác mà ứng dụng của bạn phục vụ cho người dùng mà không chỉnh sửa gì. Chúng ta cần hiểu:
 
-- How to configure static files
-- The way to work with static files
-- How to handle static files when deploying your site to the internet
+- Cách cấu hình static files
+- Cách làm việc với static files
+- Cách xử lý static files khi triển khai trang web lên internet
