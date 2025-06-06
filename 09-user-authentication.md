@@ -1,128 +1,128 @@
-# User Authentication
+# Xác Thực Người Dùng
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/) article, we learned about the structure of a Django _application_ and how apps are the core components of a Django project. In this article, we’re going to dig into Django’s built-in user authentication system. We’ll see how Django makes your life easier by giving you tools to help your web application interact with the users of your site.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã tìm hiểu về cấu trúc của một _ứng dụng_ Django và cách các ứng dụng là thành phần cốt lõi của một dự án Django. Trong bài viết này, chúng ta sẽ đào sâu vào hệ thống xác thực người dùng tích hợp sẵn của Django. Chúng ta sẽ thấy Django giúp bạn dễ dàng hơn như thế nào bằng cách cung cấp các công cụ để ứng dụng web của bạn tương tác với người dùng của trang.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/)
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/)
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/)
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/)
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
-9. User Authentication
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/)
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/)
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/)
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/)
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/)
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/)
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/)
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/)
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
+3. [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. Xác Thực Người Dùng
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## Authentication And Authorization
+## Xác Thực Và Phân Quyền
 
-We need to start with some terms before we begin our study. When your project interacts with users, there are two primary aspects tightly coupled to users that we must consider.
+Chúng ta cần bắt đầu với một số thuật ngữ trước khi đi vào nghiên cứu. Khi dự án của bạn tương tác với người dùng, có hai khía cạnh chính gắn liền với người dùng mà chúng ta phải xem xét.
 
-_Authentication_: When a user tries to prove that they are who they say they are, that is authentication. A user will typically authenticate with your site via some login form or using a social provider like Google to verify their identity.
+_Xác thực (Authentication)_: Khi một người dùng cố gắng chứng minh họ là ai, đó là xác thực. Một người dùng thường xác thực với trang của bạn thông qua một form đăng nhập hoặc sử dụng nhà cung cấp xã hội như Google để xác minh danh tính.
 
-> _Authentication can only prove that _[_you are you_](https://en.wikipedia.org/wiki/The_Important_Book)_._
+> _Xác thực chỉ có thể chứng minh rằng _[_bạn là bạn_](https://en.wikipedia.org/wiki/The_Important_Book)_._
 
-_Authorization_: What is a user allowed to do? Authorization answers that question. We use authorization to determine what permissions or groups a user belongs to, so that we can scope what a user can do on the site.
+_Phân quyền (Authorization)_: Người dùng được phép làm gì? Phân quyền trả lời câu hỏi đó. Chúng ta dùng phân quyền để xác định quyền hoặc nhóm mà người dùng thuộc về, từ đó giới hạn những gì người dùng có thể làm trên trang.
 
-> _Authorization determines what you can do._
+> _Phân quyền xác định bạn có thể làm gì._
 
-The Django auth system covers both of these topics. Sometimes the software industry will shorten authentication to “authn” and authorization to “authz,” but I think those labels are fairly silly and confusing. I will call out topics by their full name and refer to the entire Django system as “auth.”
+Hệ thống xác thực của Django bao phủ cả hai chủ đề này. Đôi khi ngành phần mềm sẽ rút gọn authentication thành “authn” và authorization thành “authz”, nhưng tôi nghĩ các nhãn đó khá ngớ ngẩn và dễ gây nhầm lẫn. Tôi sẽ gọi rõ tên đầy đủ và gọi toàn bộ hệ thống của Django là “auth”.
 
-## Setup
+## Thiết Lập
 
-If you used the `startproject` command to begin your project, then, congratulations, you’re done and can move on!
+Nếu bạn dùng lệnh `startproject` để bắt đầu dự án, thì xin chúc mừng, bạn đã xong phần này và có thể chuyển tiếp!
 
-The auth features in Django require a couple of built-in Django applications and a couple of middleware classes.
+Các tính năng xác thực trong Django yêu cầu một vài ứng dụng tích hợp sẵn của Django và một số middleware.
 
-The Django apps are:
+Các ứng dụng Django là:
 
-- `django.contrib.auth` and
-- `django.contrib.contenttypes` (which the `auth` app depends on)
+- `django.contrib.auth` và
+- `django.contrib.contenttypes` (ứng dụng `auth` phụ thuộc vào cái này)
 
-The middleware classes are:
+Các middleware là:
 
-- `SessionMiddleware` to store data about a user in a session
-- `AuthenticationMiddleware` to associate users with requests
+- `SessionMiddleware` để lưu dữ liệu về người dùng trong session
+- `AuthenticationMiddleware` để liên kết người dùng với request
 
-Middleware and sessions are both future topics so consider them internal details that you can ignore for now.
+Middleware và session đều là các chủ đề sẽ bàn sau nên hiện tại bạn có thể coi chúng là chi tiết nội bộ và bỏ qua.
 
-The Django docs provide additional context about these prerequisites so check out the [auth topic installation section](https://docs.djangoproject.com/en/4.1/topics/auth/#installation) for more details.
+Tài liệu Django cung cấp thêm bối cảnh về các điều kiện tiên quyết này, bạn có thể xem thêm ở phần [cài đặt chủ đề xác thực](https://docs.djangoproject.com/en/4.1/topics/auth/#installation).
 
-## Who Authenticates?
+## Ai Sẽ Xác Thực?
 
-If your site is going to have any level of personalization for anyone who uses it, then we need some way to track identity.
+Nếu trang của bạn sẽ có bất kỳ mức độ cá nhân hóa nào cho người dùng, thì chúng ta cần một cách để theo dõi danh tính.
 
-In the Django auth system, identity is tracked with a `User` model. This model stores information that you’d likely want to associate with anyone who uses your site. The model includes:
+Trong hệ thống xác thực của Django, danh tính được theo dõi bằng model `User`. Model này lưu trữ thông tin mà bạn có thể muốn liên kết với bất kỳ ai sử dụng trang của bạn. Model bao gồm:
 
-- name fields,
-- email address,
-- datetime fields for when a user joins or logs in to your site,
-- boolean fields for some coarse permissions that are very commonly needed,
-- and password data.
+- các trường tên,
+- địa chỉ email,
+- các trường ngày giờ cho thời điểm người dùng tham gia hoặc đăng nhập vào trang,
+- các trường boolean cho một số quyền cơ bản rất thường dùng,
+- và dữ liệu mật khẩu.
 
-The `User` model is a critically important model in many systems. Unless you’re creating a website that is entirely public data and has no need to factor in identity, then you will probably use the `User` model heavily.
+Model `User` là một model cực kỳ quan trọng trong nhiều hệ thống. Trừ khi bạn tạo một website hoàn toàn công khai và không cần quan tâm đến danh tính, bạn có lẽ sẽ sử dụng model `User` rất nhiều.
 
-Even if you _don’t_ expect your site’s visitors to identify in some fashion, you’ll still probably benefit from the `User` model because it is integrated with the Django admin site. I mentioned in [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/) that we needed a user with certain permissions to access the admin, but we glossed over the details of what that meant.
+Ngay cả khi bạn _không_ mong đợi khách truy cập trang của mình phải xác định danh tính, bạn vẫn có thể hưởng lợi từ model `User` vì nó được tích hợp với trang quản trị Django. Tôi đã đề cập trong [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/) rằng chúng ta cần một người dùng có quyền nhất định để truy cập admin, nhưng tôi đã lướt qua chi tiết điều đó nghĩa là gì.
 
-The admin will only permit users with the `is_staff` attribute set to `True`. `is_staff` is one of the boolean fields that I listed as included in the default `User` model implementation.
+Trang admin chỉ cho phép người dùng có thuộc tính `is_staff` được đặt là `True`. `is_staff` là một trong các trường boolean mà tôi đã liệt kê là có trong model `User` mặc định.
 
-Now we have an understanding that the `User` model is a very important model in a Django site. At minimum, the model is important as you use the Django admin, but it can also be very important for the people that come to your site.
+Giờ chúng ta đã hiểu rằng model `User` là một model rất quan trọng trong một trang Django. Tối thiểu, model này quan trọng khi bạn dùng trang admin Django, nhưng nó cũng có thể rất quan trọng với những người truy cập trang của bạn.
 
-Next, let’s look a bit deeper at authentication and how that works in conjunction with the `User` model.
+Tiếp theo, hãy xem sâu hơn về xác thực và cách nó hoạt động cùng với model `User`.
 
-## Authenticating With Passwords
+## Xác Thực Bằng Mật Khẩu
 
-Like many other websites that you’ve used, Django’s built-in auth system authenticates users with passwords.
+Giống như nhiều website khác mà bạn từng dùng, hệ thống xác thực tích hợp của Django xác thực người dùng bằng mật khẩu.
 
-When a user wants to authenticate, the user must log in to the site. Django includes a `LoginView` class-based view that can handle the appropriate steps. The `LoginView` is a form view that:
+Khi một người dùng muốn xác thực, họ phải đăng nhập vào trang. Django cung cấp một view dạng class `LoginView` có thể xử lý các bước cần thiết. `LoginView` là một form view mà:
 
-- Collects the `username` and `password` from the user
-- Calls the `django.contrib.auth.authenticate` function with the `username` and `password` to confirm that the user is who they claim to be
-- Redirects to either a path that is set as the value of the `next` parameter in the URL’s querystring or `settings.LOGIN_REDIRECT_URL` if the `next` parameter isn’t set
-- Or, if authentication failed, re-renders the form page with appropriate error messages
+- Thu thập `username` và `password` từ người dùng
+- Gọi hàm `django.contrib.auth.authenticate` với `username` và `password` để xác nhận người dùng là ai họ nói
+- Chuyển hướng đến một đường dẫn được đặt trong tham số `next` của querystring URL hoặc `settings.LOGIN_REDIRECT_URL` nếu không có tham số `next`
+- Hoặc, nếu xác thực thất bại, render lại trang form với thông báo lỗi phù hợp
 
-How does the `authenticate` function work? The `authenticate` function delegates the responsibility of deciding if the user’s credentials are valid to an _authentication backend_.
+Hàm `authenticate` hoạt động như thế nào? Hàm `authenticate` ủy quyền trách nhiệm quyết định thông tin xác thực của người dùng có hợp lệ không cho một _authentication backend_.
 
-Like we have seen with templates and with databases, the auth system has swappable backends. With different backend options, you can have multiple ways of authenticating. The `authenticate` function will loop through any auth backends that are set in the `AUTHENTICATION_BACKENDS` list setting. Each backend can do one of three things:
+Như chúng ta đã thấy với template và cơ sở dữ liệu, hệ thống xác thực cũng có các backend có thể hoán đổi. Với các backend khác nhau, bạn có thể có nhiều cách xác thực. Hàm `authenticate` sẽ lặp qua các backend xác thực được thiết lập trong danh sách `AUTHENTICATION_BACKENDS` trong settings. Mỗi backend có thể làm một trong ba việc:
 
-- Authenticate correctly with the user and return a `User` instance.
-- Not authenticate and return `None`. In this case, the next backend is tried.
-- Not authenticate and raise a `PermissionDenied` exception. In this case, no other backends are tried.
+- Xác thực đúng với người dùng và trả về một instance `User`.
+- Không xác thực và trả về `None`. Khi đó backend tiếp theo sẽ được thử.
+- Không xác thực và raise exception `PermissionDenied`. Khi đó sẽ không thử backend nào nữa.
 
-You could add a backend to that setting that lets people authenticate with their social media accounts ([django-allauth](https://django-allauth.readthedocs.io/en/latest/) is a great option to do exactly that). You might be in a corporate setting and need Single Sign-On (SSO) for your company. There are backend options that enable that too.
+Bạn có thể thêm một backend vào thiết lập đó để cho phép người dùng xác thực bằng tài khoản mạng xã hội (ví dụ [django-allauth](https://django-allauth.readthedocs.io/en/latest/) là một lựa chọn tuyệt vời). Bạn có thể ở môi trường doanh nghiệp và cần Single Sign-On (SSO) cho công ty. Cũng có các backend hỗ trợ điều đó.
 
-Although there are many options, we’ll focus on the built-in backend included with the auth system. The default backend is called the `ModelBackend` and it is in the `django.contrib.auth.backends` module.
+Dù có nhiều lựa chọn, chúng ta sẽ tập trung vào backend tích hợp sẵn đi kèm hệ thống xác thực. Backend mặc định gọi là `ModelBackend` và nằm trong module `django.contrib.auth.backends`.
 
-The `ModelBackend` is named as it is because it uses the `User` model to authenticate. Given a `username` and `password` from the user, the backend compares the provided data to any existing `User` records.
+`ModelBackend` được đặt tên như vậy vì nó dùng model `User` để xác thực. Khi nhận được `username` và `password` từ người dùng, backend sẽ so sánh dữ liệu đó với các bản ghi `User` hiện có.
 
-The `authenticate` function calls the `authenticate` _method_ that exists on the `ModelBackend`. The backend does a lookup of a `User` record based on the given `username` passed to the method by the `authenticate` function. If the user record exists, the backend calls `user.check_password(password)` where `password` is the actual password that is supplied by the person who submitted the POST to the `LoginView`.
+Hàm `authenticate` sẽ gọi _phương thức_ `authenticate` trên `ModelBackend`. Backend sẽ tìm một bản ghi `User` dựa trên `username` được truyền vào phương thức bởi hàm `authenticate`. Nếu bản ghi người dùng tồn tại, backend sẽ gọi `user.check_password(password)` với `password` là mật khẩu thực tế do người dùng gửi lên qua POST tới `LoginView`.
 
-Django doesn’t store actual passwords. To do so would be a major weakness in the framework because any leak of the database would leak all users’ passwords. And that’s totally not cool. Instead, the `password` field on the `User` model stores a _hash_ of the password.
+Django không lưu mật khẩu thực tế. Làm vậy sẽ là một điểm yếu lớn vì nếu cơ sở dữ liệu bị lộ thì toàn bộ mật khẩu người dùng cũng bị lộ. Thay vào đó, trường `password` trên model `User` lưu _hash_ của mật khẩu.
 
-Maybe you’ve never encountered hashing before. A hash is a computed value that is generated by running input data through a special function. The details of the computation is a very deep topic, especially when considering security, but the important thing to know about hashes is that you can’t reverse the computation.
+Có thể bạn chưa từng gặp hashing trước đây. Hash là một giá trị được tính toán bằng cách đưa dữ liệu đầu vào qua một hàm đặc biệt. Chi tiết về tính toán hash là một chủ đề rất sâu, nhất là khi xét về bảo mật, nhưng điều quan trọng cần biết là bạn _không thể đảo ngược_ phép tính này.
 
-In other words, if you generated a hash from `mysekretpassword`, then you wouldn’t be able to take the hash value and figure out that the original input was `myseckretpassword`.
+Nói cách khác, nếu bạn tạo hash từ `mysekretpassword`, bạn sẽ không thể lấy giá trị hash đó để tìm ra đầu vào gốc là `myseckretpassword`.
 
-Why is this useful? By computing hashes, Django can safely store that computed value without compromising a user’s password. When a user wants to authenticate with a site, the user submits a password, Django computes the hash on that submitted value and _compares it to the hash stored in the database._ If the hashes match, then the site can conclude that the user sent the correct password. Only the password’s hash would match the hash stored in the `User` model.
+Tại sao điều này hữu ích? Bằng cách tính toán hash, Django có thể lưu giá trị đã tính toán đó mà không làm lộ mật khẩu người dùng. Khi người dùng muốn xác thực với trang, họ gửi mật khẩu, Django sẽ tính hash trên giá trị gửi lên và _so sánh với hash lưu trong cơ sở dữ liệu._ Nếu hai hash trùng nhau, trang có thể kết luận người dùng đã gửi đúng mật khẩu. Chỉ hash của mật khẩu đúng mới trùng với hash lưu trong model `User`.
 
-Hashing is a fascinating subject. If you want to learn more about the guts of how Django manages hashes, I would suggest reading the [Password management in Django](https://docs.djangoproject.com/en/4.1/topics/auth/passwords/) docs to see the details.
+Hashing là một chủ đề thú vị. Nếu bạn muốn tìm hiểu thêm về cách Django quản lý hash, hãy đọc [Quản lý mật khẩu trong Django](https://docs.djangoproject.com/en/4.1/topics/auth/passwords/) để xem chi tiết.
 
-## Authentication Views
+## Các View Xác Thực
 
-That’s a lot of stuff to do for authentication!
+Có rất nhiều thứ phải làm cho xác thực!
 
-Is Django going to expect you to call the `authenticate` function and wire together all the views yourself? No!
+Django có bắt bạn phải tự gọi hàm `authenticate` và tự kết nối các view không? Không!
 
-I mentioned the `LoginView` earlier, but that’s not the only view that Django provides to make authentication manageable. You can add the set of views with a single `include`:
+Tôi đã đề cập đến `LoginView` ở trên, nhưng đó không phải là view duy nhất mà Django cung cấp để giúp quản lý xác thực. Bạn có thể thêm bộ view này chỉ với một dòng `include`:
 
 ```python
 # project/urls.py
@@ -138,39 +138,39 @@ urlpatterns = [
 ]
 ```
 
-This set includes a variety of features.
+Bộ này bao gồm nhiều tính năng:
 
-- A login view
-- A logout view
-- Views to change a password
-- Views to reset a password
+- View đăng nhập
+- View đăng xuất
+- View đổi mật khẩu
+- View đặt lại mật khẩu
 
-If you choose to add this set, your job is to override the built-in templates to match the styling of your site. For example, to customize the logout view, you would create a file named `registration/logged_out.html` in your templates directory. The [All authentication views](https://docs.djangoproject.com/en/4.1/topics/auth/default/#all-authentication-views) documentation provides information about each view and the name of each template to override. Note that you _must_ provide a template for the login view as the framework does not supply a default template for that view.
+Nếu bạn chọn thêm bộ này, việc của bạn là override các template tích hợp sẵn để phù hợp với giao diện trang của bạn. Ví dụ, để tùy biến view đăng xuất, bạn sẽ tạo một file tên là `registration/logged_out.html` trong thư mục template của bạn. [Tài liệu về tất cả các view xác thực](https://docs.djangoproject.com/en/4.1/topics/auth/default/#all-authentication-views) cung cấp thông tin về từng view và tên template cần override. Lưu ý bạn _phải_ cung cấp template cho view đăng nhập vì framework không cung cấp template mặc định cho view đó.
 
-If you have more complex needs for your site, you might want to consider some external Django applications that exist in the ecosystem. I personally like [django-allauth](https://django-allauth.readthedocs.io/en/latest/). The project is very customizable and provides a path to add social authentication to sign up with your social media platform of choice. I also like django-allauth because it includes sign up flows that you don’t have to build yourself. The application is definitely worth checking out.
+Nếu bạn có nhu cầu phức tạp hơn cho trang của mình, bạn có thể cân nhắc các ứng dụng Django bên ngoài trong hệ sinh thái. Cá nhân tôi thích [django-allauth](https://django-allauth.readthedocs.io/en/latest/). Dự án này rất dễ tùy biến và cung cấp cách thêm xác thực xã hội để đăng ký bằng nền tảng mạng xã hội bạn chọn. Tôi cũng thích django-allauth vì nó có sẵn luồng đăng ký mà bạn không phải tự xây dựng. Ứng dụng này rất đáng để thử.
 
-We’ve now seen how Django authenticates users to a website with the `User` model, the `authenticate` function, and the built-in authentication backend, `ModelBackend`. We’ve also seen how Django provides views to assist with login, logout, and password management.
+Chúng ta đã thấy Django xác thực người dùng với model `User`, hàm `authenticate` và backend xác thực tích hợp `ModelBackend`. Chúng ta cũng đã thấy Django cung cấp các view hỗ trợ đăng nhập, đăng xuất và quản lý mật khẩu.
 
-Once a user is authenticated, what is that user allowed to do? We’ll see that next as we explore authorization in Django.
+Khi một người dùng đã xác thực, họ được phép làm gì? Chúng ta sẽ xem tiếp khi tìm hiểu về phân quyền trong Django.
 
-## What’s Allowed?
+## Được Phép Làm Gì?
 
-### Authorization From User Attributes
+### Phân Quyền Dựa Trên Thuộc Tính Người Dùng
 
-Django has multiple ways to let you control what a user is allowed to do on your site.
+Django có nhiều cách để bạn kiểm soát người dùng được phép làm gì trên trang.
 
-The simplest form of checking on a user is to check if the site has identified the user or not. Before a user is authenticated by logging in, that user is anonymous. In fact, the Django auth system has a special class to represent this kind of anonymous user. Sticking to the principle of least surprise, the class is called `AnonymousUser`.
+Cách đơn giản nhất để kiểm tra người dùng là xem trang đã nhận diện người dùng hay chưa. Trước khi người dùng xác thực bằng cách đăng nhập, họ là người dùng ẩn danh. Thực tế, hệ thống xác thực Django có một class đặc biệt để biểu diễn loại người dùng này. Đúng như nguyên tắc “ít gây bất ngờ”, class này tên là `AnonymousUser`.
 
-The `User` model includes an `is_authenticated` attribute. Predictably, users that have authenticated will return `True` for `is_authenticated` while `AnonymousUser` instances return `False` for the same attribute.
+Model `User` có thuộc tính `is_authenticated`. Dễ đoán, người dùng đã xác thực sẽ trả về `True` cho `is_authenticated` còn instance `AnonymousUser` sẽ trả về `False` cho thuộc tính này.
 
-Django provides a `login_required` decorator that can use this `is_authenticated` information. The decorator will gate any view that needs a user to be authenticated.
+Django cung cấp decorator `login_required` có thể dùng thông tin `is_authenticated` này. Decorator này sẽ chặn bất kỳ view nào cần người dùng đã xác thực.
 
-This may be the appropriate level of authorization check if you have an application that restricts who is allowed to log in. For instance, if you’re running a Software as a Service (SaaS) application that requires users to pay a subscription to use the product, then you may have sufficient authorization checking by checking `is_authenticated`. In that scenario, if your application only permits users with an active subscription (or a trial subscription) to log in, `login_required` will guard against any non-paying users from using your product.
+Đây có thể là mức kiểm tra phân quyền phù hợp nếu bạn có ứng dụng chỉ cho phép một số người đăng nhập. Ví dụ, nếu bạn vận hành một ứng dụng SaaS yêu cầu người dùng trả phí để sử dụng sản phẩm, bạn có thể chỉ cần kiểm tra `is_authenticated` là đủ. Trong trường hợp đó, nếu ứng dụng chỉ cho phép người dùng có đăng ký (hoặc dùng thử) đăng nhập, `login_required` sẽ ngăn không cho người dùng không trả phí sử dụng sản phẩm.
 
-There are other boolean values on the `User` model that you can use for authorization checking.
+Có các giá trị boolean khác trên model `User` mà bạn có thể dùng để kiểm tra phân quyền.
 
-- `is_staff` is a boolean to decide whether a user is a staff member or not. By default, this boolean is `False`. Only staff-level users are allowed to use the built-in Django admin site. You can also use the `staff_member_required` decorator if you have views that should only be used by members of your team with that permission.
-- `is_superuser` is a special flag to indicate a user that should have access to everything. This “superuser” concept is very similar to the superuser that is present in Linux permission systems. There’s no special decorator for this boolean, but you could use the `user_passes_test` decorator if you had very private views that you needed to protect.
+- `is_staff` là boolean để quyết định người dùng có phải là nhân viên không. Mặc định, giá trị này là `False`. Chỉ người dùng staff mới được dùng trang admin tích hợp của Django. Bạn cũng có thể dùng decorator `staff_member_required` nếu có các view chỉ dành cho thành viên nhóm của bạn có quyền đó.
+- `is_superuser` là cờ đặc biệt để chỉ người dùng có quyền truy cập mọi thứ. Khái niệm “superuser” này rất giống với superuser trong hệ thống phân quyền của Linux. Không có decorator đặc biệt cho boolean này, nhưng bạn có thể dùng decorator `user_passes_test` nếu có các view riêng tư cần bảo vệ.
 
 ```python
 from django.contrib.admin.views.decorators import (
@@ -197,28 +197,28 @@ def special_view(request):
     )
 ```
 
-The `user_passes_test` decorator behaves much like `login_required`, but it accepts a callable that receives a user object and returns a boolean. If the boolean value is `True`, the request is permitted and the user gets the response. If the boolean value is `False`, the user will be redirected to the login page.
+Decorator `user_passes_test` hoạt động giống như `login_required`, nhưng nó nhận một callable nhận vào một object user và trả về boolean. Nếu giá trị boolean là `True`, request được phép và người dùng nhận response. Nếu boolean là `False`, người dùng sẽ bị chuyển hướng đến trang đăng nhập.
 
-### Authorization From Permissions And Groups
+### Phân Quyền Dựa Trên Quyền Và Nhóm
 
-The first set of checks that we looked at is data that is stored with a `User` model record. While that works well for some cases that apply to many sites, what about authorization that depends on what your application does?
+Bộ kiểm tra đầu tiên mà chúng ta xem là dữ liệu lưu cùng bản ghi model `User`. Dù cách này phù hợp với một số trường hợp, còn phân quyền phụ thuộc vào chức năng ứng dụng thì sao?
 
-Django comes with a flexible permission system that can let your application control who can see what. The permission system includes some convenient auto-created permissions as well as the ability to make custom permission for whatever purpose. These permission records are `Permission` model instances from `django.contrib.auth.models`.
+Django đi kèm hệ thống quyền linh hoạt cho phép ứng dụng kiểm soát ai được xem gì. Hệ thống quyền bao gồm một số quyền tự động tạo cũng như khả năng tạo quyền tùy biến cho bất kỳ mục đích nào. Các bản ghi quyền này là instance model `Permission` từ `django.contrib.auth.models`.
 
-Any time you create a new model, Django will create an additional set of permissions. These auto-created permissions map to the Create, Read, Update, and Delete (CRUD) operations that you can expect to use in the Django admin. For instance, if you have a `pizzas` app and create a `Topping` model, Django would create the following permissions:
+Bất cứ khi nào bạn tạo một model mới, Django sẽ tạo thêm một bộ quyền. Các quyền tự động này ánh xạ tới các thao tác CRUD mà bạn có thể dùng trong admin Django. Ví dụ, nếu bạn có app `pizzas` và tạo model `Topping`, Django sẽ tạo các quyền sau:
 
-- `pizzas.add_topping` for Create
-- `pizzas.view_topping` for Read
-- `pizzas.change_topping` for Update
-- `pizzas.delete_topping` for Delete
+- `pizzas.add_topping` cho Create
+- `pizzas.view_topping` cho Read
+- `pizzas.change_topping` cho Update
+- `pizzas.delete_topping` cho Delete
 
-A big reason to create these permissions is to aid your development _and_ add control to the Django admin. Staff-level users (i.e., `user.is_staff == True`) in your application have no permissions to start with. This is a safe default so that any new staff member cannot access all of the data in your system unless you grant them more permissions as you gain trust in them.
+Lý do lớn để tạo các quyền này là để hỗ trợ phát triển _và_ kiểm soát trong admin Django. Người dùng staff (tức là `user.is_staff == True`) trong ứng dụng của bạn ban đầu _không có quyền nào_. Đây là mặc định an toàn để bất kỳ nhân viên mới nào cũng không thể truy cập toàn bộ dữ liệu hệ thống trừ khi bạn cấp thêm quyền khi đã tin tưởng họ.
 
-When a staff user logs into the Django admin, they will initially see very little. As permissions are granted to the user’s account, the Django admin will reveal additional information corresponding to the selected permissions. Although permissions are often granted through the `User` admin page, you can add permissions to a user through code. The `User` model has a `ManyToManyField` called `user_permissions` that associates user instances to particular permissions.
+Khi một người dùng staff đăng nhập vào admin Django, ban đầu họ sẽ thấy rất ít. Khi cấp thêm quyền cho tài khoản, admin Django sẽ hiển thị thêm thông tin tương ứng với quyền đã chọn. Dù quyền thường được cấp qua trang admin của `User`, bạn cũng có thể thêm quyền cho user qua mã. Model `User` có một trường `ManyToManyField` tên là `user_permissions` liên kết instance user với các quyền cụ thể.
 
-Continuing with the pizza application example, perhaps you work with a chef for your pizza app. Your chef may need the ability to control any new toppings that should be available to customers, but you probably don’t want the chef to be able to delete orders from the application’s history.
+Tiếp tục với ví dụ ứng dụng pizza, giả sử bạn làm việc với một đầu bếp cho app pizza. Đầu bếp của bạn có thể cần quyền kiểm soát các topping mới cho khách hàng, nhưng bạn có lẽ không muốn đầu bếp xóa đơn hàng khỏi lịch sử ứng dụng.
 
-For the chef, you’d grant the `pizzas.add_topping`, `pizzas.view_topping`, and `pizzas.change_topping` permissions, but you’d leave out `orders.delete_order`.
+Với đầu bếp, bạn sẽ cấp quyền `pizzas.add_topping`, `pizzas.view_topping`, và `pizzas.change_topping`, nhưng không cấp `orders.delete_order`.
 
 ```python
 from django.contrib.auth.models import (
@@ -241,15 +241,15 @@ chef = User.objects.get(id=42)
 chef.user_permissions.add(permission)
 ```
 
-We haven’t covered the `contenttypes` app so this code may look unusual to you, but the auth system uses content types as a way to reference models generically when handling permissions. You can learn more about content types and their uses at [the contenttypes framework](https://docs.djangoproject.com/en/4.1/ref/contrib/contenttypes/) documentation. The important point to observe from the example is that permissions behave like any other Django model.
+Chúng ta chưa bàn về app `contenttypes` nên đoạn mã này có thể lạ với bạn, nhưng hệ thống xác thực dùng content type để tham chiếu model một cách tổng quát khi xử lý quyền. Bạn có thể tìm hiểu thêm về content type và cách dùng tại [tài liệu contenttypes framework](https://docs.djangoproject.com/en/4.1/ref/contrib/contenttypes/). Điều quan trọng là quyền hoạt động như bất kỳ model Django nào khác.
 
-Adding permissions to individual users is a nice feature for a small team, but if your team grows, it could devolve into a nightmare.
+Thêm quyền cho từng user là tính năng hay cho nhóm nhỏ, nhưng nếu nhóm của bạn lớn, việc này có thể trở thành ác mộng.
 
-Let’s suppose that your application is wildly successful, and you need to hire a large support staff to help with customer issues. If your support team needs to view certain models in your system, it would be a total pain if you had to manage that per staff member.
+Giả sử ứng dụng của bạn rất thành công và bạn cần thuê một đội ngũ hỗ trợ lớn để giúp khách hàng. Nếu đội hỗ trợ cần xem một số model trong hệ thống, sẽ rất phiền nếu bạn phải quản lý quyền cho từng thành viên.
 
-Django has an ability to create groups to alleviate this problem. The `Group` model is the intersection between a set of permissions and a set of users. Thus, you could create a group like “Support Team,” assign all the permissions that such a team should have, and include all your support staff on that team. Now, any time that the support staff members require a new permission, it can be added once to the group.
+Django có khả năng tạo nhóm để giải quyết vấn đề này. Model `Group` là giao điểm giữa một tập quyền và một tập người dùng. Như vậy, bạn có thể tạo một nhóm như “Support Team”, gán tất cả quyền mà nhóm cần, và thêm tất cả nhân viên hỗ trợ vào nhóm đó. Khi cần cấp quyền mới cho nhóm, chỉ cần thêm một lần vào nhóm.
 
-A user’s groups are tracked with another `ManyToManyField` called `groups`.
+Các nhóm của user được theo dõi bằng một trường `ManyToManyField` khác tên là `groups`.
 
 ```python
 from django.contrib.auth.models import (
@@ -265,9 +265,9 @@ support_sally = User.objects.get(
 support_sally.groups.add(support_team)
 ```
 
-In addition to the built-in permissions that Django creates and the group management system, you can create additional permissions for your own purposes.
+Ngoài các quyền tích hợp mà Django tạo và hệ thống quản lý nhóm, bạn cũng có thể tạo thêm quyền cho mục đích riêng.
 
-Let’s give our chef permission to bake pizzas in our imaginary app.
+Hãy cấp cho đầu bếp quyền nướng pizza trong app tưởng tượng của chúng ta.
 
 ```python
 from django.contrib.auth.models import (
@@ -291,7 +291,7 @@ chef = User.objects.get(id=42)
 chef.user_permissions.add(permission)
 ```
 
-To check on the permission in our code, you can use the `has_perm` method on the `User` model. `has_perm` expects an application label and the permission codename joined together by a period.
+Để kiểm tra quyền trong mã, bạn có thể dùng phương thức `has_perm` trên model `User`. `has_perm` nhận một app label và codename quyền nối với nhau bằng dấu chấm.
 
 ```python
 >>> chef = User.objects.get(id=42)
@@ -299,7 +299,7 @@ To check on the permission in our code, you can use the `has_perm` method on the
 True
 ```
 
-You can also use a decorator on a view to check a permission as well. The decorator will check the `request.user` for the proper permission.
+Bạn cũng có thể dùng decorator trên view để kiểm tra quyền. Decorator sẽ kiểm tra `request.user` có quyền phù hợp không.
 
 ```python
 # pizzas/views.py
@@ -313,13 +313,13 @@ def bake_pizza(request):
     ...
 ```
 
-## Working With Users In Views And Templates
+## Làm Việc Với Người Dùng Trong View Và Template
 
-Now we’ve discussed how to authenticate users and how to check their authorization. How do we _interact_ with users in your application code?
+Chúng ta đã bàn về cách xác thực người dùng và kiểm tra phân quyền. Vậy làm sao _tương tác_ với người dùng trong mã ứng dụng?
 
-The first way is inside of views. Part of configuring the auth system is to include the `AuthenticationMiddleware` in `django.contrib.auth.middleware`.
+Cách đầu tiên là trong view. Một phần của việc cấu hình hệ thống xác thực là thêm `AuthenticationMiddleware` trong `django.contrib.auth.middleware`.
 
-This middleware has one job in request processing: add a `user` attribute to the `request` that the view will receive. This middleware gives us very clean and convenient access to the user record.
+Middleware này có một nhiệm vụ khi xử lý request: thêm thuộc tính `user` vào `request` mà view sẽ nhận. Middleware này giúp chúng ta truy cập bản ghi user rất tiện lợi.
 
 ```python
 # application/views.py
@@ -337,17 +337,17 @@ def my_view(request):
         )
 ```
 
-The `AuthenticationMiddleware` is what makes it possible for the decorators that I’ve described in this article (i.e., `login_required`, `user_passes_test`, and `permission_required`) to work. Each of the decorators finds the `user` record as an attribute attached to the `request`.
+`AuthenticationMiddleware` là thứ giúp các decorator tôi đã mô tả trong bài này (như `login_required`, `user_passes_test`, và `permission_required`) hoạt động. Mỗi decorator sẽ tìm bản ghi `user` như một thuộc tính gắn vào `request`.
 
-How about templates? If you had to add a user to a view’s context for every view, that would be tedious.
+Còn template thì sao? Nếu bạn phải thêm user vào context của view cho mọi view thì sẽ rất phiền.
 
-Thankfully, there is a context processor named `auth` that lets you avoid that pain (the processor is in `django.contrib.auth.context_processors`). The context processor will add a `user` to the context of every view when processing a request.
+May mắn thay, có một context processor tên là `auth` giúp bạn tránh được điều đó (processor này nằm trong `django.contrib.auth.context_processors`). Context processor này sẽ thêm `user` vào context của mọi view khi xử lý request.
 
-Recall that a context processor is a function that receives a `request` object and returns a dictionary that will be merged into the context. Knowing that, can you guess how this context processor works?
+Nhớ rằng context processor là một hàm nhận object `request` và trả về một dictionary sẽ được trộn vào context. Biết vậy, bạn đoán context processor này hoạt động thế nào?
 
-If you guessed `AuthenticationMiddleware`, you get a cookie! 🍪 Since the middleware adds the `user` to the `request`, the context processor has the very trivial job of creating a dictionary like `{'user': request.user}`. There’s a bit more to the actual implementation, and you can check out the [Django source code](https://github.com/django/django/blob/4.1/django/contrib/auth/context_processors.py#L49) if you want to see those details.
+Nếu bạn đoán là `AuthenticationMiddleware`, bạn đúng rồi đấy! 🍪 Vì middleware thêm `user` vào `request`, context processor chỉ cần tạo dictionary như `{'user': request.user}`. Thực tế có thêm một chút chi tiết, bạn có thể xem [mã nguồn Django](https://github.com/django/django/blob/4.1/django/contrib/auth/context_processors.py#L49) nếu muốn biết thêm.
 
-What does this look like in practice? We’ve actually seen this already! One of the examples from the explanation of templates used the `user` context variable. Here’s the example again so you don’t need to jump back.
+Thực tế nó trông như thế nào? Chúng ta đã từng thấy rồi! Một ví dụ trong phần giải thích template đã dùng biến context `user`. Đây là ví dụ để bạn không phải quay lại xem:
 
 ```django
 {% if user.is_authenticated %}
@@ -355,25 +355,25 @@ What does this look like in practice? We’ve actually seen this already! One of
 {% endif %}
 ```
 
-If you decide to use Django’s permissions, you can also take advantage of the `perms` context variable in your templates. This variable is supplied by the `auth` context processor as well and gives your template access to the permissions of the `user` in a concise manner. The [Django docs](https://docs.djangoproject.com/en/4.1/topics/auth/default/#permissions) include some good examples of how the `perms` variable can be used.
+Nếu bạn dùng quyền của Django, bạn cũng có thể tận dụng biến context `perms` trong template. Biến này cũng được cung cấp bởi context processor `auth` và cho phép template truy cập quyền của `user` một cách ngắn gọn. [Tài liệu Django](https://docs.djangoproject.com/en/4.1/topics/auth/default/#permissions) có một số ví dụ hay về cách dùng biến `perms`.
 
-Now you’ve seen how Django leverages the auth middleware to make users easily accessible to your views and templates.
+Giờ bạn đã thấy Django tận dụng middleware xác thực để giúp truy cập người dùng dễ dàng trong view và template.
 
-## Summary
+## Tóm Tắt
 
-In this article, we got into Django’s built-in user auth system.
+Trong bài viết này, chúng ta đã tìm hiểu về hệ thống xác thực người dùng tích hợp của Django.
 
-We learned about:
+Chúng ta đã học về:
 
-- How auth is set up
-- What the `User` model is
-- How authentication works
-- Django’s built-in views for making a login system
-- What levels of authorization are available
-- How to access users in views and templates
+- Cách thiết lập xác thực
+- Model `User` là gì
+- Cách xác thực hoạt động
+- Các view tích hợp của Django để xây dựng hệ thống đăng nhập
+- Các mức phân quyền có sẵn
+- Cách truy cập người dùng trong view và template
 
-Next time we’ll study middleware in Django. As the name implies, middleware is some code that exists in the “middle” of the request and response process. We will learn about:
+Lần tới chúng ta sẽ tìm hiểu về middleware trong Django. Đúng như tên gọi, middleware là đoạn mã tồn tại ở “giữa” quá trình request và response. Chúng ta sẽ học về:
 
-- The mental model for considering middleware
-- How to write your own middleware
-- Some of the middleware classes that come with Django
+- Mô hình tư duy khi làm việc với middleware
+- Cách tự viết middleware
+- Một số class middleware đi kèm Django
