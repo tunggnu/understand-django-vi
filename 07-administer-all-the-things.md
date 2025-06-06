@@ -1,72 +1,72 @@
-# Administer All The Things
+# Quản Trị Mọi Thứ
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/) article, we used models to see how Django stores data in a relational database. We covered all the tools to bring your data to life in your application. In this article, we will focus on the built-in tools that Django provides to help us manage that data.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã sử dụng models để xem cách Django lưu trữ dữ liệu trong một cơ sở dữ liệu quan hệ. Chúng ta đã đề cập đến tất cả các công cụ để đưa dữ liệu của bạn vào hoạt động trong ứng dụng. Trong bài viết này, chúng ta sẽ tập trung vào các công cụ tích hợp sẵn mà Django cung cấp để giúp chúng ta quản lý dữ liệu đó.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/)
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/)
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/)
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
-7. Administer All The Things
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/)
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/)
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/)
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/)
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/)
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/)
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/)
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/)
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/)
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
+3. [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. Quản Trị Mọi Thứ
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## What Is The Django Admin?
+## Django Admin Là Gì?
 
-When you run an application, you’ll find data that needs special attention. Maybe you’re creating a blog and need to create and edit tags or categories. Perhaps you have an online shop and need to manage your inventory. Whatever you’re building, you’ll probably have to manage _something_.
+Khi bạn vận hành một ứng dụng, bạn sẽ thấy có những dữ liệu cần được chú ý đặc biệt. Có thể bạn đang tạo một blog và cần tạo hoặc chỉnh sửa các thẻ hoặc danh mục. Có thể bạn có một cửa hàng trực tuyến và cần quản lý hàng tồn kho. Dù bạn xây dựng gì đi nữa, bạn có lẽ sẽ phải quản lý _một thứ gì đó_.
 
-How can you manage that data?
+Làm thế nào để bạn quản lý dữ liệu đó?
 
-- If you’re a programmer, you can probably log into your server, fire up a Django management shell, and work with data directly using Python.
-- If you’re not a programmer, well, I guess you’re out of luck! **Nope, that’s not true!**
+- Nếu bạn là lập trình viên, bạn có thể đăng nhập vào máy chủ, mở shell quản lý của Django và làm việc trực tiếp với dữ liệu bằng Python.
+- Nếu bạn không phải lập trình viên, ừm, có lẽ bạn không còn cách nào! **Không, điều đó không đúng!**
 
-Django includes a web administrative interface that can help programmers and non-programmers alike. This administrative interface is usually called the Django admin, for short.
+Django bao gồm một giao diện quản trị web có thể giúp cả lập trình viên lẫn người không biết lập trình. Giao diện quản trị này thường được gọi tắt là Django admin.
 
-Like so many other extensions in the Django ecosystem, the admin site is a Django application. The site is so commonly used that it is pre-configured when you run the `startproject` command.
+Giống như nhiều phần mở rộng khác trong hệ sinh thái Django, trang admin là một ứng dụng Django. Trang này được sử dụng phổ biến đến mức nó đã được cấu hình sẵn khi bạn chạy lệnh `startproject`.
 
-Before proceeding, I’d first like to make note of a security issue. When using `startproject`, Django will put the admin site at `/admin/` by default. **Change this**. The starter template conveniently sets up the admin site for you, but this default URL makes it easy for [script kiddies](https://en.wikipedia.org/wiki/Script_kiddie) to try to attack your admin site to gain access. Putting your admin site on a different URL _won’t_ fully protect your site (because you should never rely on “security through obscurity”), but it will help avoid a large amount of automated attacks.
+Trước khi tiếp tục, tôi muốn lưu ý một vấn đề bảo mật. Khi sử dụng `startproject`, Django sẽ đặt trang admin ở địa chỉ `/admin/` theo mặc định. **Hãy thay đổi điều này**. Mẫu khởi tạo giúp bạn thiết lập trang admin một cách tiện lợi, nhưng URL mặc định này khiến cho [script kiddies](https://en.wikipedia.org/wiki/Script_kiddie) dễ dàng tấn công trang admin của bạn để cố gắng truy cập trái phép. Đặt trang admin ở một URL khác _không_ hoàn toàn bảo vệ trang của bạn (bạn không nên dựa vào “bảo mật nhờ che giấu”), nhưng nó sẽ giúp tránh được nhiều cuộc tấn công tự động.
 
-The Django admin gives you a quick ability to interact with your models. As you will see shortly, you can register a model with the admin site. Once the model is registered, you can use the site interface to perform CRUD operations on the data.
+Django admin cho phép bạn nhanh chóng tương tác với các model của mình. Như bạn sẽ thấy ngay sau đây, bạn có thể đăng ký một model với trang admin. Khi model đã được đăng ký, bạn có thể sử dụng giao diện trang admin để thực hiện các thao tác CRUD trên dữ liệu.
 
-CRUD is an acronym that describes the primary functions of many websites. The acronym stands for:
+CRUD là một từ viết tắt mô tả các chức năng chính của nhiều trang web. CRUD là viết tắt của:
 
-- **Create** - A website can create data (i.e., insert data into the database)
-- **Read** - Users can see the data
-- **Update** - Data can be updated by users
-- **Delete** - A user can delete data from the system
+- **Create** - Một trang web có thể tạo dữ liệu (tức là chèn dữ liệu vào cơ sở dữ liệu)
+- **Read** - Người dùng có thể xem dữ liệu
+- **Update** - Dữ liệu có thể được cập nhật bởi người dùng
+- **Delete** - Người dùng có thể xóa dữ liệu khỏi hệ thống
 
-If you think about the actions that you take on a website, most actions will fall into one of those four categories.
+Nếu bạn nghĩ về các hành động mà bạn thực hiện trên một trang web, hầu hết các hành động sẽ thuộc một trong bốn loại trên.
 
-The admin site provides tools for doing all of those operations. There are a few main pages that you can navigate when working in a Django admin site that direct where the CRUD operations happen. These pages are available to you with very little effort on your part aside from the registration process that you’ll see in the next section.
+Trang admin cung cấp các công cụ để thực hiện tất cả các thao tác đó. Có một vài trang chính mà bạn có thể điều hướng khi làm việc với trang admin của Django, nơi các thao tác CRUD diễn ra. Những trang này có sẵn cho bạn mà bạn chỉ cần thực hiện rất ít thao tác ngoài việc đăng ký mà bạn sẽ thấy ở phần tiếp theo.
 
-1. Admin index page - This page will show all the models, grouped by the Django application they originate from, that are registered with the admin.
-2. Model list page - The list page shows rows of data from a model (i.e., a database table). From this page, an administrator can perform actions on multiple database records like deleting a set of records in a single operation.
-3. Add model page - The admin provides a page where new model instances can be created using automatically generated forms based on the model’s fields.
-4. Model change page - The change page lets you update an existing model instance (i.e., a database table row). From this page, you can also delete a model instance.
+1. Trang chỉ mục admin - Trang này sẽ hiển thị tất cả các model, được nhóm theo ứng dụng Django mà chúng xuất phát, đã được đăng ký với admin.
+2. Trang danh sách model - Trang danh sách hiển thị các dòng dữ liệu từ một model (tức là một bảng cơ sở dữ liệu). Từ trang này, quản trị viên có thể thực hiện các hành động trên nhiều bản ghi cơ sở dữ liệu như xóa một loạt bản ghi chỉ với một thao tác.
+3. Trang thêm model - Admin cung cấp một trang nơi bạn có thể tạo các instance model mới bằng các form được sinh tự động dựa trên các trường của model.
+4. Trang chỉnh sửa model - Trang chỉnh sửa cho phép bạn cập nhật một instance model hiện có (tức là một dòng trong bảng cơ sở dữ liệu). Từ trang này, bạn cũng có thể xóa một instance model.
 
-If you inspect this small set of pages, you’ll notice that every part of the CRUD acronym can occur in this admin site. The power to create and destroy is in your hands. 😈
+Nếu bạn xem xét bộ trang nhỏ này, bạn sẽ nhận ra rằng mọi phần của từ viết tắt CRUD đều có thể thực hiện trong trang admin này. Quyền tạo và xóa nằm trong tay bạn. 😈
 
-Now that we understand what is in the admin site, let’s focus on how to add your models to the admin.
+Bây giờ chúng ta đã hiểu những gì có trong trang admin, hãy tập trung vào cách thêm model của bạn vào admin.
 
-## Register A Model With The Admin
+## Đăng Ký Model Với Admin
 
-To make the admin site show your model data, we need to update `admin.py`. On a new application created with `startapp`, you’ll find that the `admin.py` file is largely empty. We need to provide a bit of glue so that the admin knows about a model.
+Để trang admin hiển thị dữ liệu model của bạn, chúng ta cần cập nhật file `admin.py`. Ở một ứng dụng mới tạo bằng `startapp`, bạn sẽ thấy file `admin.py` hầu như trống rỗng. Chúng ta cần thêm một chút “kết dính” để admin biết về một model.
 
-The admin site expects a `ModelAdmin` class for every model that you want to see displayed within the site.
+Trang admin mong đợi một class `ModelAdmin` cho mỗi model mà bạn muốn hiển thị trong trang.
 
-Let’s consider a crude modeling of a book.
+Hãy xem xét một ví dụ đơn giản về model hóa một cuốn sách.
 
 ```python
 # application/models.py
@@ -81,7 +81,7 @@ class Book(models.Model):
     )
 ```
 
-Now we can create a `ModelAdmin` class for the `Book` model.
+Bây giờ chúng ta có thể tạo một class `ModelAdmin` cho model `Book`.
 
 ```python
 # application/admin.py
@@ -94,12 +94,12 @@ class BookAdmin(admin.ModelAdmin):
     pass
 ```
 
-There are a couple of important items to observe with this `admin.py` file.
+Có một vài điểm quan trọng cần chú ý với file `admin.py` này.
 
-1. The `BookAdmin` is a subclass of `admin.ModelAdmin`.
-2. The `BookAdmin` is registered with the admin site by using the `admin.register` decorator.
+1. `BookAdmin` là một lớp con của `admin.ModelAdmin`.
+2. `BookAdmin` được đăng ký với trang admin bằng decorator `admin.register`.
 
-You can also register an admin class by calling `register` after the class if you don’t want to use a decorator.
+Bạn cũng có thể đăng ký một class admin bằng cách gọi `register` sau khi định nghĩa class nếu không muốn dùng decorator.
 
 ```python
 # application/admin.py
@@ -113,11 +113,11 @@ class BookAdmin(admin.ModelAdmin):
 admin.site.register(Book, BookAdmin)
 ```
 
-Now that we have a model registered with the admin site, how do we view it? Fire up your trusty development server with `runserver` and visit the URL that used to be `/admin/` (because you did change to something different from `/admin/`, right? Right!?).
+Bây giờ chúng ta đã có một model được đăng ký với trang admin, làm sao để xem nó? Hãy khởi động server phát triển với `runserver` và truy cập vào URL mà trước đây là `/admin/` (bởi vì bạn đã đổi sang một địa chỉ khác ngoài `/admin/`, đúng không? Đúng chứ!?).
 
-On this page, you’ll encounter a login screen. We haven’t worked through the authentication system yet, but, for now, we can understand that only user accounts that have a staff level permission can log in.
+Trên trang này, bạn sẽ gặp một màn hình đăng nhập. Chúng ta chưa tìm hiểu hệ thống xác thực, nhưng hiện tại bạn chỉ cần biết rằng chỉ những tài khoản người dùng có quyền staff mới có thể đăng nhập.
 
-Django provides a command that will let us create a user account with staff level permission and all other permissions. Like Linux operating systems, the user account with all permissions is called a superuser. You can create a superuser account with the `createsuperuser` command.
+Django cung cấp một lệnh cho phép chúng ta tạo tài khoản người dùng có quyền staff và tất cả các quyền khác. Giống như hệ điều hành Linux, tài khoản người dùng có mọi quyền được gọi là superuser. Bạn có thể tạo tài khoản superuser với lệnh `createsuperuser`.
 
 ```shell
 $ ./manage.py createsuperuser
@@ -128,21 +128,21 @@ Password (again):
 Superuser created successfully.
 ```
 
-With a superuser account available, you’re ready to log in to the admin site. Because you’ll be using a superuser account, you will have permission to see every model that is registered with the admin site.
+Khi đã có tài khoản superuser, bạn đã sẵn sàng đăng nhập vào trang admin. Vì bạn sử dụng tài khoản superuser, bạn sẽ có quyền xem mọi model đã được đăng ký với trang admin.
 
-Once you’ve logged in, you can view the `Book` model’s admin page. Poke around! Create a book with the “Add Book” button. View the list page. Edit the book. Delete the book. You can see that with a tiny amount of work on your part, Django gives you a full CRUD interface for interacting with your model.
+Sau khi đăng nhập, bạn có thể xem trang admin của model `Book`. Hãy thử tạo một cuốn sách với nút “Add Book”. Xem trang danh sách. Chỉnh sửa sách. Xóa sách. Bạn có thể thấy chỉ với một lượng công việc rất nhỏ, Django đã cung cấp cho bạn một giao diện CRUD đầy đủ để tương tác với model của mình.
 
-We added the most simple `ModelAdmin` possible. The body of the class was a `pass` instead of any attributes. Django gives us a ton of options to let us control how our admin pages for `Book` will behave. Let’s go on a tour of some commonly used admin attributes.
+Chúng ta vừa thêm một `ModelAdmin` đơn giản nhất có thể. Thân class chỉ có `pass` mà không có thuộc tính nào. Django cung cấp cho chúng ta rất nhiều tùy chọn để kiểm soát cách các trang admin cho `Book` hoạt động. Hãy cùng điểm qua một số thuộc tính admin thường dùng.
 
-## Customizing Your Admin
+## Tùy Biến Trang Admin Của Bạn
 
-Like many other parts of Django, the framework uses class level attributes to define the behavior of a class. Unlike forms and models where class level attributes are mostly fields that you’re defining for yourself, `ModelAdmin` classes provide values for attributes that are well defined in the documentation. These attributes act as hooks that let you customize the behavior of your admin pages.
+Giống như nhiều phần khác của Django, framework sử dụng các thuộc tính cấp class để xác định hành vi của một class. Khác với forms và models, nơi các thuộc tính cấp class chủ yếu là các trường mà bạn tự định nghĩa, các class `ModelAdmin` cung cấp giá trị cho các thuộc tính đã được định nghĩa rõ trong tài liệu. Các thuộc tính này đóng vai trò như các “hook” cho phép bạn tùy biến hành vi của các trang admin.
 
-Making effective admin pages is primarily about using these attributes so that the `ModelAdmin` class will do what you want. As such, mastering the Django admin site is all about mastering the `ModelAdmin` options that are listed [in the documentation](https://docs.djangoproject.com/en/4.1/ref/contrib/admin/#modeladmin-options). That list is long, but don’t be discouraged! I think that you can get about 80% of the value out of the Django admin by knowing only a handful of the options.
+Việc tạo ra các trang admin hiệu quả chủ yếu là sử dụng các thuộc tính này để class `ModelAdmin` hoạt động như bạn muốn. Do đó, làm chủ trang admin Django là làm chủ các tùy chọn `ModelAdmin` được liệt kê [trong tài liệu](https://docs.djangoproject.com/en/4.1/ref/contrib/admin/#modeladmin-options). Danh sách này khá dài, nhưng đừng nản chí! Tôi nghĩ bạn có thể tận dụng khoảng 80% giá trị của Django admin chỉ với một số ít tùy chọn.
 
-When you poked around on the `Book` pages, you probably noticed that the listing of books is quite bland. The default list looks something like a list of links that show `Book object (#)`. We can change the look and utility of this page with a few different settings.
+Khi bạn thử nghịch các trang `Book`, có lẽ bạn nhận thấy danh sách sách khá đơn điệu. Danh sách mặc định trông giống như một loạt liên kết hiển thị `Book object (#)`. Chúng ta có thể thay đổi giao diện và tính hữu dụng của trang này với một vài thiết lập khác nhau.
 
-Let’s start with `list_display`. This `ModelAdmin` attribute controls which fields will appear on the list page. With our book model example, we could add the title to the page.
+Hãy bắt đầu với `list_display`. Thuộc tính `ModelAdmin` này kiểm soát những trường nào sẽ xuất hiện trên trang danh sách. Với ví dụ model sách, chúng ta có thể thêm trường tiêu đề vào trang.
 
 ```python
 # application/admin.py
@@ -152,9 +152,9 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('id', 'title')
 ```
 
-Django will make whatever is listed first into the link that a user can click to view the admin detail page for a model record. In this example, I’m using the `id` field as the link, but I could have used a single element tuple of `('title',)` to make the page show only the titles with the titles being the links.
+Django sẽ biến trường được liệt kê đầu tiên thành liên kết mà người dùng có thể nhấp để xem trang chi tiết admin cho bản ghi model. Trong ví dụ này, tôi dùng trường `id` làm liên kết, nhưng tôi cũng có thể dùng tuple chỉ có một phần tử `('title',)` để trang chỉ hiển thị tiêu đề và tiêu đề là liên kết.
 
-Sometimes you will have a type of model where you only want to see a subset of the records. Suppose that the `Book` model has a category field.
+Đôi khi bạn sẽ có loại model mà bạn chỉ muốn xem một tập con các bản ghi. Giả sử model `Book` có thêm trường category.
 
 ```python
 # application/models.py
@@ -168,7 +168,7 @@ class Book(models.Model):
         MYSTERY = 3
         NON_FICTION = 4
 
-    # ... title and author from before
+    # ... title và author như trước
 
     category = models.IntegerField(
         choices=Category.choices,
@@ -176,7 +176,7 @@ class Book(models.Model):
     )
 ```
 
-By using the `list_filter` attribute, we can give the admin list page the ability to filter to the category that we want.
+Bằng cách sử dụng thuộc tính `list_filter`, chúng ta có thể cho phép trang danh sách admin lọc theo category mà mình muốn.
 
 ```python
 # application/admin.py
@@ -187,9 +187,9 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('category',)
 ```
 
-The option will put a sidebar on the right side of the admin page. In that sidebar, you would see the categories that I included in the `Category` choices class. If I click on the “Fantasy” link, then my browser will navigate to `/admin/application/book/?category__exact=2` and will only display database rows that have a matching category.
+Tùy chọn này sẽ đặt một thanh bên ở phía bên phải trang admin. Trong thanh bên đó, bạn sẽ thấy các category mà tôi đã đưa vào class choices `Category`. Nếu tôi nhấp vào liên kết “Fantasy”, trình duyệt sẽ chuyển đến `/admin/application/book/?category__exact=2` và chỉ hiển thị các dòng dữ liệu có category phù hợp.
 
-This isn’t the only kind of filtering that the admin can do. We can also filter in time with the `date_hierarchy` field. Next, let’s give the model a `published_date`.
+Đây không phải là kiểu lọc duy nhất mà admin có thể làm. Chúng ta cũng có thể lọc theo thời gian với trường `date_hierarchy`. Tiếp theo, hãy thêm trường `published_date` cho model.
 
 ```python
 # application/models.py
@@ -202,7 +202,7 @@ class Book(models.Model):
     )
 ```
 
-We can also change the `ModelAdmin` to use the new field.
+Chúng ta cũng có thể thay đổi `ModelAdmin` để sử dụng trường mới này.
 
 ```python
 # application/admin.py
@@ -214,11 +214,11 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ("category",)
 ```
 
-By including the `date_hierarchy` attribute, the list page will contain some new user interface elements. Across the top of the page will be selectors to help filter down to the right time range. This is a very useful way to look through your database table.
+Bằng cách thêm thuộc tính `date_hierarchy`, trang danh sách sẽ có thêm một số thành phần giao diện mới. Ở phía trên cùng trang sẽ có các bộ chọn giúp lọc theo khoảng thời gian mong muốn. Đây là một cách rất hữu ích để duyệt qua bảng dữ liệu của bạn.
 
-We can still go further. Perhaps we want all of the books to be sorted by their titles. Even if the `ordering` attribute is not set on the model’s meta options, the `ModelAdmin` has its own `ordering` attribute.
+Chúng ta vẫn có thể đi xa hơn nữa. Có thể bạn muốn tất cả sách được sắp xếp theo tiêu đề. Ngay cả khi thuộc tính `ordering` không được đặt trong meta options của model, `ModelAdmin` cũng có thuộc tính `ordering` riêng.
 
-_What’s “meta?”_ Aside from fields, a Django model can set extra information about how to handle data. These extra options are the “meta” attributes of the model. A Django model adds meta info by including a nested `Meta` class on the model. Check out the [Model Meta options](https://docs.djangoproject.com/en/4.1/ref/models/options/) to see what other features are available to customize model behavior.
+_“Meta” là gì?_ Ngoài các trường, một model Django có thể thiết lập thông tin bổ sung về cách xử lý dữ liệu. Các tùy chọn bổ sung này là các thuộc tính “meta” của model. Một model Django thêm thông tin meta bằng cách khai báo một class lồng `Meta` trong model. Xem [Model Meta options](https://docs.djangoproject.com/en/4.1/ref/models/options/) để biết thêm các tính năng tùy biến hành vi model.
 
 ```python
 # application/admin.py
@@ -231,9 +231,9 @@ class BookAdmin(admin.ModelAdmin):
     ordering = ("title",)
 ```
 
-With this setting, all of the books on the page will be ordered by the title. The `ordering` attribute will add an appropriate `ORDER BY` clause to the database query via the admin-generated ORM `QuerySet`.
+Với thiết lập này, tất cả sách trên trang sẽ được sắp xếp theo tiêu đề. Thuộc tính `ordering` sẽ thêm một mệnh đề `ORDER BY` phù hợp vào truy vấn cơ sở dữ liệu thông qua `QuerySet` do admin sinh ra.
 
-The final convenient list page option that I want to highlight is the `search_fields` option.
+Tùy chọn cuối cùng tiện lợi cho trang danh sách mà tôi muốn nhấn mạnh là `search_fields`.
 
 ```python
 # application/admin.py
@@ -247,9 +247,9 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ("author",)
 ```
 
-With this option, this list page will add a search bar to the top of the page. In the example, I added the ability to search based on the author of the book.
+Với tùy chọn này, trang danh sách sẽ có thêm một thanh tìm kiếm ở phía trên. Trong ví dụ này, tôi thêm khả năng tìm kiếm dựa trên tác giả của sách.
 
-When you search, your resulting URL could look like `/admin/application/book/?q=tolkien`. Django will do a case insensitive search on the field. The `QuerySet` would be something like:
+Khi bạn tìm kiếm, URL kết quả có thể trông như `/admin/application/book/?q=tolkien`. Django sẽ thực hiện tìm kiếm không phân biệt hoa thường trên trường đó. `QuerySet` sẽ giống như:
 
 ```python
 search_results = Book.objects.filter(
@@ -257,11 +257,11 @@ search_results = Book.objects.filter(
 )
 ```
 
-The results wouldn’t compete well compared to a dedicated search engine, but getting a decent search feature for a single line of code is awesome!
+Kết quả này sẽ không thể cạnh tranh với một công cụ tìm kiếm chuyên dụng, nhưng có được một tính năng tìm kiếm ổn chỉ với một dòng mã là rất tuyệt!
 
-The `ModelAdmin` also includes some useful settings to modify the behavior of the detail page of particular database records.
+`ModelAdmin` cũng bao gồm một số thiết lập hữu ích để thay đổi hành vi của trang chi tiết của từng bản ghi cơ sở dữ liệu.
 
-For instance, let’s assume that the `Book` model has a `ForeignKey` to track an editor.
+Ví dụ, giả sử model `Book` có một trường `ForeignKey` để theo dõi biên tập viên.
 
 ```python
 # application/models.py
@@ -269,7 +269,7 @@ from django.contrib.auth.models import User
 
 class Book(models.Model):
     # ... title, author, category
-    # published_date from before
+    # published_date như trước
 
     editor = models.ForeignKey(
         User,
@@ -279,9 +279,9 @@ class Book(models.Model):
     )
 ```
 
-On the admin page for an individual book, the `editor` field will be a dropdown by default. This field will include every `User` record in your application. If you have a popular site with thousands or millions of users, the page would be crushed under the weight of loading all those user records into that dropdown.
+Trên trang admin của một cuốn sách cụ thể, trường `editor` sẽ mặc định là một dropdown. Trường này sẽ bao gồm mọi bản ghi `User` trong ứng dụng của bạn. Nếu bạn có một trang phổ biến với hàng ngàn hoặc hàng triệu người dùng, trang này sẽ bị “nghẽn” khi tải tất cả các bản ghi user vào dropdown đó.
 
-Instead of having a useless page that you can’t load, you can use `raw_id_fields`.
+Thay vì có một trang vô dụng không thể tải nổi, bạn có thể dùng `raw_id_fields`.
 
 ```python
 # application/admin.py
@@ -296,24 +296,24 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ("author",)
 ```
 
-By using `raw_id_fields`, the admin changes from using a dropdown to using a basic text input which will display the foreign key of the user record. Seeing a foreign key number is visually less useful than seeing the actual name selected in a dropdown, but the `raw_id_fields` option adds two features to alleviate this.
+Bằng cách sử dụng `raw_id_fields`, admin sẽ chuyển từ dropdown sang một ô nhập liệu cơ bản hiển thị khóa ngoại của bản ghi user. Việc nhìn thấy một số khóa ngoại thì không trực quan bằng việc thấy tên thực tế trong dropdown, nhưng tùy chọn `raw_id_fields` bổ sung hai tính năng để cải thiện điều này.
 
-1. A search icon is present. If users click on the icon, a popup window appears to let the user search for a record in a dedicated selection interface.
-2. If the record already has a foreign key for the field, then the string representation of the record will display next to the icon.
+1. Có một biểu tượng tìm kiếm. Nếu người dùng nhấp vào biểu tượng này, một cửa sổ popup sẽ xuất hiện cho phép người dùng tìm kiếm bản ghi trong một giao diện chọn riêng.
+2. Nếu bản ghi đã có khóa ngoại cho trường này, thì chuỗi biểu diễn của bản ghi sẽ hiển thị bên cạnh biểu tượng.
 
-Another option that can be useful is the `prepopulated_fields` option. Back in our discussion of URLs, we talked about slug fields. Slugs are often used to make pleasant URLs for detail pages showing an individual model instance. Let’s add a `SlugField` to the `Book` model.
+Một tùy chọn khác cũng hữu ích là `prepopulated_fields`. Ở phần bàn về URLs, chúng ta đã nói về trường slug. Slug thường được dùng để tạo URL thân thiện cho trang chi tiết hiển thị một instance model. Hãy thêm trường `SlugField` vào model `Book`.
 
 ```python
 # application/models.py
 
 class Book(models.Model):
     # ... title, author, category
-    # published_date, editor from before
+    # published_date, editor như trước
 
     slug = models.SlugField()
 ```
 
-What is the benefit of `prepopulated_fields`? By using this option, we can instruct the admin site to populate the `slug` field based on the `title` of the book. Here’s the update to the `ModelAdmin`.
+Lợi ích của `prepopulated_fields` là gì? Bằng cách sử dụng tùy chọn này, chúng ta có thể hướng dẫn trang admin tự động điền trường `slug` dựa trên trường `title` của sách. Đây là cập nhật cho `ModelAdmin`.
 
 ```python
 # application/admin.py
@@ -329,11 +329,11 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ("author",)
 ```
 
-Now when we want to add a new book in the admin, Django will use some JavaScript to update the slug field dynamically as we type the title!
+Bây giờ khi bạn muốn thêm một cuốn sách mới trong admin, Django sẽ sử dụng JavaScript để cập nhật trường slug động khi bạn gõ tiêu đề!
 
-To this point, every attribute that we’ve added to the admin is static configuration. What do you do if you want to vary how the admin pages behave based on something dynamic?
+Đến đây, mọi thuộc tính mà chúng ta thêm vào admin đều là cấu hình tĩnh. Nếu bạn muốn thay đổi hành vi các trang admin dựa trên điều gì đó động thì sao?
 
-Thankfully, the Django team thought of that too. All of the options that we’ve examined have an equivalent method you can override that is prefixed with `get_`. For instance, if we want to control what fields users see on the list page based on who they are, we would implement `get_list_display`. In that method, we would return a tuple based on the user’s access level.
+May mắn thay, nhóm phát triển Django cũng đã nghĩ đến điều này. Tất cả các tùy chọn mà chúng ta vừa xem đều có một phương thức tương ứng mà bạn có thể override, được bắt đầu bằng tiền tố `get_`. Ví dụ, nếu bạn muốn kiểm soát các trường mà người dùng nhìn thấy trên trang danh sách dựa trên họ là ai, bạn sẽ cài đặt `get_list_display`. Trong phương thức đó, bạn sẽ trả về một tuple dựa trên quyền truy cập của người dùng.
 
 ```python
 # application/admin.py
@@ -357,9 +357,9 @@ class BookAdmin(admin.ModelAdmin):
         return ('id', 'title')
 ```
 
-One final attribute to consider is called `inlines`. I don’t reach for this option often, but it’s a convenient way to see _other_ models that are related to a particular model.
+Một thuộc tính cuối cùng cần xem xét là `inlines`. Tôi không thường xuyên dùng tùy chọn này, nhưng nó là một cách tiện lợi để xem _các_ model khác có liên quan đến một model cụ thể.
 
-Suppose our sample application has reviews for books. We could add a model like:
+Giả sử ứng dụng mẫu của chúng ta có các đánh giá cho sách. Chúng ta có thể thêm một model như sau:
 
 ```python
 # application/models.py
@@ -373,7 +373,7 @@ class Review(models.Model):
     comment = models.TextField()
 ```
 
-To show other models on a detail page, we need to create an inline class and include it with the `ModelAdmin`. The result looks like:
+Để hiển thị các model khác trên trang chi tiết, chúng ta cần tạo một class inline và đưa nó vào `ModelAdmin`. Kết quả như sau:
 
 ```python
 # application/admin.py
@@ -396,19 +396,19 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ("author",)
 ```
 
-By adding the inline class to the list of `inlines`, the detail page will show any reviews that are associated with a book. Additionally, you could create new reviews from the detail page since the admin will include a few blank forms by default.
+Bằng cách thêm class inline vào danh sách `inlines`, trang chi tiết sẽ hiển thị mọi đánh giá liên quan đến một cuốn sách. Ngoài ra, bạn cũng có thể tạo đánh giá mới ngay từ trang chi tiết vì admin sẽ tự động thêm một vài form trống.
 
-We’ve covered many options of the `ModelAdmin` class that you can use to customize your admin experience with common functions that many admin tools require. **What about the _uncommon_ functions?** For extra customization, we can use admin actions.
+Chúng ta đã đề cập đến nhiều tùy chọn của class `ModelAdmin` mà bạn có thể sử dụng để tùy biến trải nghiệm admin với các chức năng phổ biến mà nhiều công cụ quản trị yêu cầu. **Vậy còn các chức năng _không phổ biến_ thì sao?** Để tùy biến thêm, chúng ta có thể sử dụng các hành động admin.
 
-## Taking Action In The Admin
+## Thực Hiện Hành Động Trong Admin
 
-When you want to do work related to specific records in your database, Django provides some techniques to customize your site and provide those capabilities. These customizations are called _actions_ and they appear on the list page above the list of records.
+Khi bạn muốn thực hiện các công việc liên quan đến các bản ghi cụ thể trong cơ sở dữ liệu, Django cung cấp một số kỹ thuật để tùy biến trang và cung cấp các khả năng đó. Các tùy biến này được gọi là _actions_ (hành động) và chúng xuất hiện trên trang danh sách phía trên danh sách bản ghi.
 
-In the default admin site, there is an action that lets administrators delete records. If you select some rows with the checkboxes on the left hand side, select “Delete selected <object type>”, then click “Go”, you will be presented with a page that asks for confirmation about deleting the rows you picked.
+Trong trang admin mặc định, có một hành động cho phép quản trị viên xóa bản ghi. Nếu bạn chọn một số dòng bằng các checkbox ở bên trái, chọn “Delete selected <object type>”, rồi nhấn “Go”, bạn sẽ được chuyển đến một trang xác nhận việc xóa các dòng đã chọn.
 
-The same kind of flow could be applied for any actions that you want to perform on database records. We can do this by adding a method on our `ModelAdmin`.
+Quy trình tương tự có thể áp dụng cho bất kỳ hành động nào bạn muốn thực hiện trên các bản ghi cơ sở dữ liệu. Chúng ta có thể làm điều này bằng cách thêm một phương thức vào `ModelAdmin`.
 
-The method must follow this interface:
+Phương thức này phải tuân theo giao diện sau:
 
 ```python
 @admin.register(MyModel)
@@ -420,26 +420,26 @@ class MyModelAdmin(admin.ModelAdmin):
             request: HttpRequest,
             queryset: QuerySet
         ) -> Optional[HttpResponse]:
-        # Do the work here.
+        # Thực hiện công việc ở đây.
         ...
 ```
 
-The queryset will represent the set of model records that the user selected. If the method returns `None`, then the user will be returned to the same admin page. If the method returns an `HttpResponse`, then the user will see that response (which is what happens with the delete confirmation page of the delete action). Whatever you do between the method being called and the method returning is up to you.
+Queryset sẽ đại diện cho tập hợp các bản ghi model mà người dùng đã chọn. Nếu phương thức trả về `None`, người dùng sẽ được trả về cùng trang admin. Nếu phương thức trả về một `HttpResponse`, người dùng sẽ thấy response đó (giống như trang xác nhận xóa của hành động xóa). Bạn có thể làm bất cứ điều gì giữa lúc phương thức được gọi và lúc nó trả về.
 
-Maybe our sample book application could set a book to premiere on the site as an important new available title. In this hypothetical scenario, we might have code that unsets any older premiere book or sends out emails to people who have expressed interest when new premieres are announced.
+Có thể ứng dụng sách mẫu của chúng ta muốn đặt một cuốn sách làm sách nổi bật trên trang như một tựa sách mới quan trọng. Trong kịch bản giả định này, chúng ta có thể có mã để bỏ chọn các sách nổi bật cũ hoặc gửi email cho những người quan tâm khi có sách nổi bật mới.
 
-For this scenario, we could add an action that would do these things.
+Với kịch bản này, chúng ta có thể thêm một action để thực hiện các việc đó.
 
 ```python
 # application/admin.py
 
 def update_premiere(book):
-    """Pretend to update the book to be a premiere.
+    """Giả vờ cập nhật sách thành sách nổi bật.
 
-    This function is to make the demo clear.
-    In a real application, this could be a manager method instead
-    which would update the book and trigger the email notifications
-    (e.g., `Book.objects.update_premiere(book)`).
+    Hàm này chỉ để minh họa cho rõ ràng.
+    Trong ứng dụng thực tế, có thể là một phương thức manager
+    cập nhật sách và gửi thông báo email
+    (ví dụ: `Book.objects.update_premiere(book)`).
     """
     print(f"Update {book.title} state to change premiere books.")
     print("Call some background task to notify interested users via email.")
@@ -466,23 +466,23 @@ class BookAdmin(admin.ModelAdmin):
             update_premiere(book)
 ```
 
-Django will use the name of the method to set the label for the dropdown on the list page. In this case, the action label will be “Set premiere”.
+Django sẽ dùng tên phương thức để đặt nhãn cho dropdown trên trang danh sách. Trong trường hợp này, nhãn hành động sẽ là “Set premiere”.
 
-We were able to extend the admin and hook into the page’s user interface by defining a method and declaring it as an action. This is a powerful system to give administrators control and allow them to operate in custom ways on the data in their applications.
+Chúng ta đã có thể mở rộng admin và tích hợp vào giao diện người dùng của trang bằng cách định nghĩa một phương thức và khai báo nó là một action. Đây là một hệ thống mạnh mẽ để trao quyền kiểm soát cho quản trị viên và cho phép họ thao tác theo cách tùy biến trên dữ liệu trong ứng dụng.
 
-## Summary
+## Tóm Tắt
 
-In this article, we looked at the built-in Django administrator’s site. This powerful extension gives us the ability to create, view, edit, and delete rows from database tables associated with your application’s models.
+Trong bài viết này, chúng ta đã xem xét trang quản trị tích hợp sẵn của Django. Phần mở rộng mạnh mẽ này cho phép chúng ta tạo, xem, chỉnh sửa và xóa các dòng khỏi các bảng cơ sở dữ liệu liên kết với các model của ứng dụng.
 
-We’ve covered:
+Chúng ta đã đề cập đến:
 
-- What the Django admin site is and how to set it up
-- How to make your models appear in the admin
-- How to customize your admin pages quickly with options provided by the `ModelAdmin` class
-- How to create extra actions that enable you to do work on your model records
+- Django admin là gì và cách thiết lập nó
+- Cách làm cho model của bạn xuất hiện trong admin
+- Cách tùy biến nhanh các trang admin với các tùy chọn do class `ModelAdmin` cung cấp
+- Cách tạo các hành động bổ sung cho phép bạn thao tác trên các bản ghi model
 
-Next time we will cover the anatomy of a Django application. A Django project is composed of many applications. We will explore:
+Lần tới chúng ta sẽ tìm hiểu giải phẫu một ứng dụng Django. Một dự án Django được cấu thành từ nhiều ứng dụng. Chúng ta sẽ khám phá:
 
-- The conventional structure of a Django app
-- How Django identifies and loads applications
-- Why applications are crucial for the Django ecosystem
+- Cấu trúc thông thường của một ứng dụng Django
+- Cách Django nhận diện và tải các ứng dụng
+- Tại sao các ứng dụng lại quan trọng đối với hệ sinh thái Django
