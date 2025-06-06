@@ -1,120 +1,120 @@
-# From Browser To Django
+# Từ Trình Duyệt Đến Django
 
-Maybe you have heard about [Django](https://www.djangoproject.com/ "‌") and that it can help you build websites. You might be new to Python, new to web development, or new to programming.
+Có thể bạn đã nghe về [Django](https://www.djangoproject.com/ "‌") và rằng nó có thể giúp bạn xây dựng website. Bạn có thể mới làm quen với Python, mới phát triển web, hoặc mới lập trình.
 
-This new series, [Understand Django](https://www.mattlayman.com/understand-django/ "‌"), will show you what Django is all about. Throughout this series, I will reveal how Django is a powerful tool that can unlock the potential of anyone interested in making applications on the internet. Django is used by companies like Instagram, Eventbrite, Disqus, and Udemy, and is also a great tool for individuals like you.
+Loạt bài mới này, [Hiểu về Django](https://www.mattlayman.com/understand-django/ "‌"), sẽ cho bạn thấy Django là gì. Xuyên suốt loạt bài này, tôi sẽ chỉ ra Django là một công cụ mạnh mẽ có thể khai phá tiềm năng của bất kỳ ai quan tâm đến việc tạo ứng dụng trên internet. Django được sử dụng bởi các công ty như Instagram, Eventbrite, Disqus, và Udemy, đồng thời cũng là một công cụ tuyệt vời cho cá nhân như bạn.
 
-We’re going to take a high-level approach to learning Django. Rather than starting at the bottom with all the pieces of Django, I’ll give you the big picture, then explore each layer in more detail to reveal how much Django does for developers and the power Django has under the hood.
+Chúng ta sẽ tiếp cận Django ở mức độ tổng quan. Thay vì bắt đầu từ dưới lên với tất cả các thành phần của Django, tôi sẽ cho bạn cái nhìn tổng thể, sau đó khám phá từng lớp chi tiết hơn để chỉ ra Django làm được bao nhiêu cho lập trình viên và sức mạnh mà Django có bên trong.
 
-Let’s get started from the very top of a user’s internet experience: at the web browser.
+Hãy bắt đầu từ trải nghiệm internet của người dùng: tại trình duyệt web.
 
-1. From Browser To Django
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/ "‌")
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/ "‌")
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/ "‌")
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/ "‌")
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/ "‌")
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/ "‌")
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/ "‌")
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/ "‌")
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/ "‌")
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/ "‌")
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/ "‌")
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/ "‌")
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/ "‌")
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/ "‌")
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/ "‌")
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/ "‌")
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/ "‌")
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/ "‌")
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/ "‌")
+1. Từ Trình Duyệt Đến Django
+2. [URL Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/ "‌")
+3. [Nhìn Nhận Về Views](https://www.mattlayman.com/understand-django/views-on-views/ "‌")
+4. [Templates Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/ "‌")
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/ "‌")
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/ "‌")
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/ "‌")
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/ "‌")
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/ "‌")
+10. [Middleware Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/ "‌")
+11. [Phục Vụ Tệp Tĩnh](https://www.mattlayman.com/understand-django/serving-static-files/ "‌")
+12. [Kiểm Thử Ứng Dụng Của Bạn](https://www.mattlayman.com/understand-django/test-your-apps/ "‌")
+13. [Triển Khai Trang Web Trực Tiếp](https://www.mattlayman.com/understand-django/deploy-site-live/ "‌")
+14. [Dữ Liệu Theo Từng Khách Truy Cập Với Sessions](https://www.mattlayman.com/understand-django/sessions/ "‌")
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/ "‌")
+16. [Sử Dụng Tệp Người Dùng](https://www.mattlayman.com/understand-django/media-files/ "‌")
+17. [Điều Khiển Ứng Dụng Của Bạn](https://www.mattlayman.com/understand-django/command-apps/ "‌")
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/ "‌")
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/ "‌")
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/ "‌")
 
-## Making A Browser Request
+## Tạo Một Yêu Cầu Trình Duyệt
 
-Django is a web framework, but what the heck does that even mean? How do websites work? I’m not going to be able to walk through all the details, but this post will lay down the breadcrumbs to build your understanding. We’ll look at the way your web browser requests data from the internet and the “plumbing” needed to make that work. Equipped with the key words and acronyms found in this chapter, you should be able to start your own research on these topics.
+Django là một framework web, nhưng điều đó thực sự có nghĩa là gì? Website hoạt động như thế nào? Tôi sẽ không thể đi qua mọi chi tiết, nhưng bài viết này sẽ đặt nền móng để bạn xây dựng sự hiểu biết của mình. Chúng ta sẽ xem cách trình duyệt web của bạn yêu cầu dữ liệu từ internet và “đường ống” cần thiết để điều đó hoạt động. Được trang bị các từ khóa và từ viết tắt trong chương này, bạn sẽ có thể tự nghiên cứu thêm về các chủ đề này.
 
-The internet works by fulfilling a user’s desire for sending and receiving information. That “information” takes many different forms. It might be:
+Internet hoạt động bằng cách đáp ứng mong muốn gửi và nhận thông tin của người dùng. “Thông tin” đó có nhiều dạng khác nhau. Nó có thể là:
 
-- Cat videos on YouTube
-- Political ramblings from social media
-- Profiles of other people on dating sites
+- Video mèo trên YouTube
+- Những dòng trạng thái chính trị trên mạng xã hội
+- Hồ sơ của người khác trên các trang hẹn hò
 
-Whatever people are looking for, the information is transferred via the same mechanisms. In internet-speak, all types of information and data fall under the name _resource_.
+Dù mọi người tìm kiếm gì, thông tin đều được truyền qua cùng một cơ chế. Trong ngôn ngữ internet, mọi loại thông tin và dữ liệu đều được gọi là _resource_ (tài nguyên).
 
-The way we get resources are with [Uniform Resource Locators](https://en.wikipedia.org/wiki/URL "‌") or URLs, for short. You know what URLs are, even if you didn’t know them by name.
+Cách chúng ta lấy tài nguyên là thông qua [Uniform Resource Locators](https://en.wikipedia.org/wiki/URL "‌") hay gọi tắt là URL. Bạn biết URL là gì, dù có thể bạn chưa biết tên gọi của nó.
 
 - [https://en.wikipedia.org/](https://en.wikipedia.org/ "smartCard-inline")
 - [https://www.djangoproject.com/](https://www.djangoproject.com/ "smartCard-inline")
 - [https://www.mattlayman.com/img/django.png](https://www.mattlayman.com/img/django.png "‌")
 
-These are all examples of URLs. Often we call them web addresses because they’re very similar to postal addresses. A URL is the address of some resource on the internet. When you hit _Enter_ on the address bar of your browser, you’re saying “Please browser, go get me this.” In other words, we make a _request_ from the browser. This request starts a large chain of events from your browser to the website at that URL so that the resource from the site can get to your eyeballs.
+Đây đều là ví dụ về URL. Thường chúng ta gọi chúng là địa chỉ web vì chúng rất giống với địa chỉ bưu điện. Một URL là địa chỉ của một tài nguyên nào đó trên internet. Khi bạn nhấn _Enter_ trên thanh địa chỉ của trình duyệt, bạn đang nói “Làm ơn trình duyệt, hãy lấy cái này cho tôi.” Nói cách khác, chúng ta tạo ra một _yêu cầu_ từ trình duyệt. Yêu cầu này bắt đầu một chuỗi sự kiện lớn từ trình duyệt của bạn đến website tại URL đó để tài nguyên từ trang web có thể đến với bạn.
 
-What’s in this chain of events? _Loads of things are there!_ We’ll gloss over many of the layers in this discussion because I’m guessing you aren’t planning to get down to the level of how electrical signals work in networking cables. Instead, let’s focus on two primary parts of the chain for now: **DNS** and **HTTP**.
+Có gì trong chuỗi sự kiện này? _Rất nhiều thứ!_ Chúng ta sẽ lướt qua nhiều lớp trong phần này vì tôi đoán bạn không định tìm hiểu đến mức tín hiệu điện hoạt động thế nào trong dây mạng. Thay vào đó, hãy tập trung vào hai phần chính của chuỗi này: **DNS** và **HTTP**.
 
-### Names Names Names
+### Tên, Tên, Tên
 
-A URL represents a resource that you want from the internet. How does the internet know where it comes from? That’s where DNS comes in. DNS stands for [Domain Name System](https://en.wikipedia.org/wiki/Domain_Name_System "‌"). The important word there is “Name.” Let’s return to the address analogy.
+Một URL đại diện cho tài nguyên bạn muốn lấy từ internet. Làm sao internet biết nó đến từ đâu? Đó là lúc DNS xuất hiện. DNS là viết tắt của [Domain Name System](https://en.wikipedia.org/wiki/Domain_Name_System "‌"). Từ quan trọng ở đây là “Name” (Tên). Hãy quay lại ví dụ về địa chỉ bưu điện.
 
-In a postal address (at least from a US perspective), there is the street, city, and state. We might write it like:
+Trong một địa chỉ bưu điện (ít nhất là ở Mỹ), có đường, thành phố và bang. Chúng ta có thể viết như sau:
 
 ```txt
 123 Main St., Springfield, IL
 ```
 
-This address goes from most narrow to most broad. 123 Main St. is in the city of Springfield in the state of Illinois (IL).
+Địa chỉ này đi từ hẹp nhất đến rộng nhất. 123 Main St. nằm ở thành phố Springfield, thuộc bang Illinois (IL).
 
-Likewise, a URL fits into a similar format.
+Tương tự, một URL cũng có định dạng như vậy.
 
 ```txt
 www.example.com
 ```
 
-The terminology is different, but the concept of going from narrow to broad is the same. Each piece between periods is a type of _domain_. Let’s look at them in reverse order.
+Thuật ngữ thì khác, nhưng ý tưởng từ hẹp đến rộng là giống nhau. Mỗi phần giữa các dấu chấm là một loại _domain_ (miền). Hãy xem chúng theo thứ tự ngược lại.
 
-- `com` is considered a [Top Level Domain](https://en.wikipedia.org/wiki/Top-level_domain "‌"), TLD. TLDs are carefully managed by a special group called [ICANN](https://www.icann.org/ "‌").
-- `example` is the domain name. This is the primary identity of a service on the internet as it is the specific identifier which a user would likely recognize.
-- `www` is considered the _subdomain_ of a domain. A domain might have many of these like `www`, `m`, `mail`, `wiki` or whatever a domain owner might want to name them. Subdomains can also be more than one level deep so `a.b.example.com` is valid, and `a` is a subdomain of `b.example.com` and `b` is a subdomain of `example.com`.
+- `com` được coi là [Top Level Domain](https://en.wikipedia.org/wiki/Top-level_domain "‌"), TLD. Các TLD được quản lý chặt chẽ bởi một nhóm đặc biệt gọi là [ICANN](https://www.icann.org/ "‌").
+- `example` là tên miền. Đây là nhận diện chính của một dịch vụ trên internet vì nó là định danh cụ thể mà người dùng có thể nhận ra.
+- `www` được coi là _subdomain_ (tên miền phụ) của một domain. Một domain có thể có nhiều subdomain như `www`, `m`, `mail`, `wiki` hoặc bất cứ tên gì chủ sở hữu domain muốn. Subdomain cũng có thể nhiều cấp, nên `a.b.example.com` là hợp lệ, và `a` là subdomain của `b.example.com`, còn `b` là subdomain của `example.com`.
 
-Domain names are _not_ how computers communicate. The domain name is something “friendly” for a human. Networking systems are designed to work with numbers so those domain names must be translated into something the networking system can use. To do this, the internet uses a system of DNS servers to act as the translation layer between domain names and the numbers that computer networks use. A server is a special purpose computer designed to provide services for other devices called clients.
+Tên miền _không phải_ là cách máy tính giao tiếp. Tên miền là thứ “thân thiện” cho con người. Hệ thống mạng được thiết kế để làm việc với các con số nên các tên miền phải được chuyển thành thứ mà hệ thống mạng có thể dùng. Để làm điều này, internet sử dụng một hệ thống các máy chủ DNS để làm lớp chuyển đổi giữa tên miền và các con số mà mạng máy tính sử dụng. Một server là máy tính chuyên dụng cung cấp dịch vụ cho các thiết bị khác gọi là client.
 
-Maybe you’ve seen these networking numbers. The numbers are called IP addresses, short for [Internet Protocol](https://en.wikipedia.org/wiki/Internet_Protocol "‌") addresses. Common examples would include:
+Có thể bạn đã từng thấy các con số mạng này. Chúng được gọi là địa chỉ IP, viết tắt của [Internet Protocol](https://en.wikipedia.org/wiki/Internet_Protocol "‌"). Một số ví dụ phổ biến:
 
-- `127.0.0.1` as the address that your computer has _for itself_ on its internal network.
-- `192.168.0.1` as a default address that a home router might use.
+- `127.0.0.1` là địa chỉ mà máy tính của bạn _tự cấp_ cho chính nó trên mạng nội bộ.
+- `192.168.0.1` là địa chỉ mặc định mà router gia đình thường dùng.
 
-The IP address examples above are special because those addresses are in specially designated [subnetworks](https://en.wikipedia.org/wiki/Subnetwork "‌"), but we’ll set that tangent aside. You can delve deeper on that topic on your own if you would like.
+Các địa chỉ IP trên là đặc biệt vì chúng nằm trong các [subnetworks](https://en.wikipedia.org/wiki/Subnetwork "‌") được chỉ định riêng, nhưng chúng ta sẽ không bàn sâu về chủ đề đó ở đây. Bạn có thể tự tìm hiểu thêm nếu muốn.
 
-Private networks have IP addresses like the two examples I listed above. Machines on public networks also have IP addresses. For instance, `172.253.115.105` is an IP address for `www.google.com` at the time of this writing.
+Mạng riêng có các địa chỉ IP như hai ví dụ trên. Máy trên mạng công cộng cũng có địa chỉ IP. Ví dụ, `172.253.115.105` là địa chỉ IP của `www.google.com` tại thời điểm tôi viết bài này.
 
-If you’d like to figure out the IP address of a domain name, you can install a popular tool named `dig`. I found Google’s IP address by running this command:
+Nếu bạn muốn biết địa chỉ IP của một tên miền, bạn có thể cài công cụ phổ biến tên là `dig`. Tôi đã tìm địa chỉ IP của Google bằng lệnh sau:
 
 ```shell
 dig www.google.com
 ```
 
-The system takes domain names and keeps a distributed routing table of names to IP addresses across the collection of DNS servers. **Wait, what?**
+Hệ thống sẽ lấy tên miền và giữ một bảng định tuyến phân tán từ tên đến địa chỉ IP trên tập hợp các máy chủ DNS. **Khoan, cái gì vậy?**
 
-DNS servers stack up into a gigantic hierarchy. When your browser makes a request, it asks the closest DNS server to your machine for the IP address of the domain name you requested. The DNS server keeps a lookup table of domain names to IP addresses for a period of time. If the domain name isn’t in the table, it can ask another DNS server in a chain that will continue to look for the domain’s IP address. This leads to a couple of outcomes:
+Các máy chủ DNS xếp thành một hệ thống phân cấp khổng lồ. Khi trình duyệt của bạn gửi yêu cầu, nó hỏi máy chủ DNS gần nhất với máy của bạn về địa chỉ IP của tên miền bạn yêu cầu. Máy chủ DNS giữ một bảng tra cứu tên miền đến địa chỉ IP trong một khoảng thời gian. Nếu tên miền không có trong bảng, nó có thể hỏi một máy chủ DNS khác trong chuỗi, tiếp tục tìm kiếm địa chỉ IP của tên miền đó. Điều này dẫn đến hai kết quả:
 
-- If none of the servers can find the domain, the browser gives up and shows you a message like “Hmm. We’re having trouble finding that site.” (from Firefox’s Server Not Found page).
-- If the browser gets the IP address from the DNS server, it can proceed with the request.
+- Nếu không máy chủ nào tìm thấy tên miền, trình duyệt sẽ bỏ cuộc và hiển thị thông báo như “Hmm. Chúng tôi gặp sự cố khi tìm trang web đó.” (từ trang Server Not Found của Firefox).
+- Nếu trình duyệt nhận được địa chỉ IP từ máy chủ DNS, nó có thể tiếp tục gửi yêu cầu.
 
-The hierarchy is gigantic, but it is wide, not deep. In other words, there are many machines that participate in DNS (like your home router), but the number of links in the chain to make a request from your computer up to the root servers in the system is relatively small.
+Hệ thống phân cấp này rất lớn, nhưng rộng chứ không sâu. Nói cách khác, có rất nhiều máy tham gia vào DNS (như router nhà bạn), nhưng số lượng liên kết trong chuỗi từ máy tính của bạn lên đến các máy chủ gốc của hệ thống là khá nhỏ.
 
-This is simplified to exclude some of the warty corners of DNS. The Wikipedia page that I linked at the start of this section covers DNS in much greater detail if you’re interested in learning more.
+Đây là phần đơn giản hóa, bỏ qua một số góc cạnh phức tạp của DNS. Trang Wikipedia mà tôi liên kết ở đầu phần này có giải thích chi tiết hơn nhiều nếu bạn muốn tìm hiểu thêm.
 
-### What Are We Sending?
+### Chúng Ta Đang Gửi Gì?
 
-The other vital piece that we need to explore is HTTP, or the [Hypertext Transfer Protocol](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol "‌"). This part of internet communication describes how content transfers between browsers and servers, or, more generally, between any computers that use the protocol.
+Phần quan trọng còn lại mà chúng ta cần khám phá là HTTP, hay [Hypertext Transfer Protocol](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol "‌"). Đây là phần mô tả cách nội dung được truyền giữa trình duyệt và máy chủ, hoặc nói chung là giữa bất kỳ máy tính nào sử dụng giao thức này.
 
-The protocol uses a standard format and a set of commands to communicate. A few of the common commands are:
+Giao thức này sử dụng một định dạng chuẩn và một tập hợp các lệnh để giao tiếp. Một số lệnh phổ biến là:
 
-- `GET` - Fetch an existing resource
-- `POST` - Create or update a resource
-- `DELETE` - Delete a resource
-- `PUT` - Update a resource
+- `GET` - Lấy một tài nguyên có sẵn
+- `POST` - Tạo mới hoặc cập nhật một tài nguyên
+- `DELETE` - Xóa một tài nguyên
+- `PUT` - Cập nhật một tài nguyên
 
-An HTTP request is like sending a text file over the network. If you visit my website at `https://www.mattlayman.com/about/`, your browser will send a request like:
+Một yêu cầu HTTP giống như gửi một tệp văn bản qua mạng. Nếu bạn truy cập trang web của tôi tại `https://www.mattlayman.com/about/`, trình duyệt của bạn sẽ gửi một yêu cầu như sau:
 
 ```txt
 GET /about/ HTTP/1.1
@@ -122,115 +122,115 @@ Host: www.mattlayman.com
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 ```
 
-There are other parts that I’ve omitted, but this gets us started. The top line provides the command, the path to a particular resource on the site (i.e., `/about/`), and a version of the protocol to use.
+Còn nhiều phần khác tôi đã lược bỏ, nhưng như vậy là đủ để bắt đầu. Dòng đầu tiên cung cấp lệnh, đường dẫn đến tài nguyên cụ thể trên trang (tức là `/about/`), và phiên bản giao thức sử dụng.
 
-After the first line are a list of _headers_. Headers are extra data that tell the server more about the request. The `Host` header is required because it names the website to retrieve (more than one website can exist on the same IP address), but any other header is optional.
+Sau dòng đầu tiên là danh sách các _header_. Header là dữ liệu bổ sung cho máy chủ biết thêm về yêu cầu. Header `Host` là bắt buộc vì nó chỉ tên website cần lấy (nhiều website có thể cùng tồn tại trên một địa chỉ IP), còn các header khác là tùy chọn.
 
-In the example, I also showed the `Accept` header. This header tells the server what kind of content the browser can receive as a response. There are other headers that can tell a server what else it should “know.” These headers can:
+Trong ví dụ, tôi cũng hiển thị header `Accept`. Header này cho máy chủ biết trình duyệt có thể nhận loại nội dung nào làm phản hồi. Có các header khác cho máy chủ biết thêm thông tin. Các header này có thể:
 
-- Indicate what kind of browser is making the request (this is the `User-Agent` header).
-- Tell when the resource was requested previously to determine if a new version should be returned (the `Last-Modified` header).
-- Declare that the browser can receive compressed data which it can decompress after receiving to save on bandwidth (the `Accept-Encoding` header).
+- Chỉ ra loại trình duyệt đang gửi yêu cầu (đây là header `User-Agent`).
+- Cho biết khi nào tài nguyên được yêu cầu lần trước để xác định có cần trả về phiên bản mới không (header `Last-Modified`).
+- Khai báo rằng trình duyệt có thể nhận dữ liệu nén và sẽ giải nén sau khi nhận để tiết kiệm băng thông (header `Accept-Encoding`).
 
-Most of the headers are handled automatically by browsers and servers, but we will see instances where we want to use these headers ourselves so it’s good to know they exist.
+Hầu hết các header được trình duyệt và máy chủ xử lý tự động, nhưng chúng ta sẽ thấy những trường hợp cần tự sử dụng các header này nên biết chúng tồn tại là điều tốt.
 
-## Serving A Response
+## Phục Vụ Một Phản Hồi
 
-It’s time to discuss Django! We now have a rough idea of what browsers do. A browser sends an HTTP request to a URL which is resolved by the DNS system. That request arrives at a server that is connected to the IP address of the domain name. Django lives on such a server and is responsible for answering requests with an HTTP _response_.
+Đã đến lúc nói về Django! Giờ chúng ta đã có ý tưởng sơ bộ về những gì trình duyệt làm. Trình duyệt gửi một yêu cầu HTTP đến một URL được hệ thống DNS phân giải. Yêu cầu đó đến một máy chủ kết nối với địa chỉ IP của tên miền. Django sống trên máy chủ đó và chịu trách nhiệm trả lời các yêu cầu bằng một _phản hồi_ HTTP.
 
-The response is what the browser user wanted. Responses can be images, web pages, videos, or whatever formats a browser can handle.
+Phản hồi là thứ người dùng trình duyệt muốn nhận. Phản hồi có thể là hình ảnh, trang web, video, hoặc bất kỳ định dạng nào mà trình duyệt có thể xử lý.
 
-Before Django can handle a request, there is one more layer to traverse: the Python web server.
+Trước khi Django có thể xử lý yêu cầu, còn một lớp nữa cần đi qua: máy chủ web Python.
 
-### Where HTTP Meets Python
+### Nơi HTTP Gặp Python
 
-A web server is the software on a machine designed to handle the incoming HTTP requests. Sometimes this terminology can be confusing because people may also apply the name “web server” to an entire _machine_ that is serving web traffic. In this instance, I’m referring to the actual program listening and responding to web requests.
+Máy chủ web là phần mềm trên máy tính được thiết kế để xử lý các yêu cầu HTTP đến. Đôi khi thuật ngữ này gây nhầm lẫn vì mọi người cũng có thể gọi cả _máy_ phục vụ web là “web server”. Ở đây, tôi nói đến chương trình thực sự lắng nghe và phản hồi các yêu cầu web.
 
-A Python web framework like Django runs with a web server. The web server’s role is to translate the raw HTTP request into a format that the framework understands. In the Python world, there is a specific format used so that any web server can talk to any Python web framework. That format is the [Web Server Gateway Interface](https://wsgi.readthedocs.io/en/latest/what.html "‌"), or WSGI (which is often pronounced “wiz-gee”).
+Một framework web Python như Django chạy cùng với máy chủ web. Vai trò của máy chủ web là chuyển đổi yêu cầu HTTP thô thành định dạng mà framework hiểu được. Trong thế giới Python, có một định dạng cụ thể để bất kỳ máy chủ web nào cũng có thể nói chuyện với bất kỳ framework web Python nào. Định dạng đó là [Web Server Gateway Interface](https://wsgi.readthedocs.io/en/latest/what.html "‌"), hay WSGI (thường được phát âm là “wiz-gee”).
 
 Web Server Gateway Interface
 
 ![Web Server Gateway Interface](https://www.mattlayman.com/img/2020/wsgi.jpg)
 
-WSGI enables common web servers like [Gunicorn](https://gunicorn.org/ "‌"), [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/ "‌"), or [mod_wsgi](https://modwsgi.readthedocs.io/en/develop/ "‌") to communicate with common Python web frameworks like Django, [Flask](https://palletsprojects.com/p/flask/ "‌"), or [Pyramid](https://trypyramid.com/ "‌"). If you really want to nerd out, you can explore all the details of that format in [PEP 3333](https://www.python.org/dev/peps/pep-3333/ "‌").
+WSGI cho phép các máy chủ web phổ biến như [Gunicorn](https://gunicorn.org/ "‌"), [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/ "‌"), hoặc [mod_wsgi](https://modwsgi.readthedocs.io/en/develop/ "‌") giao tiếp với các framework web Python phổ biến như Django, [Flask](https://palletsprojects.com/p/flask/ "‌"), hoặc [Pyramid](https://trypyramid.com/ "‌"). Nếu bạn thực sự muốn tìm hiểu sâu, bạn có thể xem chi tiết định dạng đó trong [PEP 3333](https://www.python.org/dev/peps/pep-3333/ "‌").
 
-### Django’s Job
+### Nhiệm Vụ Của Django
 
-Once the web server sends a request, Django needs to return a _response_. Your role as a Django developer is to define the resources that will be available from the server. That means you must:
+Khi máy chủ web gửi yêu cầu, Django cần trả về một _phản hồi_. Vai trò của bạn với tư cách là lập trình viên Django là định nghĩa các tài nguyên sẽ có sẵn từ máy chủ. Điều đó nghĩa là bạn phải:
 
-- Describe the set of URLs that Django will react to.
-- Write the code that powers those URLs and returns the response.
+- Mô tả tập hợp các URL mà Django sẽ phản hồi.
+- Viết mã cho các URL đó và trả về phản hồi.
 
-There is a ton to unpack in those two statements so we will explore individual topics in future articles. By now, I hope you have an idea of how a request gets from your browser to a machine running Django.
+Có rất nhiều thứ để bàn trong hai câu này nên chúng ta sẽ khám phá từng chủ đề trong các bài tiếp theo. Đến đây, tôi hy vọng bạn đã hình dung được cách một yêu cầu đi từ trình duyệt đến máy chạy Django.
 
-Life of a browser request
+Vòng đời của một yêu cầu trình duyệt
 
 ![Life of a browser request](https://www.mattlayman.com/img/2020/request-response.jpg)
 
-This article is relatively free of code examples, and for good reason. There are already enough concepts to wrestle with and I didn’t want to add code complexity on top of it. Writing that code will be the focus of this article series so we can answer questions like:
+Bài viết này hầu như không có ví dụ mã nguồn, và có lý do cho điều đó. Đã có đủ khái niệm để bạn phải suy nghĩ và tôi không muốn thêm sự phức tạp của mã nguồn vào lúc này. Việc viết mã sẽ là trọng tâm của loạt bài này để chúng ta có thể trả lời các câu hỏi như:
 
-- How do we build web pages and give everything a common look and feel?
-- How can users interact with an application and send data that the app can react to?
-- How does Django store and retrieve data to make sites dynamic?
-- Who can access the application and how is that access controlled?
-- What security do we need to add to ensure that our users’ information is safe and private?
+- Làm sao xây dựng trang web và tạo giao diện đồng nhất?
+- Làm sao người dùng tương tác với ứng dụng và gửi dữ liệu để ứng dụng phản hồi?
+- Django lưu trữ và truy xuất dữ liệu thế nào để làm cho trang web động?
+- Ai có thể truy cập ứng dụng và kiểm soát quyền truy cập ra sao?
+- Cần thêm bảo mật gì để đảm bảo thông tin người dùng an toàn và riêng tư?
 
-Django has answers for all these things and way more. The Django philosophy is to include all the required pieces to make a full web application for the internet. This “batteries-included” philosophy is what makes Django so powerful. The same philosophy can also make Django seem overwhelming. My goal in this series is to introduce piece after piece to build your understanding of Django so you can get productive and get going on your own web application.
+Django có câu trả lời cho tất cả những điều này và còn nhiều hơn nữa. Triết lý của Django là bao gồm tất cả các thành phần cần thiết để tạo một ứng dụng web hoàn chỉnh cho internet. Triết lý “pin kèm theo” này làm Django rất mạnh mẽ. Nhưng chính triết lý này cũng có thể khiến Django trở nên quá tải với người mới. Mục tiêu của tôi trong loạt bài này là giới thiệu từng phần một để bạn hiểu về Django và có thể bắt đầu xây dựng ứng dụng web của riêng mình.
 
-In the next article, our focus is going to be on those URLs that our application will respond to. We will see:
+Trong bài tiếp theo, chúng ta sẽ tập trung vào các URL mà ứng dụng sẽ phản hồi. Chúng ta sẽ xem:
 
-- how to declare the URLs.
-- how to group sets of related URLs.
-- how to extract information from URLs that can be used by the code that returns responses.
+- cách khai báo các URL.
+- cách nhóm các URL liên quan.
+- cách trích xuất thông tin từ URL để sử dụng trong mã trả về phản hồi.
 
-If you’d like to follow along with the series, please feel free to sign up for my newsletter where I announce all of my new content. If you have other questions, you can reach me online on X where I am [\@mblayman](https://x.com/mblayman "‌").
+Nếu bạn muốn theo dõi loạt bài này, hãy đăng ký nhận bản tin của tôi, nơi tôi thông báo mọi nội dung mới. Nếu bạn có câu hỏi khác, bạn có thể liên hệ với tôi trên X tại [\@mblayman](https://x.com/mblayman "‌").
 
-Finally, there is one more bonus topic…
+Cuối cùng, còn một chủ đề bổ sung nữa…
 
-## Getting Django Set Up
+## Cài Đặt Django
 
-In the series, we’ll be looking at plenty of code examples, but we won’t be setting up Django from scratch each time. The following setup instructions will help you get started with each future example.
+Trong loạt bài này, chúng ta sẽ xem nhiều ví dụ mã nguồn, nhưng sẽ không thiết lập Django từ đầu mỗi lần. Các hướng dẫn thiết lập sau sẽ giúp bạn bắt đầu với mọi ví dụ trong tương lai.
 
-> _The goal of this section is not meant to be an authoritative description of how to set up your Python environment. I am assuming that you have some knowledge of how to run Python code. If you need a more descriptive guide, I’d suggest Michael Kennedy’s _[_Installing Python 3_](https://training.talkpython.fm/installing-python "‌")_ article and Real Python’s _[_primer on virtual environments_](https://realpython.com/python-virtual-environments-a-primer/ "‌")_. These article go into the discussion of setup far more than I’m doing justice here._
+> _Mục tiêu của phần này không phải là mô tả đầy đủ cách thiết lập môi trường Python. Tôi giả định bạn đã biết cách chạy mã Python. Nếu bạn cần hướng dẫn chi tiết hơn, tôi gợi ý bài viết _[_Installing Python 3_](https://training.talkpython.fm/installing-python "‌")_ của Michael Kennedy và bài _[_primer on virtual environments_](https://realpython.com/python-virtual-environments-a-primer/ "‌")_ của Real Python. Những bài này giải thích về thiết lập kỹ hơn nhiều so với những gì tôi trình bày ở đây._
 
-We’re going to use a terminal to run commands. Windows, macOS, and Linux are all a bit different. I’m showing macOS here because that’s what I run. The dollar sign (`$`) is the traditional starting character for a bash terminal so when I list commands, don’t type that character. I’ll try to give pointers and highlight differences when I can.
+Chúng ta sẽ dùng terminal để chạy lệnh. Windows, macOS và Linux hơi khác nhau. Tôi minh họa trên macOS vì đó là hệ điều hành tôi dùng. Dấu đô la (`$`) là ký tự bắt đầu truyền thống cho terminal bash nên khi tôi liệt kê lệnh, bạn không cần gõ ký tự đó. Tôi sẽ cố gắng đưa ra gợi ý và chỉ ra sự khác biệt khi có thể.
 
-We need a place to put our work. Since this series is called “Understand Django,” I’m going to use that name. You can name your project differently if you prefer.
+Chúng ta cần một nơi để lưu công việc. Vì loạt bài này tên là “Understand Django”, tôi sẽ dùng tên đó. Bạn có thể đặt tên dự án khác nếu muốn.
 
 ```shell
 mkdir understand-django
 cd understand-django
 ```
 
-Next, we install Django into a virtual environment so we keep our project dependencies separate from the rest of the installed Python packages on our machine. Having this separation from other installed packages is a good way to prevent conflicts with other Python projects that you may be running on your computer.
+Tiếp theo, chúng ta cài Django vào một môi trường ảo để giữ các phụ thuộc của dự án tách biệt với các gói Python khác trên máy. Việc tách biệt này giúp tránh xung đột với các dự án Python khác mà bạn có thể đang chạy trên máy tính.
 
 ```shell
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-This may change your terminal prompt so that it will now start with `(venv)` to tell you that the virtual environment is in use. Other operating systems activate the virtual environment differently. Check the [venv module documentation](https://docs.python.org/3/library/venv.html "‌") for more information on your operating system.
+Điều này có thể làm thay đổi dấu nhắc terminal của bạn, giờ sẽ bắt đầu bằng `(venv)` để báo rằng môi trường ảo đang được sử dụng. Các hệ điều hành khác kích hoạt môi trường ảo theo cách khác. Xem [tài liệu module venv](https://docs.python.org/3/library/venv.html "‌") để biết thêm thông tin cho hệ điều hành của bạn.
 
-Now you can install Django, and the Django framework code will be added to the virtual environment.
+Giờ bạn có thể cài Django, và mã nguồn framework Django sẽ được thêm vào môi trường ảo.
 
 ```shell
 (venv) $ pip install Django
 ```
 
-Django includes some tools which we can use to get a project started quickly. We’ll run a single command to get it going.
+Django bao gồm một số công cụ giúp chúng ta khởi tạo dự án nhanh chóng. Chúng ta sẽ chạy một lệnh duy nhất để bắt đầu.
 
 ```shell
 (venv) $ django-admin startproject project .
 ```
 
-This commands says “start a project _named_ ‘project’ in the current directory (`.`).” The choice of “project” as the name is intentional. `startproject` will create a directory named `project` that will contain various files that you’ll use to configure your entire web app. You can name your project whatever you like, but I find that using the generic name makes my life easier as I switch between different Django web apps. I always know where my project related files reside. After that command is finished, you should have some files and a layout that looks like:
+Lệnh này có nghĩa là “khởi tạo một dự án _tên_ ‘project’ trong thư mục hiện tại (`.`).” Việc chọn tên “project” là có chủ ý. `startproject` sẽ tạo một thư mục tên `project` chứa các tệp mà bạn sẽ dùng để cấu hình toàn bộ ứng dụng web. Bạn có thể đặt tên dự án theo ý mình, nhưng tôi thấy dùng tên chung giúp tôi dễ dàng chuyển đổi giữa các ứng dụng Django khác nhau. Tôi luôn biết các tệp liên quan đến dự án nằm ở đâu. Sau khi chạy lệnh, bạn sẽ có một số tệp và cấu trúc như sau:
 
 ```shell
 (venv) $ ls
 manage.py project venv
 ```
 
-Notice that, in addition to the `project` directory, Django created a `manage.py` file. This file is a script that will help you interact with Django. You’ll learn a lot more about `manage.py` as we get farther along. To check if the basics are working, try:
+Lưu ý rằng ngoài thư mục `project`, Django còn tạo tệp `manage.py`. Đây là một script giúp bạn tương tác với Django. Bạn sẽ học thêm về `manage.py` ở các phần sau. Để kiểm tra mọi thứ đã hoạt động chưa, hãy thử:
 
 ```shell
 (venv) $ python manage.py runserver
@@ -239,7 +239,7 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
 
-When you start the web server, you will likely see a message like:
+Khi bạn khởi động máy chủ web, có thể bạn sẽ thấy thông báo như:
 
 ```txt
 You have ## unapplied migration(s).
@@ -248,21 +248,21 @@ until you apply the migrations for app(s):
 <a list of names here>
 ```
 
-We’ll explore the migrations topic later, so don’t worry about that message for now.
+Chúng ta sẽ tìm hiểu về migrations sau, nên đừng lo về thông báo này lúc này.
 
-If you copy and paste that URL (i.e., `http://127.0.0.1:8000/`) into your browser, you should see a welcoming start page! Also, if you look back at your terminal, you’ll find `"GET / HTTP/1.1"`. This message is showing that Django responded to an HTTP request. Neat!
+Nếu bạn sao chép và dán URL đó (tức là `http://127.0.0.1:8000/`) vào trình duyệt, bạn sẽ thấy trang chào mừng! Ngoài ra, nếu bạn nhìn lại terminal, bạn sẽ thấy `"GET / HTTP/1.1"`. Thông báo này cho thấy Django đã phản hồi một yêu cầu HTTP. Thật tuyệt!
 
-The other thing that we need is an “app.” This is (perhaps confusingly) the name of a Django component in a project. What you need to remember is that a Django project _contains_ one or more apps. Apps will hold most of your code that you need to write when working with Django.
+Điều tiếp theo chúng ta cần là một “app”. Đây là (có thể gây nhầm lẫn) tên của một thành phần Django trong dự án. Điều bạn cần nhớ là một dự án Django _chứa_ một hoặc nhiều app. App sẽ chứa hầu hết mã nguồn bạn cần viết khi làm việc với Django.
 
-After you have quit the server, you can create an app to work with:
+Sau khi dừng server, bạn có thể tạo một app để làm việc:
 
 ```shell
 (venv) $ python manage.py startapp application
 ```
 
-This will generate another set of files that follow the standard structure of a Django application component inside a directory called `application`. This example uses a boring name, but, unlike `project`, you should pick a name that makes sense for your web app (e.g., `movies` would be a good name for a web app that is about movies). All of these files will be discussed in detail in a future topic.
+Lệnh này sẽ tạo ra một bộ tệp khác theo cấu trúc chuẩn của một thành phần ứng dụng Django bên trong thư mục `application`. Ví dụ này dùng tên nhàm chán, nhưng, không giống như `project`, bạn nên chọn tên phù hợp với ứng dụng web của mình (ví dụ, `movies` là tên hay cho ứng dụng về phim). Tất cả các tệp này sẽ được bàn chi tiết ở chủ đề sau.
 
-Finally, we must hook that app into Django’s project settings. The project settings allow you to configure Django to suit your needs. Open up `project/settings.py`, find `INSTALLED_APPS` and append to the list so it looks like:
+Cuối cùng, chúng ta phải kết nối app đó vào cài đặt của dự án Django. Cài đặt dự án cho phép bạn cấu hình Django theo nhu cầu. Mở `project/settings.py`, tìm `INSTALLED_APPS` và thêm vào danh sách để nó trông như sau:
 
 ```python
 INSTALLED_APPS = [
@@ -276,4 +276,4 @@ INSTALLED_APPS = [
 ]
 ```
 
-That’s as far as we need to go to get started with our code examples in the next article. `application` will be our reference app. The code in future topics is not a tutorial, but I will use `application` on occasion to orient you to where you would find files in your own Django web app. We have a Django project that can run locally for testing and is configured with its first app. See you soon to talk about making URLs and resources!
+Như vậy là đủ để bắt đầu với các ví dụ mã nguồn ở bài tiếp theo. `application` sẽ là app tham chiếu của chúng ta. Mã nguồn ở các chủ đề sau không phải là hướng dẫn từng bước, nhưng tôi sẽ dùng `application` để bạn biết các tệp nằm ở đâu trong ứng dụng Django của mình. Chúng ta đã có một dự án Django có thể chạy cục bộ để kiểm thử và đã cấu hình với app đầu tiên. Hẹn gặp lại bạn ở bài tiếp theo để nói về cách tạo URL và tài nguyên!
