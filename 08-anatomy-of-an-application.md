@@ -1,49 +1,49 @@
-# Anatomy Of An Application
+# Giải Phẫu Một Ứng Dụng
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/) article, we got deep into the Django administrators site. We saw what the site was and how to configure and customize it. In this article, we will examine what goes into an application. Applications are core elements of a Django project.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã đi sâu vào trang quản trị Django. Chúng ta đã thấy trang này là gì và cách cấu hình cũng như tùy biến nó. Trong bài viết này, chúng ta sẽ xem xét những gì tạo nên một ứng dụng. Ứng dụng là các thành phần cốt lõi của một dự án Django.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/)
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/)
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/)
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/)
-8. Anatomy Of An Application
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/)
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/)
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/)
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/)
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/)
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/)
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/)
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/)
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/)
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
+3. [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. Giải Phẫu Một Ứng Dụng
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## What Is An Application?
+## Ứng Dụng Là Gì?
 
-Before getting to what a Django application **is**, we probably need to start with what it **is not** because the terminology is confusing. In the world of web development, developers may call a website a “web application.”
+Trước khi nói về một ứng dụng Django **là gì**, có lẽ chúng ta nên bắt đầu với nó **không phải là gì** vì thuật ngữ này khá dễ gây nhầm lẫn. Trong thế giới phát triển web, các lập trình viên có thể gọi một website là một “web application”.
 
-In Django parlance, a “web application” is a Django _project_. All of the pieces that come together to make a website are a project. The primary components within the project are called _applications_. In other words, a Django project is built from one or more Django applications.
+Trong cách nói của Django, một “web application” là một _dự án_ Django. Tất cả các thành phần kết hợp lại để tạo thành một website được gọi là một dự án. Các thành phần chính bên trong dự án được gọi là _ứng dụng_. Nói cách khác, một dự án Django được xây dựng từ một hoặc nhiều ứng dụng Django.
 
-This situation is quite similar to Python packages. The software industry often describes the software unit as a “package.” We think of `pip`, `npm`, or `apt` as “package” managers. This leads to a similar naming problem because Python also calls any directory with a `__init__.py` file a “package” as well.
+Tình huống này khá giống với các package Python. Ngành phần mềm thường mô tả một đơn vị phần mềm là một “package”. Chúng ta nghĩ về `pip`, `npm` hoặc `apt` như là các trình quản lý “package”. Điều này dẫn đến một vấn đề đặt tên tương tự vì Python cũng gọi bất kỳ thư mục nào có file `__init__.py` là một “package”.
 
-In reality, the code that you download using pip is technically called a “[distribution](https://packaging.python.org/overview/).” Even though we colloquially talk about Python downloads from PyPI (Python Package Index) as packages, we’re really talking about distributions, and a distribution is a unit that contains one or more Python packages.
+Thực tế, mã mà bạn tải về bằng pip về mặt kỹ thuật được gọi là một “[distribution](https://packaging.python.org/overview/)”. Dù chúng ta thường nói về việc tải các package Python từ PyPI (Python Package Index), thực ra chúng ta đang nói về distribution, và một distribution là một đơn vị chứa một hoặc nhiều package Python.
 
-Hopefully, you now understand the relationship of applications in Django.
+Hy vọng đến đây bạn đã hiểu mối quan hệ của các ứng dụng trong Django.
 
-> _Your “web application” is a Django **project** composed of one or more Django **applications**._
+> _“Web application” của bạn là một **dự án** Django được cấu thành từ một hoặc nhiều **ứng dụng** Django._
 
-## Application Structure
+## Cấu Trúc Ứng Dụng
 
-Let’s look at a fully loaded Django application to see the fairly standard structure that you will encounter in Django projects.
+Hãy cùng xem một ứng dụng Django đầy đủ để thấy cấu trúc khá tiêu chuẩn mà bạn sẽ gặp trong các dự án Django.
 
-An application usually tries to capture a core concept within your system. For this article, we will use movies as the concept we want to model.
+Một ứng dụng thường cố gắng nắm bắt một khái niệm cốt lõi trong hệ thống của bạn. Trong bài viết này, chúng ta sẽ dùng phim ảnh làm ví dụ cho khái niệm muốn mô hình hóa.
 
-Let’s see what a default scaffold includes, then build it up with all the extras.
+Hãy xem một scaffold mặc định bao gồm những gì, rồi xây dựng thêm với các thành phần bổ sung.
 
 ```shell
 (venv) $ ./manage.py startapp movies
@@ -59,37 +59,37 @@ movies
 └── views.py
 ```
 
-`admin.py`: This file is where all your `ModelAdmin` classes live to power how the movies app will appear in the Django admin. You can learn more about the admin in [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/).
+`admin.py`: File này là nơi chứa tất cả các class `ModelAdmin` để điều khiển cách ứng dụng movies sẽ xuất hiện trong trang quản trị Django. Bạn có thể tìm hiểu thêm về admin trong [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/).
 
-`apps.py`: This file is for the `AppConfig` of the application. We will discuss the `AppConfig` and how to use it later in this article.
+`apps.py`: File này dành cho `AppConfig` của ứng dụng. Chúng ta sẽ bàn về `AppConfig` và cách sử dụng nó ở phần sau của bài viết này.
 
-`migrations`: This directory is where all database migrations are stored for the application. Any model changes for this app will generate a migration and create a numbered migration file in this directory. More info about migrations is in [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/).
+`migrations`: Thư mục này là nơi lưu trữ tất cả các migration cơ sở dữ liệu cho ứng dụng. Bất kỳ thay đổi model nào cho app này sẽ sinh ra một migration và tạo một file migration được đánh số trong thư mục này. Thông tin thêm về migration có trong [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/).
 
-`models.py`: This file is the home for all the Django `Model` classes in the application. The models represent all your database data. Learn more about models in [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/).
+`models.py`: File này là nơi chứa tất cả các class `Model` của Django trong ứng dụng. Các model đại diện cho toàn bộ dữ liệu cơ sở dữ liệu của bạn. Tìm hiểu thêm về model trong [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/).
 
-`tests.py`: This file is for automated tests. We’ll cover automated tests in Django in a future article. For now, you can know that I _always_ **delete** this file and replace it with a `tests` package. A `tests` package is superior because you can split out to more focused files like `test_models.py` to know where the appropriate tests are.
+`tests.py`: File này dành cho các kiểm thử tự động. Chúng ta sẽ bàn về kiểm thử tự động trong Django ở một bài viết sau. Hiện tại, bạn chỉ cần biết rằng tôi _luôn_ **xóa** file này và thay bằng một package `tests`. Một package `tests` tốt hơn vì bạn có thể tách ra các file chuyên biệt như `test_models.py` để biết kiểm thử nào nằm ở đâu.
 
-`views.py`: This file is where Django view functions or classes go. Views are the glue code that connect your URL routes to your database models. I wrote about views in [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/).
+`views.py`: File này là nơi chứa các hàm hoặc class view của Django. View là mã “kết dính” kết nối các route URL với các model cơ sở dữ liệu của bạn. Tôi đã viết về view trong [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/).
 
-That’s everything that comes with a generated app, but what other files are missing that you will commonly see in a Django application?
+Đó là tất cả những gì đi kèm với một ứng dụng được sinh ra, nhưng còn những file nào khác mà bạn thường thấy trong một ứng dụng Django?
 
-`urls.py`: This file is often used to create routes that logically group all movie related functionality. The `urls.py` file would power all the routes in something like `www.mysite.com/movies/`. Information on URLs is in [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/).
+`urls.py`: File này thường được dùng để tạo các route nhóm logic tất cả chức năng liên quan đến phim. File `urls.py` sẽ điều khiển tất cả các route như `www.mysite.com/movies/`. Thông tin về URL có trong [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/).
 
-`forms.py`: When you use Django `Form` classes to interact with users, this is the file where forms are stored. You can discover more on forms in [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/).
+`forms.py`: Khi bạn dùng các class `Form` của Django để tương tác với người dùng, đây là file lưu trữ các form. Bạn có thể tìm hiểu thêm về form trong [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/).
 
-`templatetags`: This directory is a Python package that would include a module like `movies_tags.py` where you’d define any custom template tags to use when rendering your templates. Custom tags are a topic in [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/).
+`templatetags`: Thư mục này là một package Python sẽ chứa một module như `movies_tags.py` nơi bạn định nghĩa các template tag tùy biến để dùng khi render template. Tag tùy biến là chủ đề trong [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/).
 
-`templates`: This directory can store templates that the application will render. I personally prefer using a project-wide `templates` directory as discussed in [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/), but `templates` directories are commonly found in individual Django apps, especially for third party applications that you may pull into your project.
+`templates`: Thư mục này có thể lưu các template mà ứng dụng sẽ render. Cá nhân tôi thích dùng một thư mục `templates` toàn dự án như đã bàn trong [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/), nhưng các thư mục `templates` thường xuất hiện trong từng app Django, đặc biệt là với các ứng dụng bên thứ ba mà bạn có thể thêm vào dự án.
 
-`static`: For static files that you want to display, such as images, you can use the `static` directory. We’ll discuss static files more in a future article.
+`static`: Đối với các file tĩnh bạn muốn hiển thị, như hình ảnh, bạn có thể dùng thư mục `static`. Chúng ta sẽ bàn về file tĩnh ở một bài viết sau.
 
-`management`: Users can extend Django with custom commands that can be called via `manage.py`. Those commands are stored in this package. Custom commands are a future topic in this series.
+`management`: Người dùng có thể mở rộng Django với các lệnh tùy biến gọi qua `manage.py`. Các lệnh đó được lưu trong package này. Lệnh tùy biến sẽ là chủ đề trong các bài sau của loạt bài này.
 
-`locale`: When doing translations and internationalization, the translation files must have a home. That’s the purpose of the `locale` directory.
+`locale`: Khi làm dịch thuật và quốc tế hóa, các file dịch thuật cần có chỗ lưu trữ. Đó là mục đích của thư mục `locale`.
 
-`managers.py`: This file is not always used, but if your application has a lot of custom managers, then you may want to separate them from your models in this file. Managers are a topic in [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/).
+`managers.py`: File này không phải lúc nào cũng có, nhưng nếu ứng dụng của bạn có nhiều manager tùy biến, bạn có thể tách chúng khỏi model trong file này. Manager là chủ đề trong [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/).
 
-Most applications will _not_ have all of these pieces, but this should give you an idea of what things are when you are exploring Django apps in the wild on your own. Here’s what our final sample tree would look like.
+Hầu hết các ứng dụng sẽ _không_ có đầy đủ tất cả các thành phần này, nhưng điều này sẽ giúp bạn hình dung các thành phần khi khám phá các ứng dụng Django ngoài thực tế. Đây là cây thư mục mẫu cuối cùng của chúng ta.
 
 ```shell
 (venv) $ tree movies
@@ -120,7 +120,7 @@ movies
 │   └── movies
 │       ├── index.html
 │       └── movie_detail.html
-├── templatestags
+├── templatetags
 │   ├── __init__.py
 │   └── movies_tags.py
 ├── tests
@@ -131,65 +131,65 @@ movies
 └── views.py
 ```
 
-## Loading applications
+## Nạp Ứng Dụng
 
-We’ve now seen what’s in a Django application and have an idea of an app’s composition. How does Django load applications?
+Giờ chúng ta đã thấy bên trong một ứng dụng Django có gì và có ý tưởng về thành phần của một app. Django nạp ứng dụng như thế nào?
 
-Django does _not_ do automatic discovery of Django applications within your project. If you want Django to include an app in your project, you _must_ add the app to your `INSTALLED_APPS` list in the settings file.
+Django _không_ tự động phát hiện các ứng dụng Django trong dự án của bạn. Nếu bạn muốn Django đưa một app vào dự án, bạn _phải_ thêm app đó vào danh sách `INSTALLED_APPS` trong file settings.
 
-This is a good example of Django following the Python ethos of favoring explicit over implicit. By being explicit, your project is not in danger of including apps that you don’t expect. That might seem silly for apps that you write yourself, but you’ll be thankful that’s the case when some third party package in your virtual environment happens to have a Django app that you don’t want in your project.
+Đây là một ví dụ điển hình cho việc Django tuân theo triết lý của Python là ưu tiên rõ ràng hơn ngầm định. Bằng cách rõ ràng, dự án của bạn sẽ không gặp nguy cơ đưa vào các app mà bạn không mong đợi. Điều này có thể nghe có vẻ ngớ ngẩn với các app bạn tự viết, nhưng bạn sẽ biết ơn điều này khi một package bên thứ ba nào đó trong môi trường ảo của bạn tình cờ có một app Django mà bạn không muốn đưa vào dự án.
 
-On startup, when an application is in `INSTALLED_APPS`, Django will look for an `AppConfig` class. This class is stored in `apps.py` from the `startapp` command and contains metadata about the application.
+Khi khởi động, nếu một ứng dụng nằm trong `INSTALLED_APPS`, Django sẽ tìm một class `AppConfig`. Class này được lưu trong `apps.py` từ lệnh `startapp` và chứa metadata về ứng dụng.
 
-When Django starts, it will initialize the system by doing the following:
+Khi Django khởi động, nó sẽ khởi tạo hệ thống bằng cách thực hiện các bước sau:
 
-- Load the settings
-- Configure logging (a topic we’ll explore in the future)
-- Initialize an application registry
-- Import each package from the `INSTALLED_APPS`
-- Import a models module for each application
-- Invoke the `ready` method of every `AppConfig` discovered
+- Nạp settings
+- Cấu hình logging (chủ đề sẽ bàn sau)
+- Khởi tạo một registry ứng dụng
+- Import từng package trong `INSTALLED_APPS`
+- Import module models cho mỗi ứng dụng
+- Gọi phương thức `ready` của mọi `AppConfig` tìm thấy
 
-The `ready` method is a useful hook for taking action at startup. Since models are already loaded by the time the method is called, it’s a safe place to interact with Django.
+Phương thức `ready` là một hook hữu ích để thực hiện hành động khi khởi động. Vì các model đã được nạp khi phương thức này được gọi, đây là nơi an toàn để tương tác với Django.
 
-If you attempt to run setup code before Django is ready, and you try to do something like use the ORM to interact with database data, you’ll probably get an `AppRegistryNotReady` exception. Most apps won’t directly need to run startup code, but knowing about the `ready` hook is a useful piece of knowledge to keep in your back pocket.
+Nếu bạn cố gắng chạy mã khởi tạo trước khi Django sẵn sàng, và bạn thử làm gì đó như dùng ORM để truy cập dữ liệu cơ sở dữ liệu, bạn có thể sẽ gặp exception `AppRegistryNotReady`. Hầu hết các app sẽ không cần chạy mã khởi động trực tiếp, nhưng biết về hook `ready` là một kiến thức hữu ích nên nhớ.
 
-## Ecosystem Applications
+## Ứng Dụng Trong Hệ Sinh Thái
 
-An application is an important tool for grouping the different logical components in your project, but apps also serve another purpose. Apps are the basis for most of the 3rd party extensions in the Django ecosystem.
+Một ứng dụng là công cụ quan trọng để nhóm các thành phần logic khác nhau trong dự án của bạn, nhưng app còn phục vụ một mục đích khác. App là nền tảng cho hầu hết các phần mở rộng bên thứ ba trong hệ sinh thái Django.
 
-A big reason to use Django is that the framework takes a “batteries included” approach. Most of the tools that you need to build a website are baked directly into the framework. This is a vastly different approach compared to [Flask](https://flask.palletsprojects.com/en/2.2.x/) which provides a relatively small API and depends heavily on third party libraries.
+Một lý do lớn để dùng Django là framework này theo triết lý “batteries included” (tích hợp sẵn mọi thứ cần thiết). Hầu hết các công cụ bạn cần để xây dựng một website đều được tích hợp trực tiếp vào framework. Đây là một cách tiếp cận rất khác so với [Flask](https://flask.palletsprojects.com/en/2.2.x/) vốn cung cấp một API nhỏ và phụ thuộc nhiều vào các thư viện bên thứ ba.
 
-Even though Django includes most of the major pieces for a web application, the framework doesn’t include _everything_. When you want to include more features, Django apps fill in the gaps.
+Dù Django tích hợp hầu hết các thành phần lớn cho một ứng dụng web, framework _không_ tích hợp _mọi thứ_. Khi bạn muốn thêm nhiều tính năng hơn, các app Django sẽ lấp đầy những khoảng trống đó.
 
-Before you go out to PyPI, we need look no further than the `django.contrib` package, a collection of “contributed” applications provided by Django itself. When you run the `startproject` command, Django will include a variety of built-in applications that perform different functions. If you don’t need some of the functionality, you can opt out by removing the app from your list in `INSTALLED_APPS`.
+Trước khi bạn lên PyPI, chúng ta chỉ cần nhìn vào package `django.contrib`, một tập hợp các ứng dụng “đóng góp” được Django cung cấp sẵn. Khi bạn chạy lệnh `startproject`, Django sẽ đưa vào nhiều ứng dụng tích hợp sẵn thực hiện các chức năng khác nhau. Nếu bạn không cần một số chức năng, bạn có thể loại bỏ bằng cách xóa app khỏi danh sách trong `INSTALLED_APPS`.
 
-I think this is the big difference in philosophy behind the framework. Some developers like to start from an extremely minimal kernel of functionality and build it up based on their needs. Django’s philosophy seems to be that you start with an opinionated baseline and pare down what you don’t require. Django doesn’t expect that you’ll use every feature in every app, but many of the features that you’ll want are at the ready when you need them.
+Tôi nghĩ đây là điểm khác biệt lớn về triết lý của framework. Một số lập trình viên thích bắt đầu từ một nhân tối thiểu và xây dựng dần lên theo nhu cầu. Triết lý của Django dường như là bạn bắt đầu với một nền tảng có sẵn ý kiến và loại bỏ những gì không cần. Django không kỳ vọng bạn sẽ dùng mọi tính năng trong mọi app, nhưng nhiều tính năng bạn cần sẽ sẵn sàng khi bạn cần đến.
 
-From my point of view, I think the Django philosophy is the right one (shocking, isn’t it!? 🤪). The benefit of the Django philosophy is that you leverage the knowledge of people who have built web apps for a very long time. Not only do you leverage that knowledge, you benefit from the polishing applied by the Django developers to integrate the different major systems into a consistent whole. What you’re left with is a framework that feels like it belongs together, and I think that is a positive impact on your productivity.
+Theo quan điểm của tôi, tôi nghĩ triết lý của Django là đúng đắn (ngạc nhiên chưa!? 🤪). Lợi ích của triết lý Django là bạn tận dụng được kiến thức của những người đã xây dựng web app từ lâu. Không chỉ tận dụng kiến thức đó, bạn còn hưởng lợi từ sự trau chuốt của các lập trình viên Django khi tích hợp các hệ thống lớn thành một tổng thể nhất quán. Kết quả là bạn có một framework cảm giác như các thành phần thuộc về nhau, và tôi nghĩ điều đó giúp tăng năng suất của bạn.
 
-When you build from a minimal kernel and work up, you depend on knowing everything that’s required to put something on the web. That means that you know all the pieces and how to bolt them together. But most people _don’t_ know all the pieces (because there are so many!).
+Khi bạn xây dựng từ một nhân tối thiểu và phát triển lên, bạn phải biết mọi thứ cần thiết để đưa một thứ gì đó lên web. Điều đó nghĩa là bạn biết tất cả các thành phần và cách kết nối chúng. Nhưng hầu hết mọi người _không_ biết hết các thành phần (vì có quá nhiều!).
 
-If you start minimally and don’t know the pieces, you’ll learn along the way, but what happens when you encounter a new concept that doesn’t fit into your original mental model? For instance, security is a critical part that can destroy your mental model when you learn of a class of vulnerabilities that can restrict what is possible to do safely. When you follow this building from scratch approach, I think the final result will naturally be your own custom framework. If that’s your thing, awesome. Go for it. For me, I want a framework that is a commodity and commonly understood by many people.
+Nếu bạn bắt đầu tối giản và không biết hết các thành phần, bạn sẽ học dần trên đường đi, nhưng chuyện gì xảy ra khi bạn gặp một khái niệm mới không khớp với mô hình tư duy ban đầu? Ví dụ, bảo mật là một phần quan trọng có thể phá vỡ mô hình tư duy của bạn khi bạn biết về một lớp lỗ hổng có thể giới hạn những gì có thể làm an toàn. Khi bạn xây dựng từ đầu như vậy, tôi nghĩ kết quả cuối cùng sẽ là framework tùy biến của riêng bạn. Nếu đó là điều bạn thích, tuyệt vời. Hãy làm đi. Với tôi, tôi muốn một framework là hàng hóa và được nhiều người hiểu chung.
 
-Ok, so, what does this have to do with Django apps? Apps are contained and reusable modules. Because they have a fairly standard structure, a project can integrate a new app quickly. This means you can leverage the knowledge and experience (read: battle scars) of other web developers. The apps all play by the same rules so you, as the developer, spend less time gluing the app into your project and more time benefiting from what it does.
+Vậy, điều này liên quan gì đến app Django? App là các module đóng gói và có thể tái sử dụng. Vì chúng có cấu trúc khá tiêu chuẩn, một dự án có thể tích hợp một app mới rất nhanh. Điều này nghĩa là bạn có thể tận dụng kiến thức và kinh nghiệm (đọc là: vết sẹo trận mạc) của các lập trình viên web khác. Các app đều tuân theo cùng một quy tắc nên bạn, với tư cách lập trình viên, sẽ tốn ít thời gian để “kết dính” app vào dự án và có nhiều thời gian hơn để hưởng lợi từ chức năng của nó.
 
-I think this standard structure also makes it easier to experiment with new apps. When I need some new functionality, I will often check [Django Packages](https://djangopackages.org/) to look for apps that could meet my needs. In my experience, adding a new app is, in many cases, little more than installing the package, adding the app to the `INSTALLED_APPS` list, and putting an `include` in my `urls.py` file. Some packages require more configuration than that, but I think that the integration cost is low enough for me to experiment rapidly and back out my decision if I discover that an app won’t do what I need.
+Tôi nghĩ cấu trúc tiêu chuẩn này cũng giúp bạn dễ thử nghiệm với các app mới. Khi tôi cần một tính năng mới, tôi thường kiểm tra [Django Packages](https://djangopackages.org/) để tìm các app có thể đáp ứng nhu cầu. Theo kinh nghiệm của tôi, thêm một app mới thường chỉ là cài đặt package, thêm app vào danh sách `INSTALLED_APPS`, và thêm một `include` vào file `urls.py`. Một số package cần cấu hình nhiều hơn, nhưng tôi nghĩ chi phí tích hợp đủ thấp để tôi có thể thử nghiệm nhanh và rút lại quyết định nếu phát hiện app không đáp ứng nhu cầu.
 
-All in all, Django applications make working with the Django ecosystem a more enjoyable experience.
+Tóm lại, các ứng dụng Django giúp việc làm việc với hệ sinh thái Django trở nên thú vị hơn.
 
-## Summary
+## Tóm Tắt
 
-In this article, we studied Django applications.
+Trong bài viết này, chúng ta đã tìm hiểu về các ứng dụng Django.
 
-We saw:
+Chúng ta đã thấy:
 
-- What a Django application is
-- How a Django application is structured
-- How the Django ecosystem benefits from a common format that creates reusable components
+- Ứng dụng Django là gì
+- Cách một ứng dụng Django được cấu trúc
+- Hệ sinh thái Django hưởng lợi từ một định dạng chung tạo ra các thành phần có thể tái sử dụng
 
-Next time we will look into authentication in Django. We will study:
+Lần tới chúng ta sẽ tìm hiểu về xác thực trong Django. Chúng ta sẽ nghiên cứu:
 
-- How users are created and managed
-- How to deal with permissions for users
-- How to work with users in your views and templates
+- Cách tạo và quản lý người dùng
+- Cách xử lý quyền cho người dùng
+- Cách làm việc với người dùng trong view và template của bạn
