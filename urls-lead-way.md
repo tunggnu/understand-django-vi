@@ -1,39 +1,39 @@
-# URLs Lead The Way
+# URLs Mở Đường
 
-In the last article in the [Understand Django](https://www.mattlayman.com/understand-django/ "‌") series, we saw how a user’s browser request goes from their browser to Django’s “front door.” Now it’s time to look at how Django processes those requests.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã thấy cách một yêu cầu từ trình duyệt của người dùng đi từ trình duyệt đến “cửa trước” của Django. Bây giờ là lúc tìm hiểu cách Django xử lý các yêu cầu đó.
 
-An HTTP request coming from a browser includes a URL describing which resource Django should produce. Since URLs can come in many forms, we must instruct Django on the kinds of URLs that our web application can handle. This is what the _URL configuration_ is for. In the Django documentation, the URL configuration is called a URLconf, for short.
+Một yêu cầu HTTP đến từ trình duyệt sẽ bao gồm một URL mô tả tài nguyên mà Django nên tạo ra. Vì URL có thể có nhiều dạng khác nhau, chúng ta phải hướng dẫn Django về các loại URL mà ứng dụng web của chúng ta có thể xử lý. Đây chính là nhiệm vụ của _cấu hình URL_ (URL configuration). Trong tài liệu Django, cấu hình URL được gọi tắt là URLconf.
 
-Where is the URLconf? The URLconf is at the module path set by the `ROOT_URLCONF` setting in your project’s settings file. If you ran the `startproject` command, then that setting will be named like `project.urls` where “project” is the name given as an argument to the command. In other words, the URLconf is placed in `project/urls.py`, right next to the `settings.py` file.
+URLconf nằm ở đâu? URLconf nằm ở đường dẫn module được thiết lập bởi thiết lập `ROOT_URLCONF` trong file settings của dự án. Nếu bạn chạy lệnh `startproject`, thì thiết lập đó sẽ có tên như `project.urls` trong đó “project” là tên bạn truyền vào lệnh. Nói cách khác, URLconf được đặt trong `project/urls.py`, ngay cạnh file `settings.py`.
 
-That explains where the file resides, but it doesn’t tell us much about how it works. Let’s dig in more.
+Điều đó giải thích vị trí của file, nhưng chưa nói nhiều về cách nó hoạt động. Hãy cùng tìm hiểu sâu hơn.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/ "‌")
-2. URLs Lead The Way
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/ "‌")
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/ "‌")
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/ "‌")
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/ "‌")
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/ "‌")
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/ "‌")
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/ "‌")
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/ "‌")
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/ "‌")
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/ "‌")
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/ "‌")
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/ "‌")
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/ "‌")
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/ "‌")
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/ "‌")
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/ "‌")
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/ "‌")
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/ "‌")
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. URLs Dẫn Đường
+3. [Nhìn Vào Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. [Templates Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## URLconf In Action
+## URLconf Hoạt Động Như Thế Nào
 
-Try to think of the URL configuration as a list of URL paths that Django will attempt to match from top to bottom. When Django finds a matching path, the HTTP request will route to a chunk of Python code that is associated with that path. That “chunk of Python code” is called a _view_ which we will explore more in a bit. For the moment, trust that views know how to handle HTTP requests.
+Hãy thử nghĩ về cấu hình URL như một danh sách các đường dẫn URL mà Django sẽ cố gắng khớp từ trên xuống dưới. Khi Django tìm thấy một đường dẫn phù hợp, yêu cầu HTTP sẽ được chuyển đến một đoạn mã Python liên kết với đường dẫn đó. Đoạn “mã Python” này được gọi là _view_ mà chúng ta sẽ tìm hiểu kỹ hơn sau. Hiện tại, hãy tin rằng view biết cách xử lý các yêu cầu HTTP.
 
-We can use an example URLconf to bring this to life.
+Chúng ta có thể sử dụng một ví dụ về URLconf để minh họa.
 
 ```python
 # project/urls.py
@@ -49,20 +49,20 @@ urlpatterns = [
 ]
 ```
 
-What’s here matches well with what I described above: a list of URL paths that Django will try to match from top to bottom. The key aspect of this list is the name `urlpatterns`. Django will treat the list in a `urlpatterns` variable as the URLconf.
+Những gì có ở đây rất phù hợp với mô tả ở trên: một danh sách các đường dẫn URL mà Django sẽ cố gắng khớp từ trên xuống dưới. Điểm mấu chốt của danh sách này là tên `urlpatterns`. Django sẽ coi danh sách trong biến `urlpatterns` là URLconf.
 
-The order of this list is also important because Django will stop scanning the list as soon as it encounters a match. The example doesn’t show any conflict between paths, but it’s possible to create two different `path` entries that can match the same URL that a user submits. I’ll show an example of how that can happen after we see another aspect of paths.
+Thứ tự của danh sách này cũng rất quan trọng vì Django sẽ dừng việc quét danh sách ngay khi gặp một đường dẫn phù hợp. Ví dụ trên không có xung đột giữa các đường dẫn, nhưng hoàn toàn có thể tạo ra hai mục `path` khác nhau có thể khớp cùng một URL mà người dùng gửi lên. Tôi sẽ minh họa ví dụ về điều này sau khi chúng ta xem thêm một khía cạnh khác của path.
 
-We can work through an example to see how this would work for `www.example.com`. When considering a URL in a URLconf, Django ignores the scheme (`https://`), the domain (`www.example.com`), and the leading slash for matching. Everything else is what the URLconf will match against.
+Chúng ta có thể làm một ví dụ để xem điều này hoạt động như thế nào với `www.example.com`. Khi xét một URL trong URLconf, Django sẽ bỏ qua scheme (`https://`), domain (`www.example.com`) và dấu gạch chéo đầu tiên khi so khớp. Mọi thứ còn lại sẽ được URLconf dùng để so khớp.
 
-- A request to `https://www.example.com/about/` will look like `"about/"` to the pattern matching process and match the second `path`. That request would route to the `views.about` view.
-- A request to `https://www.example.com/` will look like `""` to the pattern matching process and match the first `path`. That request would route to the `views.home` view.
+- Một yêu cầu đến `https://www.example.com/about/` sẽ được coi là `"about/"` trong quá trình so khớp và khớp với `path` thứ hai. Yêu cầu đó sẽ được chuyển đến view `views.about`.
+- Một yêu cầu đến `https://www.example.com/` sẽ được coi là `""` trong quá trình so khớp và khớp với `path` đầu tiên. Yêu cầu đó sẽ được chuyển đến view `views.home`.
 
-> _Aside: You might notice that Django URLs end with a slash character. This behavior is because of a Django _[_design philosophy_](https://docs.djangoproject.com/en/4.1/misc/design-philosophies/#definitive-urls "‌")_ choice. In fact, if you attempt to reach a URL like_ `https://www.example.com/about`_, Django will redirect the request to the same URL with the slash appended because of the_ `APPEND_SLASH`[_default setting_](https://docs.djangoproject.com/en/4.1/ref/settings/#append-slash "‌")_._
+> _Lưu ý: Bạn có thể nhận thấy rằng các URL của Django kết thúc bằng dấu gạch chéo. Hành vi này là do một lựa chọn trong _[triết lý thiết kế](https://docs.djangoproject.com/en/4.1/misc/design-philosophies/#definitive-urls)_ của Django. Thực tế, nếu bạn cố gắng truy cập một URL như_ `https://www.example.com/about`_, Django sẽ chuyển hướng yêu cầu đến cùng URL đó nhưng có thêm dấu gạch chéo ở cuối nhờ thiết lập_ `APPEND_SLASH`[_mặc định_](https://docs.djangoproject.com/en/4.1/ref/settings/#append-slash)_._
 
-## The `path` Before Us
+## `path` Trước Mắt Chúng Ta
 
-The string part of `path` (e.g., `"about/"`) is called the _route_. A route can be a plain string as you’ve seen, but it can include other special structures with a feature called _converters_. When you use a converter, you can extract information out of a URL that a view can use later. Consider a path like this:
+Phần chuỗi trong `path` (ví dụ, `"about/"`) được gọi là _route_. Một route có thể là một chuỗi đơn giản như bạn đã thấy, nhưng nó cũng có thể bao gồm các cấu trúc đặc biệt khác với tính năng gọi là _converters_. Khi bạn sử dụng converter, bạn có thể trích xuất thông tin từ URL để view sử dụng sau này. Hãy xem một path như sau:
 
 ```python
     path(
@@ -71,23 +71,23 @@ The string part of `path` (e.g., `"about/"`) is called the _route_. A route can 
     ),
 ```
 
-The two converters in this path are:
+Hai converter trong path này là:
 
 - `<int:year>`
 - `<slug:slug>`
 
-The use of angle brackets and some [reserved names](https://docs.djangoproject.com/en/4.1/topics/http/urls/#path-converters "‌") cause Django to perform extra parsing on a URL. Each converter has some expected rules to follow.
+Việc sử dụng dấu ngoặc nhọn và một số [tên dành riêng](https://docs.djangoproject.com/en/4.1/topics/http/urls/#path-converters) khiến Django thực hiện việc phân tích cú pháp bổ sung trên một URL. Mỗi converter có một số quy tắc mong đợi riêng.
 
-- The `int` converter must match an integer.
-- The `slug` converter must match a slug. Slug is a bit of newspaper lingo that appears in Django because Django started as a project out of a newspaper in Kansas. A slug is a string that can include characters, numbers, dashes, and underscores.
+- Converter `int` phải khớp với một số nguyên.
+- Converter `slug` phải khớp với một slug. Slug là một thuật ngữ báo chí xuất hiện trong Django vì Django bắt nguồn từ một dự án của một tờ báo ở Kansas. Một slug là một chuỗi có thể bao gồm ký tự, số, dấu gạch ngang và dấu gạch dưới.
 
-Given those converter definitions, let’s compare against some URLs!
+Với các định nghĩa converter đó, hãy so sánh với một số URL!
 
-- `https://www.example.com/blog/2020/urls-lead-way/` - MATCH!
-- `https://www.example.com/blog/twenty-twenty/urls-lead-way/` - NOPE.
-- `https://www.example.com/blog/0/life-in-rome/` - MATCH! Uh, maybe not what we wanted though. Let’s look at that soon.
+- `https://www.example.com/blog/2020/urls-lead-way/` - KHỚP!
+- `https://www.example.com/blog/twenty-twenty/urls-lead-way/` - KHÔNG KHỚP.
+- `https://www.example.com/blog/0/life-in-rome/` - KHỚP! Ừm, có thể không phải điều chúng ta muốn. Hãy xem xét điều đó sớm.
 
-Now we can revisit our ordering problem from earlier. Consider these two paths in different orders:
+Bây giờ chúng ta có thể quay lại vấn đề về thứ tự từ trước. Hãy xem hai path này với thứ tự khác nhau:
 
 ```python
     path(
@@ -111,19 +111,19 @@ Now we can revisit our ordering problem from earlier. Consider these two paths i
     ),
 ```
 
-In the first ordering, the converter will match any integer following `blog/`, including `https://www.example.com/blog/2020/`. That means that the first ordering will never call the `blog_for_twenty_twenty` view because Django matches `path` entries in order.
+Ở thứ tự đầu tiên, converter sẽ khớp với bất kỳ số nguyên nào sau `blog/`, bao gồm cả `https://www.example.com/blog/2020/`. Điều đó có nghĩa là thứ tự đầu tiên sẽ không bao giờ gọi view `blog_for_twenty_twenty` vì Django sẽ khớp các mục `path` theo thứ tự.
 
-Conversely, in the second ordering, `blog/2020/` will route to `blog_for_twenty_twenty` properly because it is matched first. That means there’s a lesson to remember here:
+Ngược lại, ở thứ tự thứ hai, `blog/2020/` sẽ được chuyển đến `blog_for_twenty_twenty` đúng cách vì nó được khớp trước. Điều đó có nghĩa là có một bài học cần nhớ ở đây:
 
 ‌
 
-> _When including_ `path` _entries that match on ranges of values with converters (like the years example above), be sure to put them **after** the more specific entries._
+> _Khi thêm các mục_ `path` _khớp với một dải giá trị bằng converter (như ví dụ năm ở trên), hãy chắc chắn đặt chúng **sau** các mục cụ thể hơn._
 
-## An Abbreviated View Of Views
+## Một Góc Nhìn Ngắn Gọn Về Views
 
-What do converters do with this extra data? That’s hard to explain without touching on views. The next article will cover views in far more depth, but here’s a primer.
+Các converter làm gì với dữ liệu bổ sung này? Thật khó để giải thích mà không đề cập đến views. Bài tiếp theo sẽ nói kỹ hơn về views, nhưng đây là phần giới thiệu.
 
-A view is code that takes a request and returns a response. Using Python’s optional type hinting, here’s an example that will send a `Hello World` response.
+Một view là đoạn mã nhận một request và trả về một response. Sử dụng gợi ý kiểu dữ liệu tùy chọn của Python, đây là một ví dụ sẽ gửi response `Hello World`.
 
 ```python
 from django.http import (
@@ -137,9 +137,9 @@ def some_view(
     return HttpResponse('Hello World')
 ```
 
-The `HttpRequest` is Django’s translated format of an HTTP request wrapped up in a convenient container class. Likewise, `HttpResponse` is what we can use so that Django will translate our response data into a properly formatted HTTP response that will be sent back to the user’s browser.
+`HttpRequest` là định dạng đã được Django chuyển đổi của một yêu cầu HTTP, được gói trong một lớp tiện lợi. Tương tự, `HttpResponse` là thứ chúng ta có thể dùng để Django chuyển đổi dữ liệu phản hồi của chúng ta thành một phản hồi HTTP đúng chuẩn để gửi lại cho trình duyệt người dùng.
 
-Now we can look at one of the converters again.
+Bây giờ chúng ta có thể xem lại một trong các converter.
 
 ```python
     path(
@@ -148,7 +148,7 @@ Now we can look at one of the converters again.
     ),
 ```
 
-With this converter in place in the route, what would `blog_by_year` look like?
+Với converter này trong route, `blog_by_year` sẽ trông như thế nào?
 
 ```python
 # application/views.py
@@ -160,23 +160,23 @@ def blog_by_year(request, year):
     return HttpResponse(data)
 ```
 
-Django begins to reveal some nice qualities here! The converter did a bunch of tedious work for us. The `year` argument set by Django will already be an integer because Django did the string parsing and conversion.
+Django bắt đầu bộc lộ một số điểm hay ở đây! Converter đã làm rất nhiều việc tẻ nhạt cho chúng ta. Tham số `year` do Django truyền vào sẽ là một số nguyên vì Django đã thực hiện việc phân tích chuỗi và chuyển đổi.
 
-If someone submits `/blog/not_a_number/`, Django will return a Not Found response because `not_a_number` can’t be an integer. The benefit of this is that we don’t have to put extra checking logic in `blog_by_year` to handle the weird case where `year` doesn’t look like a number. That kind of feature is a real time saver! It keeps your code cleaner _and_ makes handling more precise.
+Nếu ai đó gửi `/blog/not_a_number/`, Django sẽ trả về phản hồi Not Found vì `not_a_number` không thể là một số nguyên. Lợi ích của điều này là chúng ta không phải thêm logic kiểm tra bổ sung trong `blog_by_year` để xử lý trường hợp kỳ lạ khi `year` không giống một con số. Tính năng này thực sự tiết kiệm thời gian! Nó giúp mã của bạn sạch hơn _và_ xử lý chính xác hơn.
 
-What about that other strange example that we saw earlier of `/blog/0/life-in-rome/`? That would match our pattern from the earlier section, but let’s assume we want to match a four digit year. How can we do that? We can use regular expressions.
+Còn ví dụ kỳ lạ khác mà chúng ta đã thấy trước đó là `/blog/0/life-in-rome/` thì sao? Đường dẫn đó sẽ khớp với pattern ở phần trước, nhưng giả sử chúng ta muốn chỉ khớp với năm có bốn chữ số. Làm sao để làm được điều đó? Chúng ta có thể dùng biểu thức chính quy.
 
-## Regular Expression Paths
+## Đường Dẫn Biểu Thức Chính Quy
 
-Regular expressions are a programming feature often likened to a chainsaw: _they are incredibly powerful, but you can cut off your foot if you’re not careful._
+Biểu thức chính quy là một tính năng lập trình thường được ví như một chiếc cưa máy: _chúng cực kỳ mạnh mẽ, nhưng bạn có thể tự cắt chân mình nếu không cẩn thận._
 
-Regular expressions can express complex patterns of characters in a concise way. This conciseness often gives regular expressions a bad reputation of being difficult to understand. When used carefully, though, they can be highly effective.
+Biểu thức chính quy có thể diễn đạt các mẫu ký tự phức tạp một cách ngắn gọn. Sự ngắn gọn này thường khiến biểu thức chính quy bị mang tiếng là khó hiểu. Tuy nhiên, khi sử dụng cẩn thận, chúng rất hiệu quả.
 
-A regular expression (which is often abbreviated to “regex”) matches complex patterns in strings. This sounds exactly like our blog year problem! In our problem, we want to match a four digit integer only. Let’s look at a solution that Django can handle and then break down what it means.
+Một biểu thức chính quy (thường được viết tắt là “regex”) sẽ khớp các mẫu phức tạp trong chuỗi. Điều này nghe có vẻ giống hệt vấn đề về năm của blog! Trong vấn đề của chúng ta, chúng ta muốn chỉ khớp với số nguyên có bốn chữ số. Hãy xem một giải pháp mà Django có thể xử lý rồi phân tích ý nghĩa của nó.
 
-As a reminder, this solution will match some URL path like `blog/2020/urls-lead-way/`.
+Nhắc lại, giải pháp này sẽ khớp với một đường dẫn URL như `blog/2020/urls-lead-way/`.
 
-Note, we use the `re_path()` function for regular expression matching here, instead of `path()`.
+Lưu ý, chúng ta dùng hàm `re_path()` để khớp biểu thức chính quy thay vì `path()`.
 
 ```python
 re_path(
@@ -185,30 +185,30 @@ re_path(
 ),
 ```
 
-This crazy string behaves exactly like our earlier example **except** that it is more precise about only allowing four digit years. The crazy string also has a name. It is called a _regex pattern_. When the Django code runs, it will test URL paths against the rules that are defined in this pattern.
+Chuỗi “kỳ lạ” này hoạt động giống hệt ví dụ trước **ngoại trừ** việc nó chính xác hơn về việc chỉ cho phép năm có bốn chữ số. Chuỗi “kỳ lạ” này cũng có một cái tên. Nó được gọi là _mẫu regex_ (regex pattern). Khi mã Django chạy, nó sẽ kiểm tra các đường dẫn URL dựa trên các quy tắc được định nghĩa trong mẫu này.
 
-To see how it works, we have to know what the parts of the pattern mean. We can explain this pattern one chunk at a time.
+Để hiểu cách nó hoạt động, chúng ta cần biết ý nghĩa của từng phần trong mẫu. Hãy giải thích mẫu này từng đoạn một.
 
-- The string itself starts with `r"` because it is a raw string in Python. This is used because regular expressions use `\` extensively. Without a raw string, a developer would have to escape the backslash repeatedly by using `\\`.
-- The caret, `^`, means “the pattern must _start_ here.” Because of the caret, a path that starts like `myblog/...` will not work.
-- `blog/` is a literal interpretation. Those characters must match exactly.
-- The portion inside parentheses `(?P<year>[0-9]{4})` is a _capture group_. The `?P<year>` is the name to associate with the capture group and is similar to the right side of the colon in a converter like `<int:year>`. The name allows Django to pass on the content in an argument called `year` to the view. The other part of the capture group, `[0-9]{4}`, is what the pattern is actually matching. `[0-9]` is a _character class_ which means “match any number from 0 through 9.” The `{4}` means that it must match **exactly** four times. This is the specificity that `re_path` gives that the `int` converter could not!
-- The slash, `/`, between capture groups is another literal character to match.
-- The second capture group, `(?P<slug>[\w-]+)`, will put whatever it matches into an argument named `slug`. The character class of `[\w-]` contains two types of characters. `\w` means any word character that you might have in a natural language and digits and underscores. The other type of character is a literal dash, `-`, character. Finally, the plus, `+`, character means that the character class must match 1 or more times.
-- The last slash is also a literal character match.
-- To complete the pattern, the dollar sign, `$`, acts like the opposite of the caret and means “the pattern must _end_ here.” Thus, `blog/2020/some-slug/another-slug/` will not match.
+- Chuỗi bắt đầu bằng `r"` vì nó là chuỗi raw trong Python. Điều này được dùng vì biểu thức chính quy sử dụng `\` rất nhiều. Nếu không dùng chuỗi raw, lập trình viên sẽ phải escape dấu gạch chéo ngược liên tục bằng cách dùng `\\`.
+- Dấu mũ `^` nghĩa là “mẫu phải _bắt đầu_ từ đây.” Nhờ dấu mũ, một path bắt đầu như `myblog/...` sẽ không khớp.
+- `blog/` là phần khớp đúng từng ký tự. Các ký tự này phải khớp chính xác.
+- Phần trong ngoặc đơn `(?P<year>[0-9]{4})` là một _capture group_. `?P<year>` là tên gán cho capture group và tương tự như phần bên phải dấu hai chấm trong converter như `<int:year>`. Tên này cho phép Django truyền nội dung vào một tham số tên là `year` cho view. Phần còn lại của capture group, `[0-9]{4}`, là phần mẫu thực sự sẽ khớp. `[0-9]` là _character class_ nghĩa là “khớp với bất kỳ số nào từ 0 đến 9.” `{4}` nghĩa là phải khớp **chính xác** bốn lần. Đây là sự chính xác mà `re_path` mang lại mà converter `int` không thể!
+- Dấu gạch chéo `/` giữa các capture group là ký tự khớp đúng từng ký tự.
+- Capture group thứ hai, `(?P<slug>[\w-]+)`, sẽ đưa bất kỳ giá trị nào nó khớp vào tham số tên là `slug`. Character class `[\w-]` chứa hai loại ký tự. `\w` nghĩa là bất kỳ ký tự từ nào bạn có thể có trong ngôn ngữ tự nhiên, số và dấu gạch dưới. Loại ký tự còn lại là dấu gạch ngang `-`. Cuối cùng, dấu cộng `+` nghĩa là character class phải khớp ít nhất 1 lần trở lên.
+- Dấu gạch chéo cuối cùng cũng là ký tự khớp đúng từng ký tự.
+- Để kết thúc mẫu, dấu đô la `$` đóng vai trò ngược lại với dấu mũ và nghĩa là “mẫu phải _kết thúc_ ở đây.” Do đó, `blog/2020/some-slug/another-slug/` sẽ không khớp.
 
-Note that you cannot mix the `path` style and `re_path` style strings. The example above had to describe the slug as a regular expression instead of using the slug converter (i.e., `<slug:slug>`).
+Lưu ý rằng bạn không thể trộn lẫn kiểu `path` và kiểu chuỗi `re_path`. Ví dụ trên phải mô tả slug bằng biểu thức chính quy thay vì dùng converter slug (tức là `<slug:slug>`).
 
-Congratulations! This is definitely the hardest section of this article. If you understood what we did with `re_path`, the rest of this should feel very comfortable. If not, _please don’t fret about it!_ If you want to know more about regular expressions, know that everything I described in the pattern is _not_ Django specific. Instead, this is Python’s built-in behavior. You can learn more about regular expressions from Python’s [Regular Expression HOWTO](https://docs.python.org/3/howto/regex.html "‌").
+Chúc mừng bạn! Đây chắc chắn là phần khó nhất của bài viết này. Nếu bạn hiểu những gì chúng ta đã làm với `re_path`, phần còn lại sẽ rất dễ dàng. Nếu chưa, _đừng lo lắng!_ Nếu bạn muốn biết thêm về biểu thức chính quy, hãy nhớ rằng mọi thứ tôi mô tả trong mẫu này _không_ phải là đặc trưng của Django. Thay vào đó, đây là hành vi tích hợp sẵn của Python. Bạn có thể tìm hiểu thêm về biểu thức chính quy từ [Regular Expression HOWTO của Python](https://docs.python.org/3/howto/regex.html).
 
-Knowing that this power with `re_path` is there may help you later on your Django journey, even if you don’t need it now.
+Biết rằng sức mạnh của `re_path` luôn ở đó có thể giúp bạn sau này trên hành trình Django, ngay cả khi bạn chưa cần đến nó bây giờ.
 
-## Grouping Related URLs
+## Nhóm Các URL Liên Quan
 
-Up to this point, we’ve looked at individual routes that you can map in a URLconf. What can we do when a related group of views should share a common path? Why would we want to do this?
+Đến thời điểm này, chúng ta đã xem các route riêng lẻ mà bạn có thể ánh xạ trong URLconf. Vậy chúng ta có thể làm gì khi một nhóm view liên quan nên chia sẻ một đường dẫn chung? Tại sao lại muốn làm như vậy?
 
-Let’s imagine you’re building an educational project. In your project, you have schools, students, and other education related concepts. You _could_ do something like:
+Hãy tưởng tượng bạn đang xây dựng một dự án giáo dục. Trong dự án, bạn có trường học, học sinh và các khái niệm liên quan đến giáo dục khác. Bạn _có thể_ làm như sau:
 
 ```python
 # project/urls.py
@@ -240,7 +240,7 @@ urlpatterns = [
 ]
 ```
 
-This approach would work fine, but it forces the root URLconf to know about all the views defined in each app, `schools` and `students`. Instead, we can use `include` to handle this better.
+Cách tiếp cận này vẫn hoạt động tốt, nhưng nó buộc URLconf gốc phải biết về tất cả các view được định nghĩa trong từng app, `schools` và `students`. Thay vào đó, chúng ta có thể dùng `include` để xử lý tốt hơn.
 
 ```python
 # project/urls.py
@@ -258,7 +258,7 @@ urlpatterns = [
 ]
 ```
 
-Then, in each application, we would have something like:
+Sau đó, trong mỗi ứng dụng, chúng ta sẽ có như sau:
 
 ```python
 # schools/urls.py
@@ -275,13 +275,13 @@ urlpatterns = [
 ]
 ```
 
-The use of `include` gives each Django app autonomy in what views it needs to define. The project can be blissfully “ignorant” of what the application is doing.
+Việc sử dụng `include` giúp mỗi app Django tự chủ trong việc xác định các view cần thiết. Dự án có thể “không biết” về những gì ứng dụng đang làm.
 
-Additionally, the repetition of `schools/` or `students/` is removed from the first example. As Django processes a route, it will match on the first portion of the route and pass the _remainder_ onto the URLconf that is defined in the individual app. In this way, URL configurations can form a tree where the root URLconf is where all requests start, but individual applications can handle the details as a request is routed to the proper app.
+Ngoài ra, việc lặp lại `schools/` hoặc `students/` được loại bỏ so với ví dụ đầu tiên. Khi Django xử lý một route, nó sẽ khớp phần đầu của route và chuyển _phần còn lại_ cho URLconf được định nghĩa trong từng app. Theo cách này, cấu hình URL có thể tạo thành một cây, trong đó URLconf gốc là nơi mọi yêu cầu bắt đầu, nhưng từng ứng dụng sẽ xử lý chi tiết khi một yêu cầu được chuyển đến app phù hợp.
 
-## Naming URLs
+## Đặt Tên Cho URL
 
-We’ve looked at the main ways that URLs get defined with `path`, `re_path`, and `include`. There is another aspect to consider. How can we refer to URLs in other places in the code? Consider this (rather silly) view:
+Chúng ta đã xem các cách chính để định nghĩa URL với `path`, `re_path` và `include`. Có một khía cạnh khác cần xem xét. Làm thế nào để tham chiếu đến các URL ở những nơi khác trong mã? Hãy xem view (hơi ngớ ngẩn) này:
 
 ```python
 # application/views.py
@@ -295,9 +295,9 @@ def old_blog_categories(request):
     )
 ```
 
-A redirect is when a user tries to visit a page and is sent somewhere else by the browser. There are much better ways to handle redirects than this example shows, but this view illustrates a different point. What would happen if you want to restructure the project so that blog categories moved from `/blog/categories/` to `/marketing/blog/categories/`? In the current form, we would have to fix this view and any other view that referenced the route directly.
+Redirect là khi người dùng cố gắng truy cập một trang và được trình duyệt chuyển đến nơi khác. Có nhiều cách tốt hơn để xử lý redirect so với ví dụ này, nhưng view này minh họa một điểm khác. Điều gì sẽ xảy ra nếu bạn muốn cấu trúc lại dự án để các danh mục blog chuyển từ `/blog/categories/` sang `/marketing/blog/categories/`? Ở dạng hiện tại, chúng ta sẽ phải sửa view này và bất kỳ view nào khác tham chiếu trực tiếp đến route đó.
 
-What a waste of time! Django gives us tools to give paths names that are independent from the explicit route. We do this with the `name` keyword argument to `path`.
+Thật lãng phí thời gian! Django cung cấp cho chúng ta công cụ để đặt tên cho các path độc lập với route cụ thể. Chúng ta làm điều này với tham số `name` của `path`.
 
 ```python
 # project/urls.py
@@ -316,7 +316,7 @@ urlpatterns = [
 ]
 ```
 
-This gives us `blog_categories` as an independent name from the route of `/marketing/blog/categories/`. To use that name, we need `reverse` as its counterpart. Our modified view looks like:
+Điều này giúp chúng ta có `blog_categories` là một tên độc lập với route `/marketing/blog/categories/`. Để sử dụng tên đó, chúng ta cần `reverse` như một đối tác. View đã chỉnh sửa của chúng ta như sau:
 
 ```python
 # application/views.py
@@ -331,33 +331,33 @@ def old_blog_categories(request):
     )
 ```
 
-The job of `reverse` is to look up any path name and return its route equivalent. That means that:
+Nhiệm vụ của `reverse` là tra cứu bất kỳ tên path nào và trả về route tương ứng. Điều đó có nghĩa là:
 
 ```python
 reverse("blog_categories") == "/marketing/blog/categories/"
 ```
 
-At least until you want to change it again. 😁
+Ít nhất là cho đến khi bạn muốn thay đổi nó lần nữa. 😁
 
-## When Names Collide
+## Khi Tên Bị Trùng
 
-What happens if you have multiple URLs that you want to give the same `name`? For instance, `index` or `detail` are common names that you may want to apply. We can turn to [The Zen of Python](https://www.python.org/dev/peps/pep-0020/ "‌") for advice.
+Điều gì xảy ra nếu bạn có nhiều URL muốn đặt cùng một `name`? Ví dụ, `index` hoặc `detail` là những tên phổ biến mà bạn có thể muốn dùng. Chúng ta có thể tham khảo [The Zen of Python](https://www.python.org/dev/peps/pep-0020/) để xin lời khuyên.
 
 > _The Zen of Python, by Tim Peters_
 >
-> _Beautiful is better than ugly._
+> _Đẹp hơn là xấu._
 >
 > _…_
 >
-> _**Namespaces are one honking great idea – let’s do more of those!**_
+> _**Namespaces là một ý tưởng tuyệt vời – hãy dùng nhiều hơn nữa!**_
 
-Namespaces might be new to you if you haven’t been programming long. They are a _shared space for names_. Maybe that’s clear, but I recall struggling with the concept when I first began to write software.
+Namespace có thể là khái niệm mới nếu bạn chưa lập trình lâu. Chúng là _không gian chung cho các tên_. Có thể điều này đã rõ, nhưng tôi nhớ mình từng gặp khó khăn với khái niệm này khi mới bắt đầu lập trình.
 
-To make an analogy to something in the real world, let’s use trusty buckets. Imagine you have two red balls and two blue balls. Put one ball of each color in each of the two buckets labeled “A” and “B.” If I wanted a specific blue ball, I can’t say “please give me the blue ball” because that would be ambiguous. Instead, to get a specific ball, I would need to say “please give me the blue ball in bucket B.” In this scenario, the bucket is the namespace.
+Để làm phép so sánh với thực tế, hãy dùng hình ảnh những chiếc xô. Hãy tưởng tượng bạn có hai quả bóng đỏ và hai quả bóng xanh. Đặt mỗi quả bóng mỗi màu vào hai chiếc xô được dán nhãn “A” và “B.” Nếu tôi muốn một quả bóng xanh cụ thể, tôi không thể nói “hãy đưa tôi quả bóng xanh” vì điều đó mơ hồ. Thay vào đó, để lấy quả bóng cụ thể, tôi cần nói “hãy đưa tôi quả bóng xanh trong xô B.” Trong trường hợp này, chiếc xô là namespace.
 
-The example that we used for schools and students can help illustrate this idea in code. Both apps had an `index` view to represent the root of the respective portions of the project (i.e., `schools/` and `students/`). If we wanted to refer to those views, we’d try to pick the easiest choice of `index`. Unfortunately, if you pick `index`, then Django can’t tell which one is the right view for `index`. The name is ambiguous.
+Ví dụ chúng ta dùng cho schools và students có thể minh họa ý tưởng này trong mã. Cả hai app đều có một view `index` để đại diện cho gốc của từng phần trong dự án (tức là `schools/` và `students/`). Nếu chúng ta muốn tham chiếu đến các view đó, chúng ta sẽ cố chọn tên dễ nhất là `index`. Thật không may, nếu bạn chọn `index`, Django sẽ không biết view nào là đúng cho `index`. Tên bị mơ hồ.
 
-One solution is to create your own namespace by prefixing `name` with something common like `schools_`. The trouble with that approach is that the URLconf repeats itself.
+Một giải pháp là tự tạo namespace bằng cách thêm tiền tố cho `name` như `schools_`. Vấn đề của cách này là URLconf bị lặp lại.
 
 ```python
 # schools/urls.py
@@ -379,7 +379,7 @@ urlpatterns = [
 ]
 ```
 
-Django provides an alternative that will let you keep a shorter name.
+Django cung cấp một cách khác giúp bạn giữ tên ngắn hơn.
 
 ```python
 # schools/urls.py
@@ -398,29 +398,29 @@ urlpatterns = [
 ]
 ```
 
-By adding `app_name`, we signal to Django that these views are in a namespace. Now when we want to get a URL, we use the namespace name and the URL name and join them with a colon.
+Bằng cách thêm `app_name`, chúng ta báo cho Django biết các view này nằm trong một namespace. Bây giờ khi muốn lấy một URL, chúng ta dùng tên namespace và tên URL, nối với nhau bằng dấu hai chấm.
 
 ```
 reverse("schools:index") == "/schools/"
 ```
 
-This is another convenience that Django gives to make our application development experience easier.
+Đây là một tiện ích khác mà Django mang lại để giúp trải nghiệm phát triển ứng dụng của bạn dễ dàng hơn.
 
-That brings us to a close on the subject of URLs. By now, we’ve seen how to:
+Như vậy là chúng ta đã kết thúc chủ đề về URL. Đến giờ, chúng ta đã biết cách:
 
-- Make a URL configuration by making a module with a list of `urlpatterns`.
-- Create URLs with `path` and `re_path`.
-- Use converters to extract information for views.
-- Use regular expressions to express more complex URL data.
-- Group related URLs together with `include`.
-- Refer to a URL by its `name`.
-- Put related names together in a namespace.
+- Tạo cấu hình URL bằng cách tạo một module với danh sách `urlpatterns`.
+- Tạo URL với `path` và `re_path`.
+- Sử dụng converter để trích xuất thông tin cho view.
+- Sử dụng biểu thức chính quy để diễn đạt dữ liệu URL phức tạp hơn.
+- Nhóm các URL liên quan với `include`.
+- Tham chiếu đến một URL bằng `name`.
+- Gom các tên liên quan vào một namespace.
 
-In the next article, we’ll dig into views. This article only gave the briefest definition to what a view is. Django gives us very rich options when working with views. We’re going to explore:
+Trong bài tiếp theo, chúng ta sẽ tìm hiểu về views. Bài viết này chỉ mới đưa ra định nghĩa ngắn gọn về view là gì. Django cung cấp cho chúng ta rất nhiều lựa chọn phong phú khi làm việc với views. Chúng ta sẽ khám phá:
 
-- View functions
-- View classes
-- Some built-in supporting views
-- Decorators that supercharge views.
+- Hàm view
+- Lớp view
+- Một số view hỗ trợ tích hợp sẵn
+- Decorator giúp tăng sức mạnh cho view.
 
-If you’d like to follow along with the series, please feel free to sign up for my newsletter where I announce all of my new content. If you have other questions, you can reach me online on X where I am [\@mblayman](https://x.com/mblayman "‌").  
+Nếu bạn muốn theo dõi loạt bài này, hãy đăng ký nhận bản tin của tôi, nơi tôi thông báo tất cả nội dung mới. Nếu bạn có câu hỏi khác, bạn có thể liên hệ với tôi trên X tại [\@mblayman](https://x.com/mblayman).
