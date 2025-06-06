@@ -1,33 +1,33 @@
-# Store Data With Models
+# Lưu Trữ Dữ Liệu Với Models
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/) article, we encountered forms and how forms allow your application to receive data from users who use your site. In this article, you’ll see how to take that data and store it into a database so that your application can use that data or display it later.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã tìm hiểu về form và cách form cho phép ứng dụng của bạn nhận dữ liệu từ người dùng sử dụng trang web. Trong bài viết này, bạn sẽ thấy cách lấy dữ liệu đó và lưu nó vào cơ sở dữ liệu để ứng dụng của bạn có thể sử dụng hoặc hiển thị lại sau này.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/)
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/)
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/)
-4. [Templates For User Interfaces](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
-6. Store Data With Models
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/)
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/)
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/)
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/)
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/)
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/)
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/)
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/)
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/)
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/)
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
+3. [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. [Template Cho Giao Diện Người Dùng](https://www.mattlayman.com/understand-django/templates-user-interfaces/)
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. Lưu Trữ Dữ Liệu Với Models
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## Setting Up
+## Thiết Lập
 
-Let’s figure out where your data goes before getting deep into how to work with it. Django uses databases to store data. More specifically, Django uses _relational_ databases. Covering relational databases would be a gigantic topic so you’ll have to settle for a **very** abridged version.
+Hãy xác định dữ liệu của bạn sẽ đi đâu trước khi đi sâu vào cách làm việc với nó. Django sử dụng cơ sở dữ liệu để lưu trữ dữ liệu. Cụ thể hơn, Django sử dụng _cơ sở dữ liệu quan hệ_. Việc tìm hiểu về cơ sở dữ liệu quan hệ là một chủ đề rất lớn nên bạn sẽ chỉ nhận được một phiên bản **rất** rút gọn.
 
-A relational database is like a collection of spreadsheets. Each spreadsheet is actually called a table. A table has a set of columns to track different pieces of data. Each row in the table would represent a related group. For instance, imagine we have an employee table for a company. The columns for an employee table might include a first name, last name, and job title. Each row would represent an individual employee.
+Một cơ sở dữ liệu quan hệ giống như một tập hợp các bảng tính. Mỗi bảng tính thực ra được gọi là một bảng (table). Một bảng có một tập các cột để lưu các phần dữ liệu khác nhau. Mỗi hàng trong bảng sẽ đại diện cho một nhóm dữ liệu liên quan. Ví dụ, hãy tưởng tượng chúng ta có một bảng nhân viên cho một công ty. Các cột của bảng nhân viên có thể bao gồm tên, họ và chức danh công việc. Mỗi hàng sẽ đại diện cho một nhân viên cụ thể.
 
 ```text
 First name | Last name | Job title
@@ -37,11 +37,11 @@ John       | Smith     | Software Engineer
 Peggy      | Jones     | Software Engineer
 ```
 
-The “relational” part of a relational database comes into play because multiple tables can _relate_ to each other. In our company example, the database could have a table of phone numbers that it uses to store the phone number of each employee.
+Phần “quan hệ” của cơ sở dữ liệu quan hệ xuất hiện vì nhiều bảng có thể _liên kết_ với nhau. Trong ví dụ về công ty, cơ sở dữ liệu có thể có một bảng số điện thoại để lưu số điện thoại của từng nhân viên.
 
-Why not put the phone number in the same employee table? Well, what would happen if a company needed a cell phone number and home phone number? By having separate tables, we could support tracking multiple phone number types. There is a lot of power that comes from being able to separate these different kinds of data. We’ll see the power of relational databases as we explore how Django exposes that power.
+Tại sao không đặt số điện thoại vào cùng bảng nhân viên? Vậy nếu một công ty cần cả số di động và số nhà thì sao? Bằng cách có các bảng riêng biệt, chúng ta có thể hỗ trợ lưu nhiều loại số điện thoại khác nhau. Có rất nhiều sức mạnh đến từ việc tách biệt các loại dữ liệu này. Chúng ta sẽ thấy sức mạnh của cơ sở dữ liệu quan hệ khi khám phá cách Django khai thác nó.
 
-Django uses a relational database so the framework must have some ability to set up that database. The database configuration is in the `DATABASES` setting in your `settings.py` file. After running `startproject`, you’ll find:
+Django sử dụng cơ sở dữ liệu quan hệ nên framework phải có khả năng thiết lập cơ sở dữ liệu đó. Cấu hình cơ sở dữ liệu nằm trong thiết lập `DATABASES` trong file `settings.py`. Sau khi chạy `startproject`, bạn sẽ thấy:
 
 ```python
 DATABASES = {
@@ -52,19 +52,19 @@ DATABASES = {
 }
 ```
 
-Like we saw with the templates system, Django supports multiple databases. Unlike the template system, the database settings refer to each supported backend as an “engine” instead of “backend.” The default database engine from `startproject` is set to use [SQLite](https://www.sqlite.org/index.html). SQLite is a great starting choice because it fits an entire relational database into a single file which the settings name `db.sqlite3`. This choice of engine really lowers the barrier to starting with Django since new Django developers don’t have to go download additional tools to try Django out.
+Như chúng ta đã thấy với hệ thống template, Django hỗ trợ nhiều cơ sở dữ liệu. Không giống như hệ thống template, thiết lập cơ sở dữ liệu gọi mỗi backend hỗ trợ là một “engine” thay vì “backend”. Engine cơ sở dữ liệu mặc định từ `startproject` được thiết lập để dùng [SQLite](https://www.sqlite.org/index.html). SQLite là một lựa chọn khởi đầu tuyệt vời vì nó gói toàn bộ cơ sở dữ liệu quan hệ vào một file duy nhất mà thiết lập đặt tên là `db.sqlite3`. Lựa chọn engine này thực sự giúp bạn dễ dàng bắt đầu với Django vì các lập trình viên mới không cần tải thêm công cụ nào để thử Django.
 
-SQLite is an amazing little database and probably the mostly widely used database in the world. The database exists in every smartphone you could think of. Even though SQLite is amazing, it’s not a good fit for many scenarios where you’d want to use Django. For starters, the database only permits one user to write to it at a time. That’s a huge problem if you’re planning to make a site that serves many people simultaneously.
+SQLite là một cơ sở dữ liệu nhỏ tuyệt vời và có lẽ là cơ sở dữ liệu được sử dụng rộng rãi nhất trên thế giới. Cơ sở dữ liệu này tồn tại trong mọi chiếc smartphone mà bạn có thể nghĩ đến. Dù SQLite rất tuyệt, nó không phù hợp với nhiều trường hợp bạn muốn dùng Django. Đầu tiên, cơ sở dữ liệu chỉ cho phép một người dùng ghi dữ liệu vào cùng lúc. Đó là một vấn đề lớn nếu bạn định xây dựng một trang phục vụ nhiều người cùng lúc.
 
-Because SQLite is not the best fit for an application on the web, you’ll likely need to switch to a different relational database. I’d recommend [PostgreSQL](https://www.postgresql.org/). Postgres (as it is often “abbreviated” to) is a wildly popular, open source database that is very well supported. Combined with [psycopg2](https://www.psycopg.org/docs/) as the Django engine, you’ll find that many places that can host your Django app will work well with Postgres.
+Vì SQLite không phải là lựa chọn tốt nhất cho ứng dụng web, bạn có thể sẽ cần chuyển sang một cơ sở dữ liệu quan hệ khác. Tôi khuyên bạn nên dùng [PostgreSQL](https://www.postgresql.org/). Postgres (thường được viết tắt như vậy) là một cơ sở dữ liệu mã nguồn mở rất phổ biến và được hỗ trợ tốt. Kết hợp với [psycopg2](https://www.psycopg.org/docs/) làm engine cho Django, bạn sẽ thấy nhiều nơi có thể host ứng dụng Django của bạn sẽ hoạt động tốt với Postgres.
 
-We can explore more database configuration in a future article on deployment. For now, while you’re learning, SQLite is perfectly well suited for the task.
+Chúng ta có thể tìm hiểu thêm về cấu hình cơ sở dữ liệu trong một bài viết về triển khai sau này. Hiện tại, khi bạn đang học, SQLite hoàn toàn phù hợp cho mục đích này.
 
-## Modeling Your Data
+## Mô Hình Hóa Dữ Liệu Của Bạn
 
-Now that you have an idea of where Django will store your data, let’s focus on _how_ Django will store data.
+Bây giờ bạn đã biết Django sẽ lưu dữ liệu ở đâu, hãy tập trung vào _cách_ Django lưu dữ liệu.
 
-Django represents data for a database in Python classes called **models**. Django models are similar to the form classes that we saw in the last article. A Django model declares the data that you want to store in the database as class level attributes, just like a form class. In fact, the types of fields are extremely similar to their form counterparts, and for good reason! We often want to save form data and store it so it makes sense for models to be similar to forms in structure. Let’s look at an example.
+Django biểu diễn dữ liệu cho cơ sở dữ liệu bằng các class Python gọi là **model**. Model Django khá giống với các class form mà chúng ta đã thấy ở bài trước. Một model Django khai báo dữ liệu mà bạn muốn lưu vào cơ sở dữ liệu dưới dạng thuộc tính cấp class, giống như class form. Thực tế, các loại trường rất giống với các trường form, và điều này có lý do! Chúng ta thường muốn lưu dữ liệu từ form nên việc model có cấu trúc giống form là hợp lý. Hãy xem một ví dụ.
 
 ```python
 # application/models.py
@@ -82,7 +82,7 @@ class Employee(models.Model):
     )
 ```
 
-This model class describes the pieces that we want to include in a database table. Each model class represents one database table. If we wanted the phone numbers that I mentioned earlier, we’d create a separate `PhoneNumber` class. Conventionally, we use a singular name instead of a plural when naming the class. We do that because each _row_ in the table is represented as an object instance.
+Class model này mô tả các phần mà chúng ta muốn đưa vào một bảng trong cơ sở dữ liệu. Mỗi class model đại diện cho một bảng trong cơ sở dữ liệu. Nếu chúng ta muốn lưu số điện thoại như đã đề cập ở trên, chúng ta sẽ tạo một class `PhoneNumber` riêng. Theo thông lệ, chúng ta dùng tên số ít thay vì số nhiều khi đặt tên class. Chúng ta làm vậy vì mỗi _hàng_ trong bảng sẽ được biểu diễn dưới dạng một instance của object.
 
 ```text
 >>> from application.models import Employee
@@ -94,23 +94,23 @@ This model class describes the pieces that we want to include in a database tabl
 'Tom'
 ```
 
-This example appears to create a new employee, but it’s missing a key element. We haven’t saved the `employee` instance to the database. We can do that with `employee.save()`, but, if you are following along and try to call that right now, it will fail with an error that says that the employee table doesn’t exist.
+Ví dụ này dường như tạo ra một nhân viên mới, nhưng nó thiếu một yếu tố quan trọng. Chúng ta chưa lưu instance `employee` vào cơ sở dữ liệu. Chúng ta có thể làm điều đó với `employee.save()`, nhưng nếu bạn thử gọi ngay bây giờ, nó sẽ báo lỗi rằng bảng employee chưa tồn tại.
 
-Since the database is a tool that is external to Django, the database needs a bit of preparation before it can receive data from Django.
+Vì cơ sở dữ liệu là một công cụ bên ngoài Django, nó cần được chuẩn bị một chút trước khi có thể nhận dữ liệu từ Django.
 
-## Preparing A Database With Migrations
+## Chuẩn Bị Cơ Sở Dữ Liệu Với Migrations
 
-We now know that Django models are Python classes that map to database tables. Database tables don’t magically appear. We need the ability to set up tables so that they will match the structure defined in the Python class. The tool Django provides to make Django models and a database sync up is called the migrations system.
+Chúng ta đã biết model Django là các class Python ánh xạ tới các bảng trong cơ sở dữ liệu. Các bảng không tự nhiên xuất hiện. Chúng ta cần khả năng thiết lập các bảng để chúng khớp với cấu trúc được định nghĩa trong class Python. Công cụ mà Django cung cấp để đồng bộ model Django và cơ sở dữ liệu gọi là hệ thống migration.
 
-Migrations are Python files that describe the sequence of database operations that are needed to make a database match any model definitions that you have in your project.
+Migration là các file Python mô tả chuỗi các thao tác trên cơ sở dữ liệu cần thiết để làm cho cơ sở dữ liệu khớp với bất kỳ định nghĩa model nào bạn có trong dự án.
 
-Because Django works with many databases, these database operations are defined in Python files so that the operations can be abstract. By using abstract operations, the Django migration system can plug in the specific database commands for whatever database you’re using. If you’re starting out with SQLite, then moving to PostgreSQL when you’re ready to put your application on the internet, then the migration system will do its best to smooth over the differences to minimize the amount of work you would need while making the transition.
+Vì Django làm việc với nhiều loại cơ sở dữ liệu, các thao tác này được định nghĩa trong các file Python để có thể trừu tượng hóa. Bằng cách dùng các thao tác trừu tượng, hệ thống migration của Django có thể cắm vào các lệnh cơ sở dữ liệu cụ thể cho bất kỳ loại cơ sở dữ liệu nào bạn đang dùng. Nếu bạn bắt đầu với SQLite, rồi chuyển sang PostgreSQL khi triển khai ứng dụng lên internet, hệ thống migration sẽ cố gắng làm mượt sự khác biệt để bạn không phải làm nhiều việc khi chuyển đổi.
 
-Initially, you can get pretty far without understanding the internals of how migration files work. At the core level, you need to learn a couple of Django commands: `makemigrations` and `migrate`.
+Ban đầu, bạn có thể tiến khá xa mà không cần hiểu nội dung bên trong các file migration. Ở mức cơ bản, bạn chỉ cần biết một vài lệnh Django: `makemigrations` và `migrate`.
 
 ### `makemigrations`
 
-The `makemigrations` command will create any migration files if there are any pending model changes. To create our migration file for the `Employee` model, we can run:
+Lệnh `makemigrations` sẽ tạo các file migration nếu có thay đổi model đang chờ xử lý. Để tạo file migration cho model `Employee`, chúng ta có thể chạy:
 
 ```shell
 (venv) $ ./manage.py makemigrations
@@ -119,18 +119,18 @@ Migrations for 'application':
     - Create model Employee
 ```
 
-The important thing to note is that we require a new migration when we make model changes that update any model fields. This includes:
+Điều quan trọng cần lưu ý là chúng ta cần migration mới mỗi khi thay đổi model làm thay đổi các trường. Điều này bao gồm:
 
-- Adding new models or new fields
-- Modifying existing fields
-- Deleting existing fields
-- Changing some model metadata and a few other edge cases
+- Thêm model mới hoặc trường mới
+- Sửa đổi trường hiện có
+- Xóa trường hiện có
+- Thay đổi một số metadata của model và một vài trường hợp đặc biệt khác
 
-If you do not make a migration, you will likely encounter errors when fetching data from the database. This is because Django only builds queries based on what is defined in the Python code. The system assumes that the database is in the proper state. Django will try to query on database tables even if those tables don’t exist yet!
+Nếu bạn không tạo migration, bạn có thể gặp lỗi khi truy vấn dữ liệu từ cơ sở dữ liệu. Điều này là do Django chỉ xây dựng truy vấn dựa trên những gì được định nghĩa trong mã Python. Hệ thống giả định rằng cơ sở dữ liệu đã ở trạng thái đúng. Django sẽ cố truy vấn các bảng ngay cả khi chúng chưa tồn tại!
 
 ### `migrate`
 
-The other command, `migrate`, takes migration files and applies them to a database. For example:
+Lệnh còn lại, `migrate`, sẽ lấy các file migration và áp dụng chúng vào cơ sở dữ liệu. Ví dụ:
 
 ```shell
 (venv) $ ./manage.py migrate
@@ -157,29 +157,29 @@ Running migrations:
   Applying sessions.0001_initial... OK
 ```
 
-This is the output that happens when applying our new migration. What is all this stuff!?
+Đây là kết quả khi áp dụng migration mới. Tất cả những thứ này là gì vậy!?
 
-The migration system is also used by built-in Django applications. In my sample project, I used `startproject` which includes a set of common applications in the `INSTALLED_APPS` list. We can observe that our sample `application` applied its migration, and the migrations from the other Django applications that we included are also applied.
+Hệ thống migration cũng được dùng bởi các ứng dụng tích hợp sẵn của Django. Trong dự án mẫu của tôi, tôi dùng `startproject` nên có một tập hợp các ứng dụng phổ biến trong danh sách `INSTALLED_APPS`. Chúng ta có thể thấy ứng dụng mẫu `application` đã áp dụng migration của nó, và các migration từ các ứng dụng Django khác cũng được áp dụng.
 
-If you run the `migrate` command again, you won’t see the same output. That’s because Django keeps tracks of which migrations were applied. The migration system will only execute any _unapplied_ migrations.
+Nếu bạn chạy lại lệnh `migrate`, bạn sẽ không thấy kết quả như trên nữa. Đó là vì Django theo dõi migration nào đã được áp dụng. Hệ thống migration chỉ thực thi các migration _chưa áp dụng_.
 
-You can also limit which migrations to execute by providing a Django app name.
+Bạn cũng có thể giới hạn migration cho một ứng dụng Django cụ thể.
 
 ```shell
 (venv) $ ./manage.py migrate application
 ```
 
-Those are the fundamentals of migrations. You can also use migrations to apply more complex operations like actions that are specific to your selected database. You can learn more about what Django migrations can do in the [Migrations documentation](https://docs.djangoproject.com/en/4.1/topics/migrations/).
+Đó là những kiến thức cơ bản về migration. Bạn cũng có thể dùng migration để thực hiện các thao tác phức tạp hơn như các hành động đặc thù cho cơ sở dữ liệu bạn chọn. Bạn có thể tìm hiểu thêm về migration trong [tài liệu Migrations](https://docs.djangoproject.com/en/4.1/topics/migrations/).
 
-## Working With Models
+## Làm Việc Với Models
 
-After running migrations, your database will be prepared to communicate properly with Django.
+Sau khi chạy migration, cơ sở dữ liệu của bạn sẽ sẵn sàng giao tiếp đúng với Django.
 
-To create new rows in our new database tables, we can use a model’s `save` method. When you save a model instance, Django will send a message to the database that effectively says “add this new data to this database table.” These database “messages” are actually called **queries**.
+Để tạo các hàng mới trong bảng cơ sở dữ liệu, chúng ta có thể dùng phương thức `save` của model. Khi bạn lưu một instance model, Django sẽ gửi một thông điệp tới cơ sở dữ liệu, về bản chất là “thêm dữ liệu mới này vào bảng cơ sở dữ liệu này.” Những “thông điệp” này thực ra được gọi là **truy vấn** (query).
 
-As I mentioned in the settings section, Django communicates with the database via a database engine. The database engine uses Structured Query Language (SQL) to communicate with the actual database. SQL is the common standard that Django’s supported databases all “speak.” Since Django uses SQL, that’s why a message is named “query.”
+Như tôi đã đề cập ở phần settings, Django giao tiếp với cơ sở dữ liệu thông qua một engine cơ sở dữ liệu. Engine này sử dụng Structured Query Language (SQL) để giao tiếp với cơ sở dữ liệu thực tế. SQL là tiêu chuẩn chung mà tất cả các cơ sở dữ liệu được Django hỗ trợ đều “nói”. Vì Django dùng SQL, nên một thông điệp được gọi là “query”.
 
-What does an SQL query look like? If we save our model example from earlier, it would look something like:
+Một truy vấn SQL trông như thế nào? Nếu chúng ta lưu model ví dụ ở trên, nó sẽ trông như sau:
 
 ```sql
 INSERT INTO "application_employee"
@@ -188,22 +188,22 @@ VALUES
     ('Tom', 'Bombadil', 'Old Forest keeper')
 ```
 
-Note that this example is an `INSERT` query when using the SQLite engine. Like natural languages, SQL has a variety of dialects depending on the database that you select. The databases do their best to adhere to some standards, but each database has its quirks, and the job of the database engine is to even out those differences where possible.
+Lưu ý rằng ví dụ này là truy vấn `INSERT` khi dùng engine SQLite. Giống như ngôn ngữ tự nhiên, SQL có nhiều “phương ngữ” tùy vào cơ sở dữ liệu bạn chọn. Các cơ sở dữ liệu cố gắng tuân thủ một số tiêu chuẩn, nhưng mỗi loại lại có những điểm riêng, và nhiệm vụ của engine là làm cho các khác biệt này trở nên đồng nhất nhất có thể.
 
-This is another area where Django does a ton of hard work on your behalf. The database engine translates your `save` call into the proper SQL query. SQL is a deep topic that we can’t possibly cover fully in this article. Thankfully, we don’t have to because of Django’s ORM!
+Đây là một lĩnh vực nữa mà Django làm rất nhiều việc nặng nhọc cho bạn. Engine cơ sở dữ liệu sẽ chuyển lệnh `save` của bạn thành truy vấn SQL phù hợp. SQL là một chủ đề rất sâu mà chúng ta không thể đề cập hết trong bài này. May mắn thay, chúng ta không cần vì đã có ORM của Django!
 
-ORM stands for Object Relational Mapper. The job of an ORM is to map (or translate) from Python _objects_ to a _relational_ database. This means that we spend our time working in Python code, and we let Django figure out how to get and put data into the database.
+ORM là viết tắt của Object Relational Mapper. Nhiệm vụ của ORM là ánh xạ (hoặc chuyển đổi) từ các _object_ Python sang cơ sở dữ liệu _quan hệ_. Điều này có nghĩa là chúng ta chỉ cần làm việc với mã Python, còn Django sẽ lo việc lấy và lưu dữ liệu vào cơ sở dữ liệu.
 
-Using `save` on a model record is such a small example of the Django ORM. What else can we do? We can do things like:
+Việc dùng `save` trên một bản ghi model chỉ là một ví dụ nhỏ về ORM của Django. Chúng ta còn có thể làm gì nữa? Chúng ta có thể:
 
-- Get all rows from the database.
-- Get a filtered set of rows based on some filtering criteria.
-- Update a set of rows at the same time.
-- Delete rows from the database.
+- Lấy tất cả các hàng từ cơ sở dữ liệu.
+- Lấy một tập hợp các hàng dựa trên tiêu chí lọc.
+- Cập nhật một nhóm hàng cùng lúc.
+- Xóa các hàng khỏi cơ sở dữ liệu.
 
-Most of these operations with the Django ORM work through a `Manager` class. Where our previous example showed how to manipulate a single row, a model manager has methods designed for interacting with multiple rows.
+Hầu hết các thao tác này với ORM Django đều thông qua class `Manager`. Ví dụ trước chỉ cho thấy cách thao tác với một hàng, còn manager của model có các phương thức thiết kế để làm việc với nhiều hàng.
 
-We can analyze our fictitious employee table. The manager for a model is attached to the model class as an attribute named `objects`. Let’s see some code:
+Chúng ta hãy phân tích bảng nhân viên giả định. Manager cho một model được gắn vào class model dưới thuộc tính tên là `objects`. Hãy xem một đoạn mã:
 
 ```text
 >>> from application.models import Employee
@@ -225,9 +225,9 @@ FROM "application_employee"
 WHERE "application_employee"."first_name" = Bob
 ```
 
-In this example, we’re using the manager to filter to a subset of employees within the table. The `bobs` variable returned by the `filter` method is a `QuerySet`. As you might guess, it represents a set of rows that an SQL query will return. Whenever you have a queryset, you can print the query to see the exact SQL statement that Django will run on your behalf.
+Trong ví dụ này, chúng ta dùng manager để lọc ra một tập con nhân viên trong bảng. Biến `bobs` trả về từ phương thức `filter` là một `QuerySet`. Như bạn có thể đoán, nó đại diện cho một tập các hàng mà một truy vấn SQL sẽ trả về. Bất cứ khi nào bạn có một queryset, bạn có thể in ra truy vấn để xem chính xác câu lệnh SQL mà Django sẽ chạy cho bạn.
 
-What if you want to delete an employee record?
+Nếu bạn muốn xóa một bản ghi nhân viên thì sao?
 
 ```text
 >>> from application.models import Employee
@@ -238,26 +238,26 @@ What if you want to delete an employee record?
 (1, {'application.Employee': 1})
 ```
 
-A queryset can apply operations in bulk. In this case, the filter is sufficiently narrow that only one record was deleted, but it could have included more if the SQL query matched more database table rows.
+Một queryset có thể thực hiện các thao tác hàng loạt. Trong trường hợp này, bộ lọc đủ hẹp để chỉ xóa một bản ghi, nhưng nó có thể xóa nhiều hơn nếu truy vấn SQL khớp với nhiều hàng trong bảng.
 
-The `QuerySet` class has a variety of methods that are useful when working with tables. Some of the methods also have the interesting property of returning a new queryset. This is a beneficial capability when you need to apply additional logic for your query.
+Class `QuerySet` có nhiều phương thức hữu ích khi làm việc với bảng. Một số phương thức còn có đặc điểm thú vị là trả về một queryset mới. Đây là khả năng hữu ích khi bạn cần áp dụng thêm logic cho truy vấn của mình.
 
 ```python
 from application.models import Employee
 
-# employees is a QuerySet of all rows!
+# employees là một QuerySet của tất cả các hàng!
 employees = Employee.objects.all()
 
 if should_find_the_bobs:
-    # New queryset!
+    # QuerySet mới!
     employees = employees.filter(
         first_name='Bob'
     )
 ```
 
-Here are some other `QuerySet` methods that I use constantly:
+Dưới đây là một số phương thức `QuerySet` mà tôi thường xuyên sử dụng:
 
-- `create` - As an alternative to creating a record instance and calling `save`, the manager can create a record directly.
+- `create` - Thay vì tạo một instance bản ghi rồi gọi `save`, manager có thể tạo bản ghi trực tiếp.
 
 ```python
 Employee.objects.create(
@@ -266,7 +266,7 @@ Employee.objects.create(
 )
 ```
 
-- `get` - Use this method when you want one _and exactly one_ record. If your query doesn’t match or will return multiple records, you’ll get an exception.
+- `get` - Dùng phương thức này khi bạn muốn lấy _chính xác một_ bản ghi. Nếu truy vấn không khớp hoặc trả về nhiều bản ghi, bạn sẽ nhận được exception.
 
 ```python
 the_bob = Employee.objects.get(
@@ -285,7 +285,7 @@ Employee.objects.get(
 # Raises application.models.Employee.DoesNotExist
 ```
 
-- `exclude` - This method lets you exclude rows that may be part of your existing queryset.
+- `exclude` - Phương thức này cho phép bạn loại trừ các hàng có thể nằm trong queryset hiện tại.
 
 ```python
 the_other_bobs = (
@@ -294,7 +294,7 @@ the_other_bobs = (
 )
 ```
 
-- `update` - With this method, you can update a group of rows in a single operation.
+- `update` - Với phương thức này, bạn có thể cập nhật một nhóm hàng trong một thao tác duy nhất.
 
 ```python
 Employee.objects.filter(
@@ -302,21 +302,21 @@ Employee.objects.filter(
 ).update(first_name='Robert')
 ```
 
-- `exists` - Use this method if you want to check if rows exist in the database that match the condition you want to check.
+- `exists` - Dùng phương thức này nếu bạn muốn kiểm tra xem có hàng nào trong cơ sở dữ liệu khớp với điều kiện bạn muốn kiểm tra không.
 
 ```python
 has_bobs = Employee.objects.filter(
     first_name='Bob').exists()
 ```
 
-- `count` - Check how many rows match a condition. Because of how SQL works, note that this is more efficient than trying to use `len` on a queryset.
+- `count` - Kiểm tra có bao nhiêu hàng khớp với điều kiện. Do cách SQL hoạt động, lưu ý rằng cách này hiệu quả hơn so với dùng `len` trên một queryset.
 
 ```python
 how_many_bobs = Employee.objects.filter(
     first_name='Bob').count()
 ```
 
-- `none` - This returns an empty queryset for the model. How could this be useful? I use this when I need to protect certain data access.
+- `none` - Trả về một queryset rỗng cho model. Điều này hữu ích khi bạn cần bảo vệ truy cập dữ liệu nhất định.
 
 ```python
 employees = Employee.objects.all()
@@ -325,7 +325,7 @@ if not is_hr:
     employees = Employee.objects.none()
 ```
 
-- `first` / `last` - These methods will return an individual model instance if one matches. The methods use ordering on the models to get the desired result. We use `order_by` to tell how we want the results arranged.
+- `first` / `last` - Các phương thức này sẽ trả về một instance model nếu có bản ghi phù hợp. Các phương thức này dùng sắp xếp trên model để lấy kết quả mong muốn. Chúng ta dùng `order_by` để chỉ định cách sắp xếp kết quả.
 
 ```text
 >>> a_bob = Employee.objects.filter(
@@ -335,19 +335,19 @@ if not is_hr:
 Ross
 ```
 
-An `order_by` operation can also reverse the order of the results. To do this, add a dash before the field name like `order_by('-last_name')`.
+Một thao tác `order_by` cũng có thể đảo ngược thứ tự kết quả. Để làm điều này, thêm dấu trừ trước tên trường như `order_by('-last_name')`.
 
-With the knowledge of how you can interact with models, we can focus more closely on what data can be stored in models (and, thus, in your database).
+Với kiến thức về cách bạn có thể tương tác với model, chúng ta có thể tập trung hơn vào loại dữ liệu có thể lưu trong model (và do đó là trong cơ sở dữ liệu).
 
-## Types Of Model Data
+## Các Loại Dữ Liệu Model
 
-The `Employee` table that I’ve used as the example for this article only has three `CharField` fields on the model. The choice was deliberate because I wanted you to have a chance to absorb a bit about the Django ORM and working with querysets before seeing other data types.
+Bảng `Employee` mà tôi dùng làm ví dụ trong bài này chỉ có ba trường `CharField` trên model. Sự lựa chọn này là có chủ ý vì tôi muốn bạn có thời gian làm quen với ORM Django và làm việc với queryset trước khi xem các kiểu dữ liệu khác.
 
-We saw in the forms article that Django’s form system includes a wide variety of form fields. If you look at the [Form fields](https://docs.djangoproject.com/en/4.1/ref/forms/fields/) reference and compare the list of types to those in the [Model field reference](https://docs.djangoproject.com/en/4.1/ref/models/fields/), you can observe a lot of overlap.
+Chúng ta đã thấy trong bài về form rằng hệ thống form của Django có rất nhiều loại trường. Nếu bạn xem [tài liệu Form fields](https://docs.djangoproject.com/en/4.1/ref/forms/fields/) và so sánh với [tài liệu Model field](https://docs.djangoproject.com/en/4.1/ref/models/fields/), bạn sẽ thấy rất nhiều điểm tương đồng.
 
-Like their form counterparts, models have `CharField`, `BooleanField`, `DateField`, `DateTimeField`, and many other similar types. The field types share many common attributes. Most commonly, I think you will use or encounter the following attributes.
+Giống như các trường form, model có `CharField`, `BooleanField`, `DateField`, `DateTimeField` và nhiều loại khác tương tự. Các loại trường này chia sẻ nhiều thuộc tính chung. Thường gặp nhất, tôi nghĩ bạn sẽ dùng hoặc gặp các thuộc tính sau.
 
-- `default` - If you want to be able to create a model record without specifying certain values, then you can use `default`. The value can either be a literal value or callable function that produces a value.
+- `default` - Nếu bạn muốn có thể tạo bản ghi model mà không cần chỉ định một số giá trị nhất định, bạn có thể dùng `default`. Giá trị này có thể là một giá trị cụ thể hoặc một hàm callable trả về giá trị.
 
 ```python
 # application/models.py
@@ -365,14 +365,13 @@ class DungeonsAndDragonsCharacter(
         max_length=100,
         default='Conan'
     )
-    # Important: Pass the function,
-    # do not *call* the function!
+    # Lưu ý: Truyền vào hàm, không gọi hàm!
     strength = models.IntegerField(
         default=strength_generator
     )
 ```
 
-- `unique` - When a field value must be unique for all the rows in the database table, use `unique`. This is a good attribute for identifiers where you don’t expect duplicates.
+- `unique` - Khi một trường phải có giá trị duy nhất cho tất cả các hàng trong bảng, hãy dùng `unique`. Đây là thuộc tính tốt cho các định danh mà bạn không muốn trùng lặp.
 
 ```python
 class ImprobableHero(models.Model):
@@ -381,40 +380,39 @@ class ImprobableHero(models.Model):
         unique=True
     )
 
-# There can be only one.
+# Chỉ có thể có một người.
 ImprobableHero.objects.create(
     name='Connor MacLeod'
 )
 ```
 
-- `null` - A relational database has the ability to store the absence of data. In the database, this value is thought of as `NULL`. Sometimes this is an important distinction versus a value that is empty. For instance, on a `Person` model, an integer field like `number_of_children` would mean very different things for a value of 0 versus a value of `NULL`. The former indicates that a person has no children while the latter indicates that the number of children is unknown. The presence of null conditions requires more checking in your code so Django defaults to making `null` be `False`. This means that a field does not allow `NULL`. Null values can be useful if needed, but I think its better to avoid them if you can and try to keep actual data about a field.
+- `null` - Cơ sở dữ liệu quan hệ có khả năng lưu trữ sự vắng mặt của dữ liệu. Trong cơ sở dữ liệu, giá trị này được gọi là `NULL`. Đôi khi đây là sự khác biệt quan trọng so với một giá trị rỗng. Ví dụ, trên model `Person`, một trường số nguyên như `number_of_children` sẽ có ý nghĩa rất khác nhau giữa giá trị 0 và giá trị `NULL`. 0 nghĩa là người đó không có con, còn `NULL` nghĩa là không biết số con. Sự xuất hiện của điều kiện null đòi hỏi bạn phải kiểm tra nhiều hơn trong mã nên Django mặc định `null` là `False`. Điều này nghĩa là trường không cho phép `NULL`. Null có thể hữu ích nếu cần, nhưng tôi nghĩ tốt hơn là tránh dùng nếu có thể và cố gắng lưu dữ liệu thực sự về trường đó.
 
 ```python
 class Person(models.Model):
-    # This field would always have a value since it can't be null.
-    # Zero counts as a value and is not NULL.
+    # Trường này luôn có giá trị vì không cho phép null.
+    # Số 0 được tính là giá trị và không phải NULL.
     age = models.IntegerField()
-    # This field could be unknown and contain NULL.
-    # In Python, a NULL db value will appear as None.
+    # Trường này có thể không biết và chứa NULL.
+    # Trong Python, giá trị NULL trong db sẽ là None.
     weight = models.IntegerField(
         null=True
     )
 ```
 
-- `blank` - The `blank` attribute is often used in conjunction with the `null` attribute. While the `null` attribute allows a database to store `NULL` for a field, `blank` allows _form validation_ to permit an empty field. This is used by forms which are automatically generated by Django like in the Django administrator site which we’ll talk about in the next article.
+- `blank` - Thuộc tính `blank` thường được dùng cùng với `null`. Trong khi `null` cho phép cơ sở dữ liệu lưu `NULL` cho trường, `blank` cho phép _kiểm tra hợp lệ form_ chấp nhận trường rỗng. Điều này được dùng bởi các form tự động sinh ra bởi Django như trong trang quản trị mà chúng ta sẽ nói ở bài sau.
 
 ```python
 class Pet(models.Model):
-    # Not all pets have tails,
-    # so we want auto-generated forms
-    # to allow no value.
+    # Không phải thú cưng nào cũng có đuôi,
+    # nên chúng ta muốn form tự động cho phép không nhập giá trị.
     length_of_tail = models.IntegerField(
         null=True,
         blank=True
     )
 ```
 
-- `choices` - We saw `choices` in the forms article as a technique for helping users pick the right value from a constrained set. `choices` can be set on the model. Django can do validation on the model that will ensure that only particular values are stored in a database field.
+- `choices` - Chúng ta đã thấy `choices` trong bài về form như một kỹ thuật giúp người dùng chọn giá trị đúng từ một tập hợp giới hạn. `choices` có thể được thiết lập trên model. Django có thể kiểm tra hợp lệ trên model để đảm bảo chỉ các giá trị nhất định được lưu vào trường.
 
 ```python
 class Car(models.Model):
@@ -431,7 +429,7 @@ class Car(models.Model):
     )
 ```
 
-- `help_text` - As applications get bigger or if you work on a large team with many people creating Django models, the need for documentation grows. Django permits help text that can be displayed with a field value in the Django administrator site. This help text is useful to remind your future self or educate a coworker.
+- `help_text` - Khi ứng dụng lớn lên hoặc bạn làm việc trong một nhóm đông người cùng tạo model Django, nhu cầu tài liệu hóa tăng lên. Django cho phép thêm help text có thể hiển thị cùng trường trong trang quản trị. Help text này hữu ích để nhắc nhở chính bạn trong tương lai hoặc hướng dẫn đồng nghiệp.
 
 ```python
 class Policy(models.Model):
@@ -446,13 +444,13 @@ class Policy(models.Model):
     )
 ```
 
-Those are the attributes that I believe users are most likely to encounter. There are also a couple of important field types that require special attention: relational fields.
+Đó là những thuộc tính mà tôi nghĩ bạn sẽ thường gặp nhất. Ngoài ra còn có một số loại trường quan trọng cần chú ý: các trường quan hệ.
 
-## What Makes A Database “Relational?”
+## Điều Gì Làm Cho Cơ Sở Dữ Liệu “Quan Hệ”?
 
-Relational databases have the ability to link different types of data together. We got a brief example of this earlier in this article when we considered an employee with multiple phone numbers.
+Cơ sở dữ liệu quan hệ có khả năng liên kết các loại dữ liệu khác nhau với nhau. Chúng ta đã có một ví dụ ngắn về điều này ở đầu bài khi xét một nhân viên có nhiều số điện thoại.
 
-An overly simplified model for an employee with multiple phone numbers might look like:
+Một model đơn giản hóa quá mức cho nhân viên có nhiều số điện thoại có thể như sau:
 
 ```python
 # application/models.py
@@ -476,12 +474,12 @@ class Employee(models.Model):
     )
 ```
 
-This single table could hold a couple of numbers, but this solution has some deficiencies.
+Bảng đơn này có thể lưu một vài số, nhưng giải pháp này có một số hạn chế.
 
-- What if an employee has more than two phone numbers? It’s possible for a person to have multiple cell phones, a land line at their residence, a pager number, a fax number, and so on.
-- How can we know what type of phone number is in `phone_number_1` and `phone_number_2`? If you pull the employee record to try to call the individual and dial a fax number instead, you’d have a hard time talking to them.
+- Nếu một nhân viên có hơn hai số điện thoại thì sao? Một người có thể có nhiều điện thoại di động, một số bàn ở nhà, một số máy nhắn tin, số fax, v.v.
+- Làm sao biết loại số điện thoại nào nằm ở `phone_number_1` và `phone_number_2`? Nếu bạn lấy bản ghi nhân viên để gọi cho họ mà lại gọi nhầm vào số fax thì sẽ khó nói chuyện với họ.
 
-Instead, what if we had two separate models?
+Thay vào đó, nếu chúng ta có hai model riêng biệt thì sao?
 
 ```python
 # application/models.py
@@ -514,7 +512,7 @@ class PhoneNumber(models.Model):
     )
 ```
 
-We’ve got two separate tables. How can we link the tables so that an employee can have one, two, or two hundred phone numbers? For that, we can use the `ForeignKey` relational field type. Here is a slightly updated version of `PhoneNumber`.
+Chúng ta có hai bảng riêng biệt. Làm sao liên kết các bảng để một nhân viên có thể có một, hai hoặc hai trăm số điện thoại? Để làm điều đó, chúng ta có thể dùng trường quan hệ `ForeignKey`. Đây là phiên bản cập nhật nhẹ của `PhoneNumber`.
 
 ```python
 ...
@@ -539,22 +537,22 @@ class PhoneNumber(models.Model):
     )
 ```
 
-This update says that every phone number must now be associated with an employee record. `on_delete` is a required attribute that determines what will happen when an employee record gets deleted. In this case, `CASCADE` means that deleting an employee row will cascade and delete any of the employee’s related phone numbers too.
+Bản cập nhật này nói rằng mỗi số điện thoại giờ phải liên kết với một bản ghi nhân viên. `on_delete` là thuộc tính bắt buộc xác định điều gì sẽ xảy ra khi bản ghi nhân viên bị xóa. Ở đây, `CASCADE` nghĩa là khi xóa một hàng nhân viên thì tất cả số điện thoại liên quan cũng bị xóa theo.
 
-The key to how this works lies in understanding _keys_. When you make a Django model, you get an extra field added to your model by the framework. This field is called an `AutoField`.
+Chìa khóa để hiểu điều này nằm ở khái niệm _key_. Khi bạn tạo một model Django, framework sẽ tự động thêm một trường vào model của bạn. Trường này gọi là `AutoField`.
 
 ```python
-# This is what Django adds to your model.
+# Đây là trường Django tự thêm vào model.
 id = models.AutoField(primary_key=True)
 ```
 
-An `AutoField` adds a column to a database table that will assign each row in the table a unique integer. Each new row increments from the previous row and numbering starts at one. This number is the identifier for the row and is called the _primary key_.
+`AutoField` thêm một cột vào bảng cơ sở dữ liệu để gán cho mỗi hàng một số nguyên duy nhất. Mỗi hàng mới sẽ tăng lên từ hàng trước và bắt đầu từ một. Số này là định danh cho hàng và gọi là _primary key_.
 
-If Tom Bombadil is the first employee in the table, then the row `id` value would be `1`.
+Nếu Tom Bombadil là nhân viên đầu tiên trong bảng, thì giá trị `id` của hàng đó sẽ là `1`.
 
-Knowing about primary keys, we’re equipped to understand foreign key fields. In the case of the `PhoneNumber.employee` foreign key field, any phone number row will store the value of some employee row’s primary key. This is usually called a one to many relationship.
+Biết về primary key, chúng ta có thể hiểu trường foreign key. Trong trường hợp trường foreign key `PhoneNumber.employee`, bất kỳ hàng số điện thoại nào cũng sẽ lưu giá trị của primary key của một hàng nhân viên nào đó. Đây thường được gọi là quan hệ một-nhiều.
 
-A `ForeignKey` is a one to many relationship because multiple rows from a table (in this case, `PhoneNumber`) can reference a single row in another table, namely, `Employee`. In other words, an employee can have multiple phone numbers. If we wanted to get Tom’s phone numbers, then one possible way would be:
+`ForeignKey` là quan hệ một-nhiều vì nhiều hàng từ một bảng (ở đây là `PhoneNumber`) có thể tham chiếu tới một hàng trong bảng khác, cụ thể là `Employee`. Nói cách khác, một nhân viên có thể có nhiều số điện thoại. Nếu chúng ta muốn lấy số điện thoại của Tom, một cách có thể là:
 
 ```python
 tom = Employee.objects.get(
@@ -564,7 +562,7 @@ tom = Employee.objects.get(
 phone_numbers = PhoneNumber.objects.filter(employee=tom)
 ```
 
-The query for `phone_numbers` would be:
+Truy vấn cho `phone_numbers` sẽ là:
 
 ```sql
 SELECT
@@ -576,13 +574,13 @@ FROM "application_phonenumber"
 WHERE "application_phonenumber"."employee_id" = 1
 ```
 
-In the database, Django will store the table column for the foreign key as `employee_id`. The query is asking for all phone number rows that match when the employee ID is 1. Since primary keys have to be unique, that value of 1 can only match Tom Bombadil so the resulting rows will be phone numbers that are associated with that employee.
+Trong cơ sở dữ liệu, Django sẽ lưu cột bảng cho foreign key là `employee_id`. Truy vấn này hỏi tất cả các hàng số điện thoại mà có employee ID là 1. Vì primary key phải duy nhất, giá trị 1 chỉ có thể khớp với Tom Bombadil nên các hàng trả về sẽ là số điện thoại liên kết với nhân viên đó.
 
-There is another relational field type that we should spend time on. That field is the `ManyToManyField`. As you might guess, this field is used when two types of data relate to each other in a many to many fashion.
+Có một loại trường quan hệ nữa mà chúng ta nên tìm hiểu. Đó là trường `ManyToManyField`. Như bạn có thể đoán, trường này dùng khi hai loại dữ liệu liên kết với nhau theo kiểu nhiều-nhiều.
 
-Let’s think about neighborhoods. Neighborhoods can have a variety of mixed residence types like houses, apartments, condominiums and so on, but to keep the example simpler, we’ll assume that neighborhoods are composed of houses. Each house in a neighborhood is the home of one or more people.
+Hãy nghĩ về khu phố. Khu phố có thể có nhiều loại nhà ở như nhà riêng, căn hộ, chung cư, v.v., nhưng để đơn giản, ta giả sử khu phố chỉ gồm các ngôi nhà. Mỗi ngôi nhà trong khu phố là nơi ở của một hoặc nhiều người.
 
-What if we tried to model this with `ForeignKey` fields?
+Nếu chúng ta thử mô hình hóa điều này với trường `ForeignKey` thì sao?
 
 ```python
 # application/models.py
@@ -603,7 +601,7 @@ class House(models.Model):
     )
 ```
 
-This version shows a scenario where a house can only have a single resident. A person could be the resident of multiple houses, but those houses would be pretty lonely. What if we put the foreign key on the other side of the modeling relationship?
+Phiên bản này cho thấy một ngôi nhà chỉ có một cư dân. Một người có thể là cư dân của nhiều nhà, nhưng những ngôi nhà đó sẽ khá cô đơn. Nếu chúng ta đặt foreign key ở phía còn lại của mối quan hệ thì sao?
 
 ```python
 # application/models.py
@@ -624,11 +622,11 @@ class Person(models.Model):
     )
 ```
 
-In this version, a house can have multiple residents, but a person can only belong to a single house.
+Trong phiên bản này, một ngôi nhà có thể có nhiều cư dân, nhưng một người chỉ có thể thuộc về một ngôi nhà.
 
-Neither of these scenarios model the real world well. In the real world, houses can and do often hold multiple people. Simultaneously, many people in the world have a second house like a beach house or a summer cottage in the woods. Both sides of the model relationship can have many of the other side.
+Cả hai kịch bản này đều không mô hình hóa thế giới thực tốt. Trong thực tế, nhà có thể và thường chứa nhiều người. Đồng thời, nhiều người trên thế giới có nhà thứ hai như nhà nghỉ biển hoặc nhà gỗ mùa hè. Cả hai phía của mối quan hệ đều có thể có nhiều phía còn lại.
 
-With a `ManyToManyField`, you can add the field to either side. Here’s the new modeling.
+Với `ManyToManyField`, bạn có thể thêm trường này vào bất kỳ phía nào. Đây là mô hình mới.
 
 ```python
 # application/models.py
@@ -648,14 +646,14 @@ class House(models.Model):
     )
 ```
 
-How does this work at the database level? We saw with foreign keys that one table can hold the primary key of another table’s row in its own data. Unfortunately, a single database column cannot hold multiple foreign keys. That means that the modeling above does _not_ add `residents` to the `House` table. Instead, the relationship is handled by adding a _new_ database table. This new table contains the mapping between people and houses and stores rows that contain primary keys from each model.
+Điều này hoạt động thế nào ở mức cơ sở dữ liệu? Chúng ta đã thấy với foreign key là một bảng có thể lưu primary key của một hàng bảng khác trong dữ liệu của nó. Không may, một cột cơ sở dữ liệu không thể lưu nhiều foreign key. Điều đó nghĩa là mô hình trên _không_ thêm `residents` vào bảng `House`. Thay vào đó, mối quan hệ được xử lý bằng cách thêm một bảng cơ sở dữ liệu _mới_. Bảng mới này chứa ánh xạ giữa người và nhà, lưu các hàng chứa primary key từ mỗi model.
 
-Let’s think of an example to see what this looks like. Suppose there are three `Person` records with primary keys of 1, 2, and 3. Let’s also suppose that there are three `House` records with primary keys of 97, 98, and 99. To prove that the many-to-many relationship works in both directions, we’ll assume these conditions are true:
+Hãy nghĩ về một ví dụ để xem nó trông như thế nào. Giả sử có ba bản ghi `Person` với primary key là 1, 2, và 3. Giả sử cũng có ba bản ghi `House` với primary key là 97, 98, và 99. Để chứng minh quan hệ nhiều-nhiều hoạt động hai chiều, ta giả định các điều kiện sau:
 
-- People with primary keys of 1 and 2 reside in house 97.
-- The person with primary key 3 owns house 98 and 99.
+- Người có primary key 1 và 2 sống ở nhà 97.
+- Người có primary key 3 sở hữu nhà 98 và 99.
 
-The data in the new mapping table between `Person` and `House` would contain data like:
+Dữ liệu trong bảng ánh xạ mới giữa `Person` và `House` sẽ như sau:
 
 ```text
 Person | House
@@ -666,17 +664,17 @@ Person | House
 3      | 99
 ```
 
-Because of the joining table, Django is able to query either side of the table to get related houses or residents.
+Nhờ bảng liên kết này, Django có thể truy vấn từ bất kỳ phía nào để lấy nhà hoặc cư dân liên quan.
 
-We can access the “many” side of each model using a queryset. `residents` will be a `ManyRelatedManager` and, like other managers, can provide querysets by using certain manager methods.
+Chúng ta có thể truy cập phía “nhiều” của mỗi model bằng queryset. `residents` sẽ là một `ManyRelatedManager` và, giống như các manager khác, có thể cung cấp queryset bằng các phương thức manager nhất định.
 
-Getting the reverse direction is a little less obvious. Django will add another `ManyRelatedManager` to the `Person` model automatically. The name of that manager is the model name joined with `_set`. In this case, that name is `house_set`. You can also provide a `related_name` attribute to the `ManyToManyField` if you want a different name like if you wanted to call it `houses` instead.
+Lấy chiều ngược lại thì ít rõ ràng hơn. Django sẽ tự động thêm một `ManyRelatedManager` khác vào model `Person`. Tên của manager này là tên model ghép với `_set`. Trong trường hợp này, tên đó là `house_set`. Bạn cũng có thể cung cấp thuộc tính `related_name` cho trường `ManyToManyField` nếu muốn tên khác, ví dụ như `houses`.
 
 ```python
 house = House.objects.get(
     address='123 Main St.'
 )
-# Note the use of `all()`!
+# Lưu ý dùng `all()`!
 for resident in house.residents.all():
     print(resident.name)
 
@@ -685,31 +683,31 @@ for house in person.house_set.all():
     print(house.address)
 ```
 
-Understanding the Django models fields of `ForeignKey` and `ManyToManyField` is an important step to modeling your problem domain well. By having these tools available to you, you can begin to create many of the complex data relationships that exist with real world problems.
+Hiểu về các trường model Django như `ForeignKey` và `ManyToManyField` là một bước quan trọng để mô hình hóa tốt miền vấn đề của bạn. Với các công cụ này, bạn có thể bắt đầu tạo ra nhiều mối quan hệ dữ liệu phức tạp tồn tại trong các vấn đề thực tế.
 
-## Summary
+## Tóm Tắt
 
-In this article, we’ve explored:
+Trong bài viết này, chúng ta đã khám phá:
 
-- How to set up a database for your project.
-- How Django uses special classes called models to keep data.
-- Running the commands that will prepare a database for the models you want to use.
-- Saving new information into the database.
-- Asking the database for information that we stored.
-- Complex field types to model real world problems.
+- Cách thiết lập cơ sở dữ liệu cho dự án của bạn.
+- Cách Django sử dụng các class đặc biệt gọi là model để lưu dữ liệu.
+- Chạy các lệnh để chuẩn bị cơ sở dữ liệu cho các model bạn muốn dùng.
+- Lưu thông tin mới vào cơ sở dữ liệu.
+- Truy vấn cơ sở dữ liệu để lấy thông tin đã lưu.
+- Các loại trường phức tạp để mô hình hóa các vấn đề thực tế.
 
-With this ability to store data into a database, **you have all the core tools for building an interactive website for your users!** In this series, we have examined:
+Với khả năng lưu dữ liệu vào cơ sở dữ liệu, **bạn đã có tất cả công cụ cốt lõi để xây dựng một trang web tương tác cho người dùng!** Trong loạt bài này, chúng ta đã xem xét:
 
-- URL handling
-- views to run your code and business logic
-- templates to display your user interface
-- forms to let users input and interact with your site
-- models to store data into a database for long term storage
+- Xử lý URL
+- view để chạy mã và logic nghiệp vụ
+- template để hiển thị giao diện người dùng
+- form để cho phép người dùng nhập và tương tác với trang
+- model để lưu dữ liệu vào cơ sở dữ liệu cho lưu trữ lâu dài
 
-This is the core set of features that most websites have. Since we’ve seen the core topics that make Django sites work, we’re ready to focus our attention on some of the other amazing tools that set Django apart from the pack.
+Đây là tập hợp tính năng cốt lõi mà hầu hết các trang web đều có. Vì chúng ta đã thấy các chủ đề cốt lõi giúp Django hoạt động, chúng ta đã sẵn sàng tập trung vào một số công cụ tuyệt vời khác giúp Django nổi bật.
 
-First on the list is the built-in Django administrators site that lets you explore the data that you store in your database. We’ll cover:
+Đầu tiên trong danh sách là trang quản trị tích hợp sẵn của Django cho phép bạn khám phá dữ liệu đã lưu trong cơ sở dữ liệu. Chúng ta sẽ tìm hiểu:
 
-- What the Django admin site is
-- How to make your models appear in the admin
-- How to create extra actions that your admin users can do
+- Trang quản trị Django là gì
+- Cách làm cho model của bạn xuất hiện trong admin
+- Cách tạo các hành động bổ sung mà người dùng admin có thể thực hiện
