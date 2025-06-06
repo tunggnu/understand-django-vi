@@ -1,33 +1,33 @@
-# Templates For User Interfaces
+# Template Cho Giao Diện Người Dùng
 
-In the previous [Understand Django](https://www.mattlayman.com/understand-django/) article, we looked at the fundamentals of using views in Django. This article will focus on templates. Templates are your primary tool in a Django project for generating a user interface. With templates, you’ll be able to build the pages that users will see when they visit your web app. Let’s see how templates hook into views and what features Django provides with its template system.
+Trong bài viết trước của loạt bài [Hiểu về Django](https://www.mattlayman.com/understand-django/), chúng ta đã xem các kiến thức cơ bản về việc sử dụng view trong Django. Bài viết này sẽ tập trung vào template. Template là công cụ chủ lực của bạn trong một dự án Django để tạo ra giao diện người dùng. Với template, bạn sẽ có thể xây dựng các trang mà người dùng sẽ nhìn thấy khi truy cập ứng dụng web của bạn. Hãy xem cách template kết nối với view và những tính năng mà Django cung cấp với hệ thống template của nó.
 
-1. [From Browser To Django](https://www.mattlayman.com/understand-django/browser-to-django/)
-2. [URLs Lead The Way](https://www.mattlayman.com/understand-django/urls-lead-way/)
-3. [Views On Views](https://www.mattlayman.com/understand-django/views-on-views/)
-4. Templates For User Interfaces
-5. [User Interaction With Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
-6. [Store Data With Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
-7. [Administer All The Things](https://www.mattlayman.com/understand-django/administer-all-the-things/)
-8. [Anatomy Of An Application](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
-9. [User Authentication](https://www.mattlayman.com/understand-django/user-authentication/)
-10. [Middleware Do You Go?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
-11. [Serving Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
-12. [Test Your Apps](https://www.mattlayman.com/understand-django/test-your-apps/)
-13. [Deploy A Site Live](https://www.mattlayman.com/understand-django/deploy-site-live/)
-14. [Per-visitor Data With Sessions](https://www.mattlayman.com/understand-django/sessions/)
-15. [Making Sense Of Settings](https://www.mattlayman.com/understand-django/settings/)
-16. [User File Use](https://www.mattlayman.com/understand-django/media-files/)
-17. [Command Your App](https://www.mattlayman.com/understand-django/command-apps/)
-18. [Go Fast With Django](https://www.mattlayman.com/understand-django/go-fast/)
-19. [Security And Django](https://www.mattlayman.com/understand-django/secure-apps/)
-20. [Debugging Tips And Techniques](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
+1. [Từ Trình Duyệt Đến Django](https://www.mattlayman.com/understand-django/browser-to-django/)
+2. [URLs Dẫn Đường](https://www.mattlayman.com/understand-django/urls-lead-way/)
+3. [Góc Nhìn Về Views](https://www.mattlayman.com/understand-django/views-on-views/)
+4. Template Cho Giao Diện Người Dùng
+5. [Tương Tác Người Dùng Với Forms](https://www.mattlayman.com/understand-django/user-interaction-forms/)
+6. [Lưu Trữ Dữ Liệu Với Models](https://www.mattlayman.com/understand-django/store-data-with-models/)
+7. [Quản Trị Mọi Thứ](https://www.mattlayman.com/understand-django/administer-all-the-things/)
+8. [Giải Phẫu Một Ứng Dụng](https://www.mattlayman.com/understand-django/anatomy-of-an-application/)
+9. [Xác Thực Người Dùng](https://www.mattlayman.com/understand-django/user-authentication/)
+10. [Middleware Bạn Đi Đâu?](https://www.mattlayman.com/understand-django/middleware-do-you-go/)
+11. [Phục Vụ Static Files](https://www.mattlayman.com/understand-django/serving-static-files/)
+12. [Kiểm Thử Ứng Dụng](https://www.mattlayman.com/understand-django/test-your-apps/)
+13. [Triển Khai Trang Web](https://www.mattlayman.com/understand-django/deploy-site-live/)
+14. [Dữ Liệu Theo Từng Người Dùng Với Sessions](https://www.mattlayman.com/understand-django/sessions/)
+15. [Hiểu Về Settings](https://www.mattlayman.com/understand-django/settings/)
+16. [Quản Lý File Người Dùng](https://www.mattlayman.com/understand-django/media-files/)
+17. [Lệnh Cho Ứng Dụng](https://www.mattlayman.com/understand-django/command-apps/)
+18. [Tăng Tốc Với Django](https://www.mattlayman.com/understand-django/go-fast/)
+19. [Bảo Mật Và Django](https://www.mattlayman.com/understand-django/secure-apps/)
+20. [Mẹo Và Kỹ Thuật Gỡ Lỗi](https://www.mattlayman.com/understand-django/debugging-tips-techniques/)
 
-## Set Up Templates
+## Thiết Lập Template
 
-We need a place for templates to live. Templates are static files that Django will fill in with data. In order to use those files, we must instruct Django on where to find them.
+Chúng ta cần một nơi để lưu trữ các template. Template là các file tĩnh mà Django sẽ điền dữ liệu vào. Để sử dụng các file này, chúng ta phải hướng dẫn Django biết vị trí của chúng.
 
-Like most parts of Django, this configuration is in your project’s settings file. After you use `startproject`, you can find a section in your settings file that will be called `TEMPLATES`. The section should look something like:
+Như hầu hết các phần khác của Django, cấu hình này nằm trong file settings của dự án. Sau khi bạn dùng `startproject`, bạn sẽ thấy một phần trong file settings có tên là `TEMPLATES`. Phần này sẽ trông như sau:
 
 ```python
 # project/settings.py
@@ -47,13 +47,13 @@ TEMPLATES = [{
 }]
 ```
 
-Django’s template system can use multiple template backends. The backends dictate how your templates will work. I would recommend sticking with the default Django template language. This language has the tightest integration with the framework and the strongest support.
+Hệ thống template của Django có thể sử dụng nhiều backend template khác nhau. Backend quyết định cách template của bạn sẽ hoạt động. Tôi khuyên bạn nên giữ nguyên ngôn ngữ template mặc định của Django. Ngôn ngữ này tích hợp chặt chẽ nhất với framework và được hỗ trợ mạnh mẽ nhất.
 
-The next thing to notice is `APP_DIRS` with its value of `True`. For the Django template language, setting this value to `True` will cause Django to look for template files within a `templates` directory in each Django application in your project. Note that this also includes any third party applications so you should probably leave this set to `True`.
+Điều tiếp theo cần chú ý là `APP_DIRS` với giá trị `True`. Đối với ngôn ngữ template của Django, đặt giá trị này là `True` sẽ khiến Django tìm các file template trong thư mục `templates` của mỗi ứng dụng Django trong dự án của bạn. Lưu ý rằng điều này cũng bao gồm cả các ứng dụng bên thứ ba nên bạn nên giữ giá trị này là `True`.
 
-So, where should _your_ templates go? There are different schools of thought in the Django community. Some developers believe in having all templates within applications. Others ascribe to having all your project’s templates in a single directory. I’m in this second category of developers. I find it valuable to keep all of the templates for my entire project within a single directory.
+Vậy, template _của bạn_ nên đặt ở đâu? Có nhiều trường phái khác nhau trong cộng đồng Django. Một số lập trình viên thích đặt tất cả template trong từng ứng dụng. Số khác lại thích đặt tất cả template của dự án vào một thư mục duy nhất. Tôi thuộc nhóm thứ hai. Tôi thấy việc giữ tất cả template của toàn bộ dự án trong một thư mục là rất hữu ích.
 
-From my perspective, keeping templates in a single directory makes it very clear where all the layout and UI in your system will live. To use that pattern, we must set the `DIRS` variable with the directory that we want Django to include. I recommend keeping a `templates` directory at the root of your project. If you do that, your `DIRS` value will change to something like:
+Theo quan điểm của tôi, giữ template trong một thư mục giúp bạn dễ dàng biết toàn bộ bố cục và giao diện của hệ thống nằm ở đâu. Để dùng cách này, chúng ta phải thiết lập biến `DIRS` với thư mục mà chúng ta muốn Django sử dụng. Tôi khuyên bạn nên đặt một thư mục `templates` ở gốc dự án. Nếu làm vậy, giá trị `DIRS` của bạn sẽ như sau:
 
 ```python
 # project/settings.py
@@ -65,15 +65,15 @@ TEMPLATES = [
 ]
 ```
 
-Finally, there is `OPTIONS`. Each backend can accept a variety of options. `startproject` sets a number of context processors. We’ll come back to context processors later in this article.
+Cuối cùng là `OPTIONS`. Mỗi backend có thể nhận nhiều tùy chọn khác nhau. `startproject` sẽ thiết lập một số context processor. Chúng ta sẽ quay lại context processor ở phần sau của bài viết này.
 
-With your templates set up, you’re ready to go!
+Khi đã thiết lập template, bạn đã sẵn sàng bắt đầu!
 
-## Using Templates With Render
+## Sử Dụng Template Với Render
 
-Django builds your user interface by _rendering_ a template. The idea behind rendering is that dynamic data is combined with a static template file to produce a final output.
+Django xây dựng giao diện người dùng của bạn bằng cách _render_ một template. Ý tưởng của render là dữ liệu động sẽ được kết hợp với một file template tĩnh để tạo ra kết quả cuối cùng.
 
-To produce an `HttpResponse` that contains rendered output, we use the `render` function. Let’s see an example in the form of a function-based view (FBV).
+Để tạo một `HttpResponse` chứa nội dung đã render, chúng ta dùng hàm `render`. Hãy xem ví dụ với một view dạng hàm (FBV).
 
 ```python
 # application/views.py
@@ -89,26 +89,26 @@ def hello_view(request):
     )
 ```
 
-In this example, the view would use a template located in `templates/hello.txt` which could contain:
+Trong ví dụ này, view sẽ sử dụng một template nằm ở `templates/hello.txt` có thể chứa:
 
-```restructuredtext
+```django
 Hello {{ name }}
 ```
 
-When this view responds to a request, a user would see “Hello Johnny” in their browser. There are some interesting things to note about this example.
+Khi view này phản hồi một request, người dùng sẽ thấy “Hello Johnny” trên trình duyệt. Có một số điểm thú vị cần lưu ý ở ví dụ này.
 
-1. The template can be any plain text file type. Most often we will use HTML to make a user interface so you will often see `some_template.html`, but the Django template system can render on any type.
-2. In the process of rendering, Django took the context data dictionary and used its keys as variable names in the template. Because of special double curly brace syntax, the template backend swapped out `{{ name }}` for the literal value of “Johnny” that was in the context.
+1. Template có thể là bất kỳ loại file văn bản thuần nào. Thông thường chúng ta sẽ dùng HTML để tạo giao diện người dùng nên bạn sẽ thường thấy `some_template.html`, nhưng hệ thống template của Django có thể render trên bất kỳ loại file nào.
+2. Trong quá trình render, Django lấy dictionary context và dùng các key của nó làm tên biến trong template. Nhờ cú pháp dấu ngoặc nhọn kép đặc biệt, backend template sẽ thay thế `{{ name }}` bằng giá trị thực “Johnny” có trong context.
 
-This idea of mixing context and static layout is the core concept of working with templates. The rest of this article builds on this root concept and shows what else is possible in the Django template language.
+Ý tưởng kết hợp context và bố cục tĩnh là khái niệm cốt lõi khi làm việc với template. Phần còn lại của bài viết này sẽ xây dựng dựa trên ý tưởng này và cho bạn thấy những gì ngôn ngữ template của Django có thể làm được.
 
-As an aside, HTML is a topic that we are not going to explore directly. HTML, the Hypertext Markup Language, is the language used on the web to describe the structure of a page. HTML is composed of tags and many of these tags work in pairs. For example, to make a _paragraph_, you can use a `p` tag, which is represented by wrapping `p` with greater than and less than symbols to form the “opening” tag. The “closing” tag is similar, but it includes a forward slash.
+Ngoài lề, HTML là một chủ đề mà chúng ta sẽ không đi sâu vào. HTML, hay Hypertext Markup Language, là ngôn ngữ dùng trên web để mô tả cấu trúc của một trang. HTML gồm các thẻ và nhiều thẻ trong số đó đi theo cặp. Ví dụ, để tạo một _đoạn văn_, bạn có thể dùng thẻ `p`, được biểu diễn bằng cách đặt `p` trong dấu lớn hơn và nhỏ hơn để tạo thẻ “mở”. Thẻ “đóng” tương tự, nhưng có thêm dấu gạch chéo.
 
 ```html
 <p>This is a paragraph example.</p>
 ```
 
-From the last article, you may recall seeing the `TemplateView`. In those examples, we provided a template name, and I declared that Django would take care of the rest. Now you can start to understand that Django takes the template name and calls code similar to `render` to provide an `HttpResponse`. Those examples were missing context data to combine with the template. A fuller example replicating the `hello_view` function-based view as a class-based-view would look like:
+Từ bài trước, bạn có thể nhớ đã thấy `TemplateView`. Trong các ví dụ đó, chúng ta truyền vào tên template, và tôi đã nói rằng Django sẽ lo phần còn lại. Bây giờ bạn có thể hiểu rằng Django lấy tên template và gọi mã tương tự như `render` để trả về một `HttpResponse`. Các ví dụ đó thiếu dữ liệu context để kết hợp với template. Một ví dụ đầy đủ hơn, tái hiện lại view hàm `hello_view` dưới dạng view lớp sẽ như sau:
 
 ```python
 # application/views.py
@@ -129,19 +129,19 @@ class HelloView(TemplateView):
         return context
 ```
 
-This example uses `get_context_data` so that we can insert our “dynamic” data into the rendering system to give us the response we want.
+Ví dụ này sử dụng `get_context_data` để chúng ta có thể chèn dữ liệu “động” vào hệ thống render nhằm tạo ra phản hồi mong muốn.
 
-In a real application, a lot of the code that we need to write focuses on building up a truly dynamic context. I’m using static data in these examples to keep the mechanics of the template system clear. When you see me use `context`, try to imagine more complex data building to create a user interface.
+Trong một ứng dụng thực tế, phần lớn mã bạn cần viết sẽ tập trung vào việc xây dựng context thực sự động. Tôi dùng dữ liệu tĩnh trong các ví dụ này để làm rõ cơ chế của hệ thống template. Khi bạn thấy tôi dùng `context`, hãy tưởng tượng đến việc xây dựng dữ liệu phức tạp hơn để tạo giao diện người dùng.
 
-Those are the fundamentals of rendering. We’ll now turn our attention to what the Django template language is capable of.
+Đó là những kiến thức nền tảng về render. Bây giờ chúng ta sẽ chuyển sang xem ngôn ngữ template của Django có thể làm gì.
 
-## Templates In Action
+## Template Trong Thực Tế
 
-When using templates, we take context data and insert it into the placeholders within the template.
+Khi sử dụng template, chúng ta lấy dữ liệu context và chèn vào các vị trí placeholder trong template.
 
-Template variables are the most basic form of filling placeholders with context. The previous section showed an example by using the `name` variable. The context dictionary contains a `name` key, whose value appears anywhere in the template where that key is surrounded by double curly braces.
+Biến template là hình thức cơ bản nhất để điền dữ liệu context vào placeholder. Phần trước đã cho ví dụ với biến `name`. Dictionary context chứa key `name`, giá trị của nó sẽ xuất hiện ở bất cứ đâu trong template mà key đó được đặt trong dấu ngoặc nhọn kép.
 
-We can also use a dot access when the context data is more complex. Let’s say your template gets context like:
+Chúng ta cũng có thể dùng cú pháp dấu chấm khi dữ liệu context phức tạp hơn. Giả sử template của bạn nhận context như sau:
 
 ```python
 context = {
@@ -154,15 +154,15 @@ context = {
 }
 ```
 
-Your Django template _won’t_ work if you try to access this context data like a regular dictionary (e.g., `{{ address['street'] }}`). Instead, you would use dot notation to get to the data in the dictionary.
+Template Django _sẽ không_ hoạt động nếu bạn cố truy cập dữ liệu context như dictionary thông thường (ví dụ, `{{ address['street'] }}`). Thay vào đó, bạn sẽ dùng cú pháp dấu chấm để lấy dữ liệu trong dictionary.
 
-```restructuredtext
+```django
 The address is:
     {{ address.street }}
     {{ address.city }}, {{ address.state }} {{ address.zip_code}}
 ```
 
-This would render as:
+Điều này sẽ render thành:
 
 ```text
 The address is:
@@ -170,23 +170,23 @@ The address is:
     Beverly Hills, CA 90210
 ```
 
-Django templates also try to be flexible with the types of context data. You could also pass in a Python class instance like an `Address` class with attributes that are the same as the keys in our previous dictionary. The template would work the same.
+Template Django cũng cố gắng linh hoạt với kiểu dữ liệu context. Bạn cũng có thể truyền vào một instance class Python như class `Address` với các thuộc tính giống như các key trong dictionary ở trên. Template sẽ hoạt động tương tự.
 
-The core template language also includes some standard programming logic keywords by using _tags_. Template tags look like `{% some_tag %}` whereas template variables look like `{{ some_variable }}`. Variables are meant to be placeholders to fill in, but tags offer more power.
+Ngôn ngữ template cốt lõi cũng bao gồm một số từ khóa logic lập trình tiêu chuẩn bằng cách sử dụng _tag_. Tag template trông như `{% some_tag %}` trong khi biến template trông như `{{ some_variable }}`. Biến dùng để điền dữ liệu, còn tag cung cấp nhiều sức mạnh hơn.
 
-We can start with two core tags, `if` and `for`.
+Chúng ta có thể bắt đầu với hai tag cốt lõi là `if` và `for`.
 
-The `if` tag is for handling conditional logic that your template might need.
+Tag `if` dùng để xử lý logic điều kiện mà template của bạn có thể cần.
 
-```restructuredtext
+```django
 {% if user.is_authenticated %}
     <h1>Welcome, {{ user.username }}</h1>
 {% endif %}
 ```
 
-This example will only include this welcome message HTML header tag when the user is logged in to the application. We started the example with an `if` tag. Observe that the `if` tag requires a closing `endif` tag. Templates must respect whitespace since your layout might depend on that whitespace. The template language can’t use whitespace to indicate scope like it can with Python so it uses closing tags instead. As you might guess, there are also `else` and `elif` tags that are accepted inside of an `if`/`endif` pair.
+Ví dụ này chỉ hiển thị thẻ HTML header chào mừng khi người dùng đã đăng nhập vào ứng dụng. Chúng ta bắt đầu ví dụ với tag `if`. Lưu ý rằng tag `if` cần một tag đóng `endif`. Template phải tôn trọng khoảng trắng vì bố cục của bạn có thể phụ thuộc vào khoảng trắng đó. Ngôn ngữ template không thể dùng khoảng trắng để xác định phạm vi như Python nên nó dùng tag đóng. Như bạn có thể đoán, cũng có các tag `else` và `elif` được chấp nhận trong cặp `if`/`endif`.
 
-```restructuredtext
+```django
 {% if user.is_authenticated %}
     <h1>Welcome, {{ user.username }}</h1>
 {% else %}
@@ -194,11 +194,11 @@ This example will only include this welcome message HTML header tag when the use
 {% endif %}
 ```
 
-In this case, only one of the header tags will render depending on whether the user is authenticated or not.
+Trong trường hợp này, chỉ một trong hai thẻ header sẽ được render tùy vào việc người dùng đã xác thực hay chưa.
 
-The other core tag to consider is the `for` loop tag. A `for` loop in Django templates behaves as you might expect.
+Tag cốt lõi còn lại là tag vòng lặp `for`. Vòng lặp `for` trong template Django hoạt động như bạn mong đợi.
 
-```restructuredtext
+```django
 <p>Prices:</p>
 <ul>
 {% for item in items %}
@@ -207,7 +207,7 @@ The other core tag to consider is the `for` loop tag. A `for` loop in Django tem
 </ul>
 ```
 
-Django will loop over iterables like lists and let users output template responses for each entry in an iterable. If the example above had a list of `items` in the context like:
+Django sẽ lặp qua các iterable như list và cho phép bạn xuất ra phản hồi template cho từng phần tử trong iterable. Nếu ví dụ trên có một list `items` trong context như:
 
 ```python
 items = [
@@ -216,7 +216,7 @@ items = [
 ]
 ```
 
-Then the output would look roughly like:
+Thì kết quả sẽ trông như:
 
 ```html
 <p>Prices:</p>
@@ -226,9 +226,9 @@ Then the output would look roughly like:
 </ul>
 ```
 
-Occasionally, you may want to take some specific action on a particular element in the `for` loop. Python’s built in `enumerate` function isn’t available directly in templates, but a special variable called `forloop` is available inside of a `for` tag. This `forloop` variable has some attributes like `first` and `last` that you can use to make templates behave differently on certain loop iterations.
+Đôi khi, bạn có thể muốn thực hiện một hành động cụ thể với một phần tử nhất định trong vòng lặp `for`. Hàm `enumerate` tích hợp của Python không có sẵn trực tiếp trong template, nhưng một biến đặc biệt tên là `forloop` sẽ có sẵn bên trong tag `for`. Biến `forloop` này có một số thuộc tính như `first` và `last` mà bạn có thể dùng để template hoạt động khác nhau ở một số vòng lặp nhất định.
 
-```restructuredtext
+```django
 Counting:
 {% for number in first_three_numbers %}
     {{ number }}{% if forloop.last %} is last!{% endif %}
@@ -237,7 +237,7 @@ Counting:
 
 ‌
 
-This example would produce:
+Ví dụ này sẽ tạo ra:
 
 ```text
 Counting:
@@ -246,13 +246,13 @@ Counting:
     3 is last!
 ```
 
-Equipped with variables, `if` tags, and `for` tags, you should now have the ability to make some fairly powerful templates, but there’s more!
+Với biến, tag `if` và tag `for`, bạn đã có thể tạo ra những template khá mạnh mẽ, nhưng vẫn còn nhiều thứ nữa!
 
-### More Context On Context
+### Thêm Bối Cảnh Cho Context
 
-In the setup of the templates settings, we glossed over context processors. Context processors are a valuable way to extend the context that is available to your templates when they are rendered.
+Khi thiết lập settings cho template, chúng ta đã lướt qua context processor. Context processor là một cách hữu ích để mở rộng context có sẵn cho template khi render.
 
-Here’s the set of context processors that Django’s `startproject` command brings in by default.
+Đây là tập hợp context processor mà lệnh `startproject` của Django thêm vào mặc định.
 
 ```python
 'context_processors': [
@@ -263,20 +263,20 @@ Here’s the set of context processors that Django’s `startproject` command br
 ],
 ```
 
-Context processors are functions (technically, callables, but let’s focus on functions) that receive an `HttpRequest` and must return a dictionary. The returned dictionary merges with any other context that will be passed to your template.
+Context processor là các hàm (chính xác là callable, nhưng hãy tập trung vào hàm) nhận một `HttpRequest` và phải trả về một dictionary. Dictionary trả về sẽ được hợp nhất với bất kỳ context nào khác được truyền vào template.
 
-Conceptually, when preparing to render and given a `context` dictionary that was passed to `render`, the template system will do something like:
+Về mặt ý tưởng, khi chuẩn bị render và có một dictionary `context` được truyền vào `render`, hệ thống template sẽ làm như sau:
 
 ```python
 for processor in context_processors:
     context.update(processor(request))
 
-# Continue on to template rendering
+# Tiếp tục render template
 ```
 
-The actual code in the template system is more complex than this concept code sketch, but not by much!
+Mã thực tế trong hệ thống template phức tạp hơn một chút, nhưng không khác nhiều so với đoạn mô tả ý tưởng này!
 
-We can look at the actual definition of the `request` context processor included in that default list.
+Chúng ta có thể xem định nghĩa thực tế của context processor `request` có trong danh sách mặc định đó.
 
 ```python
 # django/template/context_processors.py
@@ -285,21 +285,21 @@ def request(request):
     return {'request': request}
 ```
 
-That’s it! Because of this context processor, the `request` object will be available as a variable to any template in your project. That’s super powerful.
+Chỉ vậy thôi! Nhờ context processor này, đối tượng `request` sẽ có sẵn như một biến cho bất kỳ template nào trong dự án của bạn. Điều này rất mạnh mẽ.
 
-#### Sidebar
+#### Bên Lề
 
-Don't be afraid to look at the source code of the projects that you depend on. Remember that regular people wrote your favorite frameworks! You can learn valuable lessons from what they did. The code might be a little intimidating at first, but there is no magic going on!
+Đừng ngại xem mã nguồn của các dự án mà bạn phụ thuộc vào. Hãy nhớ rằng những người bình thường đã viết ra các framework mà bạn yêu thích! Bạn có thể học được nhiều bài học giá trị từ những gì họ đã làm. Ban đầu mã nguồn có thể hơi khó hiểu, nhưng không có gì là ma thuật cả!
 
-The “dark side” of context processors is that they run for all requests. If you write a context processor that is slow and does a lot of computation, _every request_ will suffer that performance impact. So use context processors carefully.
+“Mặt tối” của context processor là chúng sẽ chạy cho mọi request. Nếu bạn viết một context processor chậm và thực hiện nhiều tính toán, _mọi request_ sẽ bị ảnh hưởng về hiệu năng. Vì vậy hãy dùng context processor một cách cẩn thận.
 
-### Reusable Chunks Of Templates
+### Các Đoạn Template Tái Sử Dụng
 
-Now let’s talk about one of the powerhouse features of the template system: reusable pieces.
+Bây giờ hãy nói về một trong những tính năng mạnh mẽ nhất của hệ thống template: các phần có thể tái sử dụng.
 
-Think about a website. Most pages have a similar look and feel. They do this by repeating a lot of the same HTML, which is Hypertext Markup Language that defines the structure of a page. These pages also use the same CSS, Cascading Style Sheets, which define the styles that shape the look of the page elements.
+Hãy nghĩ về một website. Hầu hết các trang đều có giao diện và cảm giác giống nhau. Điều này đạt được bằng cách lặp lại rất nhiều HTML giống nhau, tức là Hypertext Markup Language định nghĩa cấu trúc của một trang. Các trang này cũng dùng cùng một CSS, tức là Cascading Style Sheets, định nghĩa kiểu dáng cho các phần tử trang.
 
-Imagine you’re asked to manage a site and you need to create two separate pages. The homepage looks like:
+Hãy tưởng tượng bạn được giao quản lý một trang web và cần tạo hai trang riêng biệt. Trang chủ trông như sau:
 
 ```html
 <!DOCTYPE html>
@@ -313,7 +313,7 @@ Imagine you’re asked to manage a site and you need to create two separate page
 </html>
 ```
 
-And here is a page to learn about the company behind the website.
+Và đây là một trang giới thiệu về công ty đứng sau website.
 
 ```html
 <!DOCTYPE html>
@@ -327,11 +327,11 @@ And here is a page to learn about the company behind the website.
 </html>
 ```
 
-These examples are tiny amounts of HTML, but what if you’re asked to change the stylesheet from `styles.css` to a new stylesheet made by a designer called `better_styles.css`? You would have to update both places. Now think if there were 2,000 pages instead of 2 pages. Making big changes quickly across a site would be virtually impossible!
+Các ví dụ này chỉ là một lượng nhỏ HTML, nhưng nếu bạn được yêu cầu đổi stylesheet từ `styles.css` sang một stylesheet mới do designer tạo tên là `better_styles.css` thì sao? Bạn sẽ phải cập nhật ở cả hai nơi. Bây giờ hãy tưởng tượng nếu có 2.000 trang thay vì 2 trang. Việc thay đổi lớn trên toàn site sẽ gần như không thể!
 
-Django helps you avoid this scenario entirely with a few tags. Let’s make a new template called `base.html`.
+Django giúp bạn tránh hoàn toàn tình huống này với một vài tag. Hãy tạo một template mới tên là `base.html`.
 
-```restructuredtext
+```django
 <!DOCTYPE html>
 <html>
     <head>
@@ -343,9 +343,9 @@ Django helps you avoid this scenario entirely with a few tags. Let’s make a ne
 </html>
 ```
 
-We’ve created a reusable template with the `block` tag! We can fix up our homepage to use this new template.
+Chúng ta đã tạo một template có thể tái sử dụng với tag `block`! Chúng ta có thể sửa lại trang chủ để dùng template mới này.
 
-```restructuredtext
+```django
 {% extends "base.html" %}
 
 {% block main %}
@@ -353,20 +353,20 @@ We’ve created a reusable template with the `block` tag! We can fix up our home
 {% endblock %}
 ```
 
-This new version of the homepage _extends_ the base template. All the template had to do was define its own version of the `main` block to fill in the content. We could do the exact same thing with the about page.
+Phiên bản mới này của trang chủ _kế thừa_ template base. Tất cả những gì template cần làm là định nghĩa lại block `main` để điền nội dung. Chúng ta có thể làm tương tự với trang giới thiệu.
 
-If we revisit the task of replacing `styles.css` with `better_styles.css`, we can make the update in `base.html` and have that change apply to any templates that extend it. Even if there were 2,000 pages that all extended from `base.html`, changing the stylesheet would still be one line of code to change for an entire site.
+Nếu quay lại nhiệm vụ thay thế `styles.css` bằng `better_styles.css`, chúng ta chỉ cần cập nhật trong `base.html` và thay đổi đó sẽ áp dụng cho mọi template kế thừa nó. Dù có 2.000 trang đều kế thừa từ `base.html`, việc đổi stylesheet cũng chỉ là một dòng mã cho toàn bộ site.
 
-That’s the power of Django’s template extension system. Use `extend` when you need content that is mostly the same. Add a `block` section whenever you need to customize an extended page. You can extend a page by including multiple types of blocks. The example only shows a `main` block, but you might have pages that customize a `sidebar`, `header`, `footer`, or whatever might vary.
+Đó là sức mạnh của hệ thống mở rộng template của Django. Dùng `extend` khi bạn cần nội dung gần như giống nhau. Thêm block bất cứ khi nào bạn cần tùy biến một trang mở rộng. Bạn có thể mở rộng một trang bằng nhiều loại block khác nhau. Ví dụ chỉ có block `main`, nhưng bạn có thể có các trang tùy biến `sidebar`, `header`, `footer` hoặc bất cứ phần nào có thể thay đổi.
 
-Another powerful tool for reuse is the `include` tag. The `include` tag is useful when you want to extract some chunk of template that you want to use in multiple locations. You may want to use `include` to:
+Một công cụ mạnh khác để tái sử dụng là tag `include`. Tag `include` hữu ích khi bạn muốn tách một phần template để dùng ở nhiều nơi khác nhau. Bạn có thể dùng `include` để:
 
-1. Keep templates tidy. You can break a large template up into small pieces that are more manageable.
-2. Use a template fragment in different parts of your site. Maybe you have a piece of template that should only appear on a few pages.
+1. Giữ template gọn gàng. Bạn có thể chia một template lớn thành các phần nhỏ dễ quản lý hơn.
+2. Dùng một đoạn template ở nhiều vị trí khác nhau trên site. Có thể bạn có một phần template chỉ xuất hiện ở một số trang.
 
-Coming back to our website example, imagine that `base.html` grew to be 20,000 lines long. Navigating to the right part of the template to make changes is now harder. We can decompose the template into smaller pieces.
+Quay lại ví dụ website, hãy tưởng tượng `base.html` dài tới 20.000 dòng. Việc tìm đúng phần template để sửa sẽ khó hơn. Chúng ta có thể chia nhỏ template thành các phần nhỏ hơn.
 
-```restructuredtext
+```django
 <!DOCTYPE html>
 <html>
     {% include "head.html" %}
@@ -378,17 +378,17 @@ Coming back to our website example, imagine that `base.html` grew to be 20,000 l
 </html>
 ```
 
-The `include` tag can move those extra pieces around. By providing a good name for your templates, if you needed to change the structure of some section like navigation, you could go to the template with the appropriate name. That template file would focus on only the element that you need to change.
+Tag `include` có thể di chuyển các phần phụ đó. Nếu bạn đặt tên template hợp lý, khi cần thay đổi cấu trúc một phần như navigation, bạn chỉ cần vào đúng file template đó. File template đó sẽ chỉ tập trung vào phần tử bạn cần thay đổi.
 
-`block`, `extends`, and `include` are core tags for keeping your user interface code from sprawling all over the place with lots of duplication.
+`block`, `extends` và `include` là các tag cốt lõi giúp bạn tránh việc mã giao diện người dùng bị tràn lan với nhiều sự lặp lại.
 
-Next, let’s talk about more of Django’s built-in template tags that can supercharge your UI.
+Tiếp theo, hãy nói về nhiều tag template tích hợp sẵn của Django có thể tăng sức mạnh cho UI của bạn.
 
-## The Templates Toolbox
+## Hộp Công Cụ Template
 
-The Django documentation includes a [large set of built-in tags](https://docs.djangoproject.com/en/4.1/ref/templates/builtins/) that you can use in your projects. We aren’t going to cover all of them, but I’ll focus on a few tags to give you a flavor of what is available.
+Tài liệu Django có một [danh sách lớn các tag tích hợp sẵn](https://docs.djangoproject.com/en/4.1/ref/templates/builtins/) mà bạn có thể dùng trong dự án của mình. Chúng ta sẽ không đề cập hết tất cả, nhưng tôi sẽ tập trung vào một số tag để bạn cảm nhận được những gì có sẵn.
 
-One of the most used built-in tags aside from what we’ve already covered is the `url` tag. Recall from the article on URLs that you can get the URL to a named view by using the `reverse` function. What if you wanted to use the URL in your template? You could do this:
+Một trong những tag tích hợp sẵn được dùng nhiều nhất ngoài những gì đã đề cập là tag `url`. Nhớ lại từ bài viết về URL rằng bạn có thể lấy URL tới một view đã đặt tên bằng hàm `reverse`. Nếu bạn muốn dùng URL đó trong template thì sao? Bạn có thể làm như sau:
 
 ```python
 # application/views.py
@@ -407,21 +407,21 @@ def the_view(request):
     )
 ```
 
-While this works, it’s tedious to have to route all URLs through the context. Instead, our template can directly create the proper URL. Here’s what `a_template.html` might look like instead:
+Cách này hoạt động, nhưng thật phiền khi phải truyền mọi URL qua context. Thay vào đó, template của chúng ta có thể tự tạo URL phù hợp. Đây là ví dụ về `a_template.html`:
 
-```restructuredtext
+```django
 <a href="{% url "a_named_view" %}">Go to a named view</a>
 ```
 
-The `url` tag is the template equivalent of the `reverse` function. Like its `reverse` counterpart, `url` can accept args or kwargs for routes that expect other variables. `url` is an incredibly useful tool and one that you will probably reach for many times as you build your user interface.
+Tag `url` là tương đương với hàm `reverse` trong template. Giống như `reverse`, `url` có thể nhận args hoặc kwargs cho các route cần biến khác. `url` là một công cụ cực kỳ hữu ích mà bạn sẽ dùng rất nhiều khi xây dựng giao diện người dùng.
 
-Another useful tag is the `now` tag. `now` is a convenient method to display information about the current time. Using what Django calls _format specifiers_, you can tell your template how to display the current time. Want to add a current copyright year to your website? No problem!
+Một tag hữu ích khác là tag `now`. `now` là một cách tiện lợi để hiển thị thông tin về thời gian hiện tại. Sử dụng cái mà Django gọi là _format specifier_, bạn có thể nói cho template biết cách hiển thị thời gian hiện tại. Muốn thêm năm bản quyền hiện tại vào website? Không vấn đề!
 
-```restructuredtext
+```django
 &copy; {% now "Y" %} Your Company LLC.
 ```
 
-One final built-in tag to consider is the `spaceless` tag. HTML is _partially_ sensitive to whitespace. There are some frustrating circumstances where this whitespace sensitivity can ruin your day when building a user interface. Can you make a pixel perfect navigation menu for your site with an unordered list? Maybe. Consider this:
+Một tag tích hợp cuối cùng cần xem xét là tag `spaceless`. HTML _phần nào_ nhạy cảm với khoảng trắng. Có những trường hợp khó chịu mà sự nhạy cảm này có thể phá hỏng ngày làm việc của bạn khi xây dựng giao diện người dùng. Bạn có thể tạo một menu điều hướng hoàn hảo bằng danh sách không thứ tự không? Có thể. Hãy xem ví dụ này:
 
 ```html
 <ul class="navigation">
@@ -430,9 +430,9 @@ One final built-in tag to consider is the `spaceless` tag. HTML is _partially_ s
 </ul>
 ```
 
-The indented whitespace on those list items (or the new line characters that follow them) might cause you trouble when working with CSS. Knowing that the whitespace can affect layout, we can use `spaceless` like so:
+Khoảng trắng thụt vào ở các phần tử list (hoặc ký tự xuống dòng sau chúng) có thể gây rắc rối khi làm việc với CSS. Biết rằng khoảng trắng có thể ảnh hưởng đến layout, chúng ta có thể dùng `spaceless` như sau:
 
-```restructuredtext
+```django
 {% spaceless %}
 <ul class="navigation">
     <li><a href="/home/">Home</a></li>
@@ -441,85 +441,85 @@ The indented whitespace on those list items (or the new line characters that fol
 {% endspaceless %}
 ```
 
-This neat little template tag will remove all the spaces between HTML tags so your output looks like:
+Tag template nhỏ gọn này sẽ loại bỏ mọi khoảng trắng giữa các thẻ HTML để đầu ra của bạn trông như:
 
 ```html
 <ul class="navigation"><li><a href="/home/">Home</a></li>...</ul>
 ```
 
-By removing the extra space, you may get a more consistent experience with your CSS styling and save yourself some frustration. (I had to trim the output to fit better on the screen.)
+Bằng cách loại bỏ khoảng trắng thừa, bạn có thể có trải nghiệm nhất quán hơn với CSS và tránh được nhiều phiền toái. (Tôi đã cắt bớt đầu ra để vừa với màn hình.)
 
-There is another kind of built-in that we have not looked at yet. These alternative built-in functions are called **filters**. Filters change the output of variables in your templates. The filter syntax is a bit interesting. It looks like:
+Có một loại tích hợp khác mà chúng ta chưa xem. Các hàm tích hợp thay thế này được gọi là **filter**. Filter thay đổi đầu ra của biến trong template. Cú pháp filter hơi đặc biệt. Nó trông như sau:
 
-```restructuredtext
+```django
 Here's a filter example: {{ a_variable|some_filter:"filter arguments" }}
 ```
 
-The important element is the pipe character directly after a variable. This character signals to the template system that we want to modify the variable with some kind of transformation. Also observe that filters are used between double curly braces instead of the `{%` syntax that we’ve seen with tags.
+Điểm quan trọng là ký tự pipe ngay sau biến. Ký tự này báo cho hệ thống template rằng chúng ta muốn biến đổi biến bằng một kiểu chuyển đổi nào đó. Lưu ý rằng filter được dùng trong dấu ngoặc nhọn kép thay vì cú pháp `{%` như tag.
 
-A very common filter is the `date` filter. When you pass a Python `datetime` instance in the context, you can use the `date` filter to control the format of the datetime. The `date` [documentation](https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#date) shows what options you can use to modify the format.
+Một filter rất phổ biến là filter `date`. Khi bạn truyền một instance `datetime` của Python vào context, bạn có thể dùng filter `date` để kiểm soát định dạng của datetime. [Tài liệu về date](https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#date) cho biết các tùy chọn bạn có thể dùng để thay đổi định dạng.
 
-```restructuredtext
+```django
 {{ a_datetime|date:"Y-m-d" }}
 ```
 
-If `a_datetime` was an instance of April Fools’ Day, then it could return a string like `2020-04-01`. The `date` filter has many specifiers that will enable you to produce most of the date formatting outputs you could think of.
+Nếu `a_datetime` là ngày Cá tháng Tư, nó có thể trả về chuỗi như `2020-04-01`. Filter `date` có nhiều định dạng giúp bạn tạo ra hầu hết các kiểu định dạng ngày tháng mà bạn nghĩ ra.
 
-`default` is a useful filter for when your template value evaluates to `False`. This is perfect when you’ve got a variable with an empty string. The example below outputs “Nothing to see here” if the variable was Falsy.
+`default` là một filter hữu ích khi giá trị template của bạn là `False`. Điều này rất phù hợp khi bạn có một biến là chuỗi rỗng. Ví dụ dưới đây sẽ xuất ra “Nothing to see here” nếu biến là Falsy.
 
-```restructuredtext
+```django
 {{ a_variable|default:"Nothing to see here." }}
 ```
 
-Falsy is a concept in Python that describes anything that Python will evaluate as false in a boolean expression. Empty strings, empty lists, empty dicts, empty sets, `False`, and `None` are all common Falsy values.
+Falsy là một khái niệm trong Python mô tả bất cứ thứ gì mà Python đánh giá là false trong biểu thức boolean. Chuỗi rỗng, list rỗng, dict rỗng, set rỗng, `False` và `None` đều là các giá trị Falsy phổ biến.
 
-`length` is a simple filter for lists. `{{ a_list_variable|length }}` will produce a number. It is the Django template equivalent to the `len` function.
+`length` là một filter đơn giản cho list. `{{ a_list_variable|length }}` sẽ trả về một số. Đây là tương đương với hàm `len` trong template Django.
 
-I like the `linebreaks` filter a lot. If you create a form (which we’ll explore in the next article) and accept a text area field where the user is allowed to provide newlines, then the `linebreaks` filter allows you to display those newlines later when rendering the user’s data. By default, HTML will not show new line characters as intended. The `linebreaks` filter will convert `\n` to a `<br>` HTML tag. Handy!
+Tôi rất thích filter `linebreaks`. Nếu bạn tạo một form (chúng ta sẽ tìm hiểu ở bài sau) và chấp nhận một trường textarea cho phép người dùng nhập xuống dòng, thì filter `linebreaks` cho phép bạn hiển thị các dòng mới đó khi render dữ liệu của người dùng. Mặc định, HTML sẽ không hiển thị ký tự xuống dòng như mong muốn. Filter `linebreaks` sẽ chuyển `\n` thành thẻ HTML `<br>`. Rất tiện!
 
-Before moving on, let’s consider two more.
+Trước khi tiếp tục, hãy xem thêm hai filter nữa.
 
-`pluralize` is a convenient filter for the times when your text considers counts of things. Consider a count of items.
+`pluralize` là một filter tiện lợi khi văn bản của bạn liên quan đến số lượng. Hãy xem ví dụ đếm số phần tử.
 
-```restructuredtext
+```django
 {{ count_items }} item{{ count_items|pluralize }}
 ```
 
-The `pluralize` filter will do the right thing if there are zero, one, or more items in the list.
+Filter `pluralize` sẽ làm đúng nếu có 0, 1 hoặc nhiều phần tử trong list.
 
 ```
 0 items
 1 item
 2 items
 3 items
-(and so on)
+(và cứ thế)
 ```
 
-Be aware that `pluralize` can’t handle irregular plurals like “mice” for “mouse.”
+Lưu ý rằng `pluralize` không xử lý được các danh từ số nhiều bất quy tắc như “mice” cho “mouse”.
 
-The final filter in our tour is the `yesno` filter. `yesno` is good for converting `True|False|None` into a meaningful text message. Imagine we’re making an application for tracking events and a person’s attendance is one of those three values. Our template might look like:
+Filter cuối cùng trong chuyến tham quan này là filter `yesno`. `yesno` tốt cho việc chuyển đổi `True|False|None` thành thông điệp văn bản có ý nghĩa. Hãy tưởng tượng chúng ta đang làm một ứng dụng theo dõi sự kiện và trạng thái tham dự của một người là một trong ba giá trị đó. Template của chúng ta có thể như sau:
 
-```restructuredtext
+```django
 {{ user.name }} has {{ user_accepted|yesno:"accepted,declined,not RSVPed" }}.
 ```
 
-Depending on the value of `user_accepted`, the template will display something meaningful to a reader.
+Tùy vào giá trị của `user_accepted`, template sẽ hiển thị thông điệp phù hợp cho người đọc.
 
-There are so many built-ins that it’s really hard to narrow down my favorites. Check out the full list to see what might be useful for you.
+Có rất nhiều filter tích hợp đến mức thật khó để chọn ra filter yêu thích. Hãy xem danh sách đầy đủ để tìm ra filter phù hợp với bạn.
 
-What if the built-ins don’t cover what you need? Have no fear, Django lets you make custom tags and filters for your own purposes. We’ll see how next.
+Nếu các filter tích hợp không đáp ứng được nhu cầu của bạn thì sao? Đừng lo, Django cho phép bạn tạo tag và filter tùy chỉnh cho mục đích riêng. Chúng ta sẽ xem cách làm ngay sau đây.
 
-## Build Your Own Lightsaber In Templates
+## Tự Xây Dựng "Lightsaber" Trong Template
 
-When you need to build your own template tags or filters, Django gives you the tools to make what you need.
+Khi bạn cần xây dựng tag hoặc filter template riêng, Django cung cấp cho bạn công cụ để làm điều đó.
 
-There are three major elements to working with custom tags:
+Có ba yếu tố chính khi làm việc với tag tùy chỉnh:
 
-1. Defining your tags in a place that Django expects.
-2. Registering your tags with the template engine.
-3. Loading your tags in a template so they can be used.
+1. Định nghĩa tag ở nơi Django mong đợi.
+2. Đăng ký tag với engine template.
+3. Load tag trong template để có thể sử dụng.
 
-The first step is to put the tags in the correct location. To do that, we need a `templatetags` Python package inside of a Django application. We also need a module in that directory. Choose the module name carefully because it is what we will load in the template later on.
+Bước đầu tiên là đặt tag vào đúng vị trí. Để làm điều đó, chúng ta cần một package Python tên là `templatetags` bên trong một ứng dụng Django. Chúng ta cũng cần một module trong thư mục đó. Hãy chọn tên module cẩn thận vì đó là cái chúng ta sẽ load trong template sau này.
 
 ```
 application
@@ -532,7 +532,7 @@ application
 └── views.py
 ```
 
-Next, we need to make our tag or filter and register it. Let’s start with a filter example.
+Tiếp theo, chúng ta cần tạo tag hoặc filter và đăng ký nó. Hãy bắt đầu với ví dụ về filter.
 
 ```python
 # application/templatetags/custom_tags.py
@@ -552,17 +552,17 @@ def add_pizzazz(value):
     return value + random.choice(pieces_of_flair)
 ```
 
-Now, if we have a `message` variable, we can give it some pizzazz. To use the custom filter, we must load our tags module into the template with the `load` tag.
+Bây giờ, nếu chúng ta có một biến `message`, chúng ta có thể thêm chút "pizzazz" cho nó. Để dùng filter tùy chỉnh, chúng ta phải load module tag vào template với tag `load`.
 
-```restructuredtext
+```django
 {% load custom_tags %}
 
 {{ message|add_pizzazz }}
 ```
 
-If our message was “You got a perfect score!”, then our template should show the message and one of the three random choices like “You got a perfect score! Wowza!”
+Nếu message của chúng ta là “You got a perfect score!”, thì template sẽ hiển thị thông điệp đó kèm một trong ba lựa chọn ngẫu nhiên như “You got a perfect score! Wowza!”
 
-Writing basic custom tags is very similar to custom filters. Code will speak better than words here.
+Việc viết tag tùy chỉnh cơ bản rất giống với filter tùy chỉnh. Mã sẽ nói lên tất cả.
 
 ```python
 # application/templatetags/custom_tags.py
@@ -585,34 +585,34 @@ def champion_welcome(name, level):
     return welcome
 ```
 
-We can load the custom tags and use our tag like any other built-in tag.
+Chúng ta có thể load tag tùy chỉnh và dùng tag này như bất kỳ tag tích hợp nào khác.
 
-```restructuredtext
+```django
 {% load custom_tags %}
 
 {% champion_welcome "He-Man" 50 %}
 ```
 
-This silly welcome tag will respond to multiple input variables and vary depending on the provided level. The example usage should display “Hello great champion He-Man!”
+Tag chào mừng vui nhộn này sẽ phản hồi theo nhiều biến đầu vào và thay đổi tùy vào level truyền vào. Ví dụ trên sẽ hiển thị “Hello great champion He-Man!”
 
-We’re only looking at the most common kinds of custom tags in our examples. There are some more advanced custom tagging features which you can explore in the [Django custom template tags documentation](https://docs.djangoproject.com/en/4.1/howto/custom-template-tags/).
+Chúng ta chỉ đang xem các loại tag tùy chỉnh phổ biến nhất trong ví dụ. Có một số tính năng tag tùy chỉnh nâng cao hơn mà bạn có thể khám phá trong [tài liệu về custom template tags của Django](https://docs.djangoproject.com/en/4.1/howto/custom-template-tags/).
 
-Django also uses `load` to provide template authors with some additional tools. For instance, we will see how to load some custom tags provided by the framework when we learn about working with images and JavaScript later on.
+Django cũng sử dụng `load` để cung cấp cho tác giả template một số công cụ bổ sung. Ví dụ, chúng ta sẽ thấy cách load một số thẻ tùy chỉnh do framework cung cấp khi chúng ta học về làm việc với hình ảnh và JavaScript ở các phần sau.
 
-## Summary
+## Tóm tắt
 
-Now we’ve seen templates in action! We’ve looked at:
+Bây giờ chúng ta đã thấy template hoạt động thực tế! Chúng ta đã xem qua:
 
-- How to set up templates for your site
-- Ways to call templates from views
-- How to use data
-- How to handle logic
-- Built-in tags and filters available to templates
-- Customizing templates with your own code extensions
+- Cách thiết lập template cho trang web của bạn
+- Các cách gọi template từ view
+- Cách sử dụng dữ liệu
+- Cách xử lý logic
+- Các thẻ và filter tích hợp sẵn dành cho template
+- Tùy biến template với phần mở rộng mã của riêng bạn
 
-In the next article, we are going to examine how users can send data to a Django application with HTML forms. Django has tools to make form building quick and effective. We’re going to see:
+Trong bài tiếp theo, chúng ta sẽ xem xét cách người dùng có thể gửi dữ liệu đến một ứng dụng Django với các form HTML. Django có các công cụ giúp xây dựng form nhanh chóng và hiệu quả. Chúng ta sẽ tìm hiểu:
 
-- The `Form` class that Django uses to handle form data in Python
-- Controlling what fields are in forms
-- How forms are rendered to users by Django
-- How to do form validation
+- Lớp `Form` mà Django sử dụng để xử lý dữ liệu form trong Python
+- Kiểm soát các trường có trong form
+- Cách Django hiển thị form cho người dùng
+- Cách thực hiện kiểm tra hợp lệ cho form
